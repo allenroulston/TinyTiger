@@ -1,1 +1,1 @@
-Gem 'discordrb'
+gem 'discordrb'
