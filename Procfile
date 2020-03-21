@@ -1,1 +1,1 @@
-<process type>: <command> ruby pingpong.rb
+web: bundle exec pingpong -C config/pingpong.rb
