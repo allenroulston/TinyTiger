@@ -56,3 +56,5 @@ bot.command(:o, description: "Owner Commands", usage: "#{prefix}o [sub] [*args]"
         end
 	end
 end
+
+bot.run
