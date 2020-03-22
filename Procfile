@@ -1,1 +1,10 @@
-web: ruby pingpong.rb
+worker: ruby pingpong.rb
+
+
+
+
+
+
+
+
+
