@@ -4,14 +4,7 @@ require 'yaml'
 
 #####Configuration########
 junk = YAML.load(File.read("data.yml"));
-puts;
-puts "--- here comes the junk value ";
-puts junk.inspect;
-puts;
-puts "here is the token";
 token = junk[0]+junk[1]+junk[2];
-puts token;
-puts;
 prefix = "!" # Your bot's prefix
 owner = 690339632529015005 # Your user ID
 
@@ -19,27 +12,20 @@ owner = 690339632529015005 # Your user ID
 
 bot = Discordrb::Bot.new token: token 
 
-bot.message(with_text: 'Ping!') do |event|
-  event.respond 'Pong!'
-end
+#bot.message(with_text: 'ping') do |event|
+#  event.respond 'PONG';
+#end
 
-bot.message(with_text: '[20]') do |event|
-  event.respond 'NATURAL 20'
-end
+#bot.message(contains: "[20]") do |event|
+#  event.respond 'SOMEONE ROLLED A NATURAL TWENTY'
+#end
 
-bot.message(with_text: '[20]') do |event|
-  puts;
-  puts event.inspect;
-  puts;
+bot.message(contains: "[20]") do |event|
+  tempVar = "WOW, A NATURAL 20!  "
+  tempVar = tempVar + event.author.display_name;
+  tempVar = tempVar + " :: " + event.content;
+  event.respond tempVar;
 end
 
 
 bot.run
-
-
-
-
-
-
-
-
