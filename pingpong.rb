@@ -29,12 +29,30 @@ bot.message(contains: "Roll:") do |event|
   tempResult = tempVar.slice(theIndex,10);
   theResult = tempResult.slice(7,10);
   number = theResult.to_i;
-  if number < 10 then
-    comment = "  Could be a failed death save."
-  else
-    comment = "  Might be a successful death save."
+  case number
+    when 1; comment = "  Critical death save?";
+    when 2; comment = "  Just a flesh wound.";
+    when 3; comment = "  Maybe no one noticed.";
+    when 4; comment = "  Great result on a die 4.";
+    when 5; comment = "  Did you remember to add your proficiency?";
+    when 6; comment = "  Is that the best you can do?";
+    when 7; comment = "  Was it lucky for you, punk?";
+    when 8; comment = "  Great roll ... for damage.";
+    when 9; comment = "  Hopefully not a death save roll.";
+    when 10; comment = "  Solid damage, or did you miss on your attack?";
+    when 11; comment = "  Whose side are you on?";
+    when 12; comment = "  That will hit a Kobold.";
+    when 13; comment = "  Is today a Friday?";
+    when 14; comment = "  Twice as good as a seven.";
+    when 15; comment = "  That will hit a Troll.";
+    when 16; comment = "  That hits a Bugbear.";
+    when 17; comment = "  Snap! That probably hit.";
+    when 18; comment = "  That will hit most Hobgoblins.";
+    when 19; comment = "  So very close.";
+    when 20; comment = "  Possible Natural 20.";
+    when 21..30; comment = "  That must be a hit."
   end;
-  responseValue = theName + " rolled a " + theResult + comment;
+  responseValue = theName + " rolled a " + theResult + "." + comment;
   event.respond responseValue;
 end
 
