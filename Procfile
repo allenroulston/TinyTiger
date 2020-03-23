@@ -1,4 +1,4 @@
-worker: ruby pingpong.rb
+web: ruby pingpong.rb
 
 
 
