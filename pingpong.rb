@@ -21,13 +21,20 @@ bot = Discordrb::Bot.new token: token
 #end
 
 bot.message(contains: "Roll:") do |event|
+  comment = " Just saying."
   tempVar = event.content;  
   theIndex = tempVar.index('Roll:');
   theName = tempVar.slice(0,theIndex).to_s;
   theIndex = tempVar.index('Result:');
   tempResult = tempVar.slice(theIndex,10);
   theResult = tempResult.slice(7,10);
-  responseValue = theName + " rolled a " + theResult;
+  number = theResult.to_i;
+  if number < 10 then
+    comment = "  Could be a failed death save."
+  else
+    comment = "  Might be a successful death save."
+  end;
+  responseValue = theName + " rolled a " + theResult + comment;
   event.respond responseValue;
 end
 
