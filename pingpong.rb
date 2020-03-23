@@ -20,12 +20,15 @@ bot = Discordrb::Bot.new token: token
 #  event.respond 'SOMEONE ROLLED A NATURAL TWENTY'
 #end
 
-bot.message(contains: "[20]") do |event|
-  tempVar = "WOW, A NATURAL 20!  "
-  tempVar = tempVar + event.author.display_name;
-  tempVar = tempVar + " :: " + event.content;
-  event.respond tempVar;
+bot.message(contains: "Roll:") do |event|
+  tempVar = event.content;  
+  theIndex = tempVar.index('Roll:');
+  theName = tempVar.slice(0,theIndex).to_s;
+  theIndex = tempVar.index('Result:');
+  tempResult = tempVar.slice(theIndex,10);
+  theResult = tempResult.slice(7,10);
+  responseValue = theName + " rolled a " + theResult;
+  event.respond responseValue;
 end
-
 
 bot.run
