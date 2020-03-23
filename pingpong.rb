@@ -56,7 +56,7 @@ bot.message(contains: "Roll:") do |event|
     when 20; comment = "  Possible Natural 20.";
     when 21..30; comment = "  That must be a hit."
   end;
-  responseValue = theName + " rolled a " + theResult + "." + comment;
+  responseValue = theName + "rolled a" + theResult + "." + comment;
   event.respond responseValue;
 end
 
