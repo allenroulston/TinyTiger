@@ -57,7 +57,10 @@ bot.message(contains: "Roll:") do |event|
     when 21..30; comment = "  That must be a hit."
   end;
   responseValue = theName + "rolled a"  +  theResult + "." + comment;
-  event.respond responseValue;
+  showText = rand(9)+1;
+  if showText == 1 then;
+     event.respond responseValue;
+  end;
 end
 
 bot.run
