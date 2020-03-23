@@ -20,7 +20,7 @@ bot = Discordrb::Bot.new token: token
 #  event.respond 'SOMEONE ROLLED A NATURAL TWENTY'
 #end
 
-bot.message(contains: "Damage:") do |event|
+bot.message(contains: "GM-GM") do |event|
   event.respond "Detected Avrae content Damage:";
 end
 
