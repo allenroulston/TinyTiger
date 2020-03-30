@@ -2,6 +2,8 @@
 require 'discordrb'
 require 'yaml'
 
+
+
 #####Configuration########
 junk = YAML.load(File.read("data.yml"));
 token = junk[0]+junk[1]+junk[2];
@@ -20,9 +22,14 @@ bot = Discordrb::Bot.new token: token
 #  event.respond 'SOMEONE ROLLED A NATURAL TWENTY'
 #end
 
-bot.message(contains: "GM-GM") do |event|
-  event.respond "Detected Avrae content Damage:";
-end
+
+#bot.message(contains: "d20") do |event|
+#  @oneVar = (event.content) + " d20 roll detected";
+#end
+
+bot.message(contains: " d20") do |event|
+  @d20 = 1;
+end;
 
 bot.message(contains: "Roll:") do |event|
   comment = " Just saying."
@@ -34,13 +41,13 @@ bot.message(contains: "Roll:") do |event|
   theResult = tempResult.slice(7,10);
   number = theResult.to_i;
   case number
-    when 1; comment = "  Critical death save?";
+    when 1; comment = "  I hope that wasn't a roll to attack.";
     when 2; comment = "  Just a flesh wound.";
     when 3; comment = "  Maybe no one noticed.";
-    when 4; comment = "  Great result on a die 4.";
-    when 5; comment = "  Did you remember to add your proficiency?";
-    when 6; comment = "  Is that the best you can do?";
-    when 7; comment = "  Was it lucky for you, punk?";
+    when 4; comment = "  Would have been a GREAT result on a die 4.";
+    when 5; comment = "  Meh.";
+    when 6; comment = "  You have a +10 modifier, right?";
+    when 7; comment = "  Was it your lucky number?";
     when 8; comment = "  Great roll ... for damage.";
     when 9; comment = "  Hopefully not a death save roll.";
     when 10; comment = "  Solid damage, or did you miss on your attack?";
@@ -58,8 +65,9 @@ bot.message(contains: "Roll:") do |event|
   end;
   responseValue = theName + "rolled a"  +  theResult + "." + comment;
   showText = rand(9)+1;
-  if showText == 1 then;
+  if @d20 == 1 then;
      event.respond responseValue;
+     @d20 = 0;
   end;
 end
 
