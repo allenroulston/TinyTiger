@@ -50,7 +50,7 @@ bot.message(contains: "Roll:") do |event|
     when 7; comment = "  Was it your lucky number?";
     when 8; comment = "  Great roll ... for damage.";
     when 9; comment = "  Hopefully not a death save roll.";
-    when 10; comment = "  Solid damage, or did you miss on your attack?";
+    when 10; comment = "  A solid roll for damage, too bad it was a roll to hit.";
     when 11; comment = "  Whose side are you on?";
     when 12; comment = "  That will hit a Kobold.";
     when 13; comment = "  Is today a Friday?";
@@ -59,13 +59,14 @@ bot.message(contains: "Roll:") do |event|
     when 16; comment = "  That hits a Bugbear.";
     when 17; comment = "  Snap! That probably hit.";
     when 18; comment = "  That will hit most Hobgoblins.";
-    when 19; comment = "  So very close.";
-    when 20; comment = "  Possible Natural 20.";
+    when 19; comment = "  Critical Hit, for a Champion.";
+    when 20; comment = "  NATURAL 20!";
     when 21..30; comment = "  That must be a hit."
   end;
   responseValue = theName + "rolled a"  +  theResult + "." + comment;
-  showText = rand(9)+1;
-  if @d20 == 1 then;
+  showText = rand(199)+1;
+#  if @d20 == 1 then;
+  if showText == 1 then; 
      event.respond responseValue;
      @d20 = 0;
   end;
