@@ -37,7 +37,8 @@ bot.message(contains: "Roll:") do |event|
   tempResult = tempVar.slice(theIndex,10);
   theResult = tempResult.slice(7,10);
   number = theResult.to_i;
-  event.respond theResult;
+  responseValue = theName + " " + theResult;
+  event.respond responseValue;
 end;
 
 bot.message(contains: " d20") do |event|
