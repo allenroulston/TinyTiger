@@ -37,7 +37,7 @@ bot.message(contains: "Roll:") do |event|
   tempResult = tempVar.slice(theIndex,10);
   theResult = tempResult.slice(7,10);
   number = theResult.to_i;
-  responseValue = "Drum Roll here             " + theName + " " + theResult + "<====";
+  responseValue = "Drum Roll here                  " + theName + " " + theResult + "       <====";
   event.respond responseValue;
 end;
 
