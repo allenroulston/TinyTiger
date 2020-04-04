@@ -49,7 +49,7 @@ bot.message(contains: ".i") do |event|
      end;
      
      
-     if ( (inputStr.slice(0,2) == '.i';) && ( input3chars == true ) then;
+     if ( (inputStr.slice(0,2) == '.i';) && ( input3chars == true ) )then;
        
          adv = inputStr.index('a'); dis = inputStr.index('d');
          if (adv != nil) || (dis != nil) then;
