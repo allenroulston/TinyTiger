@@ -95,26 +95,34 @@ bot.message(contains:"d4") do |event|
 end;
 
 bot.message(contains:"d6") do |event|
-    check_user_or_nick(event);
-    responseValue = @user.to_s + " provided ";
-    event.respond responseValue;
+  check_user_or_nick(event);
+  @tempVar = event.content;
+  howManyDice = parse_the_d();
+  responseValue = @user.to_s + " provided " + @tempVar.to_s + "  How many d6? :" + howManyDice.to_s;
+  event.respond responseValue;
 end;
 
 bot.message(contains:"d8") do |event|
     check_user_or_nick(event);
-    responseValue = @user.to_s + " provided ";
+    @tempVar = event.content;
+    howManyDice = parse_the_d();
+    responseValue = @user.to_s + " provided " + @tempVar.to_s + "  How many d8? :" + howManyDice.to_s;
     event.respond responseValue;
 end;
 
 bot.message(contains:"d10") do |event|
     check_user_or_nick(event);
-    responseValue = @user.to_s + " provided ";
+    @tempVar = event.content;
+    howManyDice = parse_the_d();
+    responseValue = @user.to_s + " provided " + @tempVar.to_s + "  How many d10? :" + howManyDice.to_s;
     event.respond responseValue;
 end;
 
 bot.message(contains:"d12") do |event|
     check_user_or_nick(event);
-    responseValue = @user.to_s + " provided ";
+    @tempVar = event.content;
+    howManyDice = parse_the_d();
+    responseValue = @user.to_s + " provided " + @tempVar.to_s + "  How many d12? :" + howManyDice.to_s;
     event.respond responseValue;
 end;
 
