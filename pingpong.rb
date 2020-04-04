@@ -37,20 +37,22 @@ end;
 
 bot.message(contains: ".i") do |event|
      check_user_or_nick(event)
-     inputStr = event.content; mod = 0; input3chars = true; char3 = ""; extraChar = "none";
+     inputStr = event.content; mod = 0; moreChars = true;  extraChar = "none";
      docMsg = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \n For Advantage / Disadvantage append an  a or d => .i1a "
      lenInputStr = inputStr.length;
      if lenInputStr > 2 then
-       extraChar = lenInputStr - 2;
-        char3 = inputStr.slice(2,1)
-        char3chk = ("-1234567890ad").index(char3);
-        if char3chk == nil then;
-          input3chars = false;
+       extraChar = lenInputStr - 2; # how many characters we will check
+       extras = inputStr.slice(2,extraChar-1) # -1 accounts for placement count starts at 0
+       (0..(extraChar-1)).each do |x|;
+          sample = inputStr.slice(x,1)   # get one character to sample
+          chkResult = ("-1234567890ad").index(sample); # test this sample character
+        if chkResult == nil then;
+          moreChars = false;  #if the sample character was not found set moreChars to false
         end;
      end;
      
      
-     if ( (inputStr.slice(0,2) == '.i';) && ( input3chars == true ) )then;
+     if ( (inputStr.slice(0,2) == '.i';) && ( moreChars == true ) )then;
        
          adv = inputStr.index('a'); dis = inputStr.index('d');
          if (adv != nil) || (dis != nil) then;
@@ -59,10 +61,11 @@ bot.message(contains: ".i") do |event|
              mod = (inputStr.slice(2,lenInputStr)).to_i;
          end;   
          theRoll = (rand 20) + 1;
-         say = @user.to_s + " has rolled initiative " + theRoll.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s + "  ===> " + char3.to_s + " ==> " + char3chk.inspect + "  => " + extraChar.to_s;
+         say = @user.to_s + " has rolled initiative " + theRoll.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s + " =>" + "something";
      else
          say = docMsg; 
      end;
+     
      event.respond say;
 end;
 #bot.message(contains: "d20") do |event|
