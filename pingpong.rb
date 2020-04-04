@@ -50,7 +50,7 @@ end;
 
 bot.message(contains: "d6") do |event|
     tempVar = event.content;
-    event.respond tempVar.author.to_s; 
+    event.respond tempVar.Member.to_s; 
     #responseValue = "Someone rolled a d6 : " + ((rand 6)+1).to_s;
     event.respond responseValue;
 end;
