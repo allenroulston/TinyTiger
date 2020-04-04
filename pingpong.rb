@@ -44,7 +44,7 @@ bot.message(contains: "Roll:") do |event|
      tempResult = tempVar.slice(theIndex,10);
      theResult = tempResult.slice(7,10);
      number = theResult.to_i;
-     responseValue = "The survery results are in    " + theName + " rolls  = = = = = => " + theResult;
+     responseValue = "The survery results are in    " + theName + " initiative roll  = = = = = => " + theResult;
      event.respond responseValue;
    end;
    @init = 0;
