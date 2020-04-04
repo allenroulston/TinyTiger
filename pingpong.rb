@@ -29,7 +29,7 @@ def check_user_or_nick(event)
   end
 end
 
-def parse_the_d(@tempVar);
+def parse_the_d();
   theIndex = @tempVar.index('d');
   howManyDice = @tempVar(0,(theIndex-1));
   return(howManyDice);
@@ -89,7 +89,7 @@ end;
 bot.message(contains:"d4") do |event|
     check_user_or_nick(event);
     @tempVar = event.content;
-    howManyDice = parse_the_d(@tempVar);
+    howManyDice = parse_the_d();
     responseValue = @user.to_s + " provided " + tempVar.to_s + "  How many d4? :" + howManyDice.to_s;
     event.respond responseValue;
 end;
