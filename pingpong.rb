@@ -54,7 +54,7 @@ bot.message(contains: ".i") do |event|
        responseValue = docProm;
      else
        
-       responseValue = @user.to_s + " has rolled initiative " + ((rand 20)+1+mod).to_s + "   :: " + numbLetter.to_s + "  :: " + advFlag.to_s + " :: " + disFlag.to_s " :: " + lastChar.to_s;
+       responseValue = @user.to_s + " has rolled initiative " + ((rand 20)+1+mod).to_s + "   :: " + numbLetter.to_s + "  :: " + advFlag.to_s + " :: " + disFlag.to_s + " :: " + lastChar.to_s;
 
      end;
      event.respond responseValue;
