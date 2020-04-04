@@ -43,7 +43,7 @@ bot.message(contains: ".i") do |event|
      theIndex = tempVar.index('.i');
      dotI = tempVar.slice(0,2);
      if dotI != ".i" then
-       responseValue = "Rolling initiative? Use:  .i   or  .i-1  or .i2"
+       responseValue = "Rolling initiative? Use:  .i  or  .i-1  .i2  .i-1 \n append  A or D (.i1A) for Advantage / Disadvantage"
      else
        responseValue = "I have received a request from " + @user.to_s + " to roll initiative " + ((rand 20)+1+mod).to_s;
      end;
