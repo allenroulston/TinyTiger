@@ -40,7 +40,7 @@ bot.message(contains: ".i") do |event|
      tempVar = event.content;  
      theIndex = tempVar.index('.i');
      tempResult = tempVar.slice(theIndex,2);
-     responseValue = "I have received a request from " + @user.to_s + " to roll initiative " + tempResult;
+     responseValue = "I have received a request from " + @user.to_s + " to roll initiative " + tempResult + "  theIndex value is:" + theIndex.to_s;
      event.respond responseValue;
 end;
 #bot.message(contains: "d20") do |event|
