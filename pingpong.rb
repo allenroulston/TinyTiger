@@ -57,7 +57,7 @@ end;
 bot.message(contains: "d6") do |event|
     check_user_or_nick(event);
     tempVar = event.content;
-    event.respond (@user.to_s + " rolled " + ((rand 6)+1).to_s + " on a die 6";
+    responseValue = @user.to_s + " rolled " + ((rand 6)+1).to_s + " on a die 6";
     event.respond responseValue;
 end;
 
