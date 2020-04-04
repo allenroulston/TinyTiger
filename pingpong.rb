@@ -86,7 +86,7 @@ bot.message(contains: "Roll:") do |event|
 end;
 
 ############################################
-bot.message(contains:"d4 ") do |event|
+bot.message(contains:"d4.") do |event|
     check_user_or_nick(event);
     @tempVar = event.content;
     howManyDice = parse_the_d();
@@ -94,7 +94,7 @@ bot.message(contains:"d4 ") do |event|
     event.respond responseValue;
 end;
 
-bot.message(contains:"d6 ") do |event|
+bot.message(contains:"d6.") do |event|
   check_user_or_nick(event);
   @tempVar = event.content;
   howManyDice = parse_the_d();
@@ -102,7 +102,7 @@ bot.message(contains:"d6 ") do |event|
   event.respond responseValue;
 end;
 
-bot.message(contains:"d8 ") do |event|
+bot.message(contains:"d8.") do |event|
     check_user_or_nick(event);
     @tempVar = event.content;
     howManyDice = parse_the_d();
@@ -110,7 +110,7 @@ bot.message(contains:"d8 ") do |event|
     event.respond responseValue;
 end;
 
-bot.message(contains:"d10 ") do |event|
+bot.message(contains:"d10.") do |event|
     check_user_or_nick(event);
     @tempVar = event.content;
     howManyDice = parse_the_d();
@@ -118,7 +118,7 @@ bot.message(contains:"d10 ") do |event|
     event.respond responseValue;
 end;
 
-bot.message(contains:"d12 ") do |event|
+bot.message(contains:"d12.") do |event|
     check_user_or_nick(event);
     @tempVar = event.content;
     howManyDice = parse_the_d();
