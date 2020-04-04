@@ -48,6 +48,11 @@ bot.message(contains: "qqq") do |event|
     event.respond responseValue;
 end;
 
+bot.message(contains: "d6") do |event|
+    responseValue = "Someone rolled a d6 : " + ((rand 6)+1).to_s;
+    event.respond responseValue;
+end;
+
 
 
 
