@@ -29,9 +29,9 @@ def check_user_or_nick(event)
   end
 end
 
-def parse_the_d(dString);
-  theIndex = dString.index('d');
-  howManyDice = dString(0,(theIndex-1));
+def parse_the_d(tempVar);
+  theIndex = tempVar.index('d');
+  howManyDice = tempVar(0,(theIndex-1));
   return(howManyDice);
 end;
 
@@ -85,7 +85,7 @@ bot.message(contains: "Roll:") do |event|
    @init = 0;
 end;
 
-
+############################################
 bot.message(contains:"d4") do |event|
     check_user_or_nick(event);
     tempVar = event.content;
