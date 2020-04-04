@@ -46,7 +46,7 @@ bot.message(contains: ".i") do |event|
         (0..(extraChar-1)).each do |x|;
           sample = inputStr.slice(x,1)   # get one character to sample
           chkResult = ("-1234567890ad").index(sample); # test this sample character     
-             if chkResult == nil then;
+             if chkResult != nil then;
                 moreChars = false;  #if the sample character was not found set moreChars to false
              end;
         end;     
