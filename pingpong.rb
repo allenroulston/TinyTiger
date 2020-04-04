@@ -37,11 +37,11 @@ end;
 
 bot.message(contains: ".i") do |event|
      check_user_or_nick(event)
-     inputStr = event.content; modStr = "?";
+     inputStr = event.content; modStr = 0;
      lenInputStr = inputStr.length;
      docMsg = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \n For Advantage / Disadvantage append an  a or d => .i1a "
      
-     if (inputStr.slice(0,2) == '.i';) && (lenInputStr > 2 )then;
+     if (inputStr.slice(0,2) == '.i';) then;
        
          adv = inputStr.index('a'); dis = inputStr.index('d');
          if (adv + dis) > 0 then;
@@ -49,8 +49,8 @@ bot.message(contains: ".i") do |event|
          else
             modStr = inputStr.slice(2,lenInputStr);
          end;   
-      
-         say = @user.to_s + " has rolled initiative " + modStr.to_s;
+         theRoll = (rand 20) + 1;
+         say = @user.to_s + " has rolled initiative " + theRoll.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s;
      else
          say = docMsg; 
      end;
