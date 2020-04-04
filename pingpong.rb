@@ -32,7 +32,7 @@ end
 def parse_the_d(dString);
   theIndex = dString.index('d');
   howManyDice = dString(0,(theIndex-1));
-  return(howManydice);
+  return(howManyDice);
 end;
 
 #bot.message(contains: "d20") do |event|
