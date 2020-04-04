@@ -41,9 +41,9 @@ bot.message(contains: ".i") do |event|
      docMsg = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \n For Advantage / Disadvantage append an  a or d (.i1a) "
      dotI = inputStr.slice(0,2) == '.i';
      if dotI == true then;         # does the input string start with '.i' ?
-       newChar = inputStr.slice(2,1);
+       newChar1 = inputStr.slice(2,1);
        if newChar1 == "-"; then;
-          minus = newChar;
+          minus = newChar1;
        else
           checkInt = Integer(newChar1) rescue false; # is last char an integer
           if checkInt != true;
