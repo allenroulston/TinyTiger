@@ -54,10 +54,12 @@ bot.message(contains: "qqq") do |event|
     event.respond responseValue;
 end;
 
-bot.message(contains: "d6") do |event|
+bot.message( (contains: "d6") || (contains: "d4") || (contains: "d10") || (contains: "d12") )do |event|
     check_user_or_nick(event);
     tempVar = event.content;
-    responseValue = @user.to_s + " rolled " + ((rand 6)+1).to_s + " on a die 6";
+    theIndex = tempVar.index('d');
+    subTempVar = tempVar.slice(theIndex,3);
+    responseValue = @user.to_s + " provided " + subTempVar.to_s;
     event.respond responseValue;
 end;
 
