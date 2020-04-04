@@ -36,23 +36,25 @@ def parse_the_d();
 end;
 
 bot.message(contains: ".i") do |event|
-     mod = 0;
-     docProm = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \n For Advantage / Disadvantage append an  a or d (.i1a) "
      check_user_or_nick(event)
-     inputStr = event.content; 
-     # does the input string start with '.i' ?
+     inputStr = event.content; mod = 0;
+     docMsg = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \n For Advantage / Disadvantage append an  a or d (.i1a) "
      dotI = inputStr.slice(0,2) == '.i';
-
-     inputStrLen = inputStr.length-1 # to account for starting at 0
-     lastChar = inputStr.slice(inputStrLen,1) # obtain the last character
-     check = Integer(lastChar) rescue false; # is last char an integer?
-     if check == false then;
-        flagAdvDis = (lastChar.include? 'a') && (lastChar.include? 'd');  # is the last character 'a' or 'd'
+     if dotI == true then;         # does the input string start with '.i' ?
+        #flagAdvDis = true;
+        #inputStrLen = inputStr.length-1 # to account for starting at 0
+        #lastChar = inputStr.slice(inputStrLen,1) # obtain the last character
+        #check = Integer(lastChar) rescue false; # is last char an integer?
+        #if check == false then;
+        #  flagAdvDis = (lastChar.include? 'a') || (lastChar.include? 'd');  # is the last character 'a' or 'd'
+        #  mod = inputStr.slice(2,inputStrLen-1);
+        #  modCheck = Integer(mod) rescue false;
+        #end;
+       say = @user.to_s + " has rolled initiative " + ((rand 20)+1+mod).to_s;
+     else
+       say = docMsg; 
      end;
-
-     responseValue = @user.to_s + " has rolled initiative " + ((rand 20)+1+mod).to_s  + " - " + flagAdvDis.to_s + " :dotI: " + dotI.to_s;
-
-     event.respond responseValue;
+     event.respond say;
 end;
 #bot.message(contains: "d20") do |event|
 #  @oneVar = (event.content) + " d20 roll detected";
