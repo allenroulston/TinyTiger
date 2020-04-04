@@ -39,20 +39,18 @@ bot.message(contains: ".i") do |event|
      mod = 0;
      docProm = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \n For Advantage / Disadvantage append an  a or d (.i1a) "
      check_user_or_nick(event)
-     tempVar = event.content; 
-     
-     dotI = tempVar.slice(0,2) == '.i';
+     inputStr = event.content; 
+     # does the input string start with '.i' ?
+     dotI = inputStr.slice(0,2) == '.i';
 
-     # ensure the starting characters are ".i"
-     theIndex = tempVar.index('.i');
-     tempVarLen = tempVar.length-1 # to account for starting at 0
-     numbLetter = tempVar.slice(2,tempVarLen);
-     lastChar = tempVar.slice(tempVarLen,1)
-     check = Integer(lastChar) rescue false;
-     advFlag = numbLetter.include? 'a';
-     disFlag = numbLetter.include? 'd';
+     inputStrLen = inputStr.length-1 # to account for starting at 0
+     lastChar = inputStr.slice(tempVarLen,1) # obtain the last character
+     check = Integer(lastChar) rescue false; # is last char an integer?
+     if check == false do;
+        flagAdvDis = (lastChar.include? 'a') && (lastChar.include? 'd');  # is the last character 'a' or 'd'
+     end;
 
-     responseValue = @user.to_s + " has rolled initiative " + ((rand 20)+1+mod).to_s + "   :: " + numbLetter.to_s + "  :: " + advFlag.to_s + " :: " + disFlag.to_s + " :last char Int?: " + check.to_s + " :dotI: " + dotI.to_s;
+     responseValue = @user.to_s + " has rolled initiative " + ((rand 20)+1+mod).to_s  + " - " + flagAdvDis.to_s + " :dotI: " + dotI.to_s;
 
      event.respond responseValue;
 end;
