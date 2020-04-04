@@ -37,21 +37,25 @@ end;
 
 bot.message(contains: ".i") do |event|
      mod = 0;
+     docProm = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \n For Advantage / Disadvantage append an  a or d (.i1a) "
      check_user_or_nick(event)
      tempVar = event.content;     
      # ensure the starting characters are ".i"
      theIndex = tempVar.index('.i');
      tempVarLen = tempVar.length-1 # to account for starting at 0
      numbLetter = tempVar.slice(2,tempVarLen);
-     advFlag = numbLetter.include? 'A';
-     disFlag = numbLetter.include? 'D';
+     lastChar = tempVar.slice(tempVarLen,1)
+     advFlag = numbLetter.include? 'a';
+     disFlag = numbLetter.include? 'd';
      
      
      dotI = tempVar.slice(0,2);
      if dotI != ".i" then
-       responseValue = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \n For Advantage / Disadvantage append an  A or D (.i1A) "
+       responseValue = docProm;
      else
-       responseValue = @user.to_s + " has rolled initiative " + ((rand 20)+1+mod).to_s + "   :: " + numbLetter.to_s + "  :: " + advFlag.to_s + " :: " + disFlag.to_s;
+       
+       responseValue = @user.to_s + " has rolled initiative " + ((rand 20)+1+mod).to_s + "   :: " + numbLetter.to_s + "  :: " + advFlag.to_s + " :: " + disFlag.to_s " :: " + lastChar.to_s;
+
      end;
      event.respond responseValue;
 end;
