@@ -37,7 +37,7 @@ end;
 
 bot.message(contains: ".i") do |event|
      check_user_or_nick(event)
-     inputStr = event.content; modStr = 0;
+     inputStr = event.content; mod = 0;
      lenInputStr = inputStr.length;
      docMsg = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \n For Advantage / Disadvantage append an  a or d => .i1a "
      
