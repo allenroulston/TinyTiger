@@ -38,14 +38,16 @@ end;
 bot.message(contains: ".i") do |event|
      mod = 0;
      check_user_or_nick(event)
-     tempVar = event.content;
-     tempVarLen = tempVar.length;
+     tempVar = event.content;     
+     # ensure the starting characters are ".i"
      theIndex = tempVar.index('.i');
+     tempVarLen = tempVar.length-1 # to account for starting at 0
+     newtempVar = tempVar.slice(2,tempVarLen);
      dotI = tempVar.slice(0,2);
      if dotI != ".i" then
        responseValue = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \n For Advantage / Disadvantage append an  A or D (.i1A) "
      else
-       responseValue = "I have received a request from " + @user.to_s + " to roll initiative " + ((rand 20)+1+mod).to_s;
+       responseValue = @user.to_s + " has rolled initiative " + ((rand 20)+1+mod).to_s + "   ::::" + newTempVar.to_s;
      end;
      event.respond responseValue;
 end;
