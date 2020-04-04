@@ -54,7 +54,7 @@ bot.message(contains: "qqq") do |event|
     event.respond responseValue;
 end;
 
-bot.message( (contains: "d6") || (contains: "d4") || (contains: "d10") || (contains: "d12") )do |event|
+bot.message(contains: ("d6" || "d4" || "d10" || "d12" )) do |event|
     check_user_or_nick(event);
     tempVar = event.content;
     theIndex = tempVar.index('d');
