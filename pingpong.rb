@@ -37,10 +37,11 @@ end;
 
 bot.message(contains: ".i") do |event|
      check_user_or_nick(event)
-     tempVar = event.content;  
+     tempVar = event.content;
+     tempVarLen = tempVar.length;
      theIndex = tempVar.index('.i');
      tempResult = tempVar.slice(theIndex,2);
-     responseValue = "I have received a request from " + @user.to_s + " to roll initiative " + tempResult + "  theIndex value is:" + theIndex.to_s;
+     responseValue = "I have received a request from " + @user.to_s + " to roll initiative " + ((rand 20)+1).to_s + "       the tempVarLen is:" + tempVarLen.to_s;
      event.respond responseValue;
 end;
 #bot.message(contains: "d20") do |event|
