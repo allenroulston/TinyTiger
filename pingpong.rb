@@ -38,7 +38,7 @@ bot.message(contains: "rth") do |event|
      if number > 13 then
          responseValue = "The  Combat  Roll, to  hit, by  " + theName + "  of " + theResult + " is a HIT!";
       else
-         responseValue = "The  Combat  Roll, to  hit, by  " + theName + "  of " + theResult; + " is a MISS!";        
+         responseValue = "The  Combat  Roll, to  hit, by  " + theName + "  of " + theResult + " is a MISS!";        
       end;
      event.respond responseValue;
 end;
