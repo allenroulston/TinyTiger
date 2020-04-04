@@ -42,7 +42,7 @@ bot.message(contains: ".i") do |event|
      lenInputStr = inputStr.length;
      if lenInputStr > 2 then
         char3 = inputStr.slice(2,1)
-        char3chk = char3.index("-1234567890ad");
+        char3chk = ("-1234567890ad").index(char3);
      end;
      
      if (inputStr.slice(0,2) == '.i';) then;
