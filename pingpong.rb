@@ -54,17 +54,6 @@ bot.message(contains: "qqq") do |event|
     event.respond responseValue;
 end;
 
-bot.message(contains: ("d6" || "d4" || "d10" || "d12" )) do |event|
-    check_user_or_nick(event);
-    tempVar = event.content;
-    theIndex = tempVar.index('d');
-    subTempVar = tempVar.slice(theIndex,3);
-    responseValue = @user.to_s + " provided " + subTempVar.to_s;
-    event.respond responseValue;
-end;
-
-
-
 
 bot.message(contains: "!init") do |event|
   @init = 1;
@@ -89,6 +78,53 @@ bot.message(contains: "Roll:") do |event|
    end;
    @init = 0;
 end;
+
+
+bot.message(contains:"d4") do |event|
+    check_user_or_nick(event);
+    tempVar = event.content;
+    theIndex = tempVar.index('d');
+    subTempVar = tempVar.slice(theIndex,3);
+    responseValue = @user.to_s + " provided " + subTempVar.to_s;
+    event.respond responseValue;
+end;
+
+bot.message(contains:"d6") do |event|
+    check_user_or_nick(event);
+    tempVar = event.content;
+    theIndex = tempVar.index('d');
+    subTempVar = tempVar.slice(theIndex,3);
+    responseValue = @user.to_s + " provided " + subTempVar.to_s;
+    event.respond responseValue;
+end;
+
+bot.message(contains:"d8") do |event|
+    check_user_or_nick(event);
+    tempVar = event.content;
+    theIndex = tempVar.index('d');
+    subTempVar = tempVar.slice(theIndex,3);
+    responseValue = @user.to_s + " provided " + subTempVar.to_s;
+    event.respond responseValue;
+end;
+
+bot.message(contains:"d10") do |event|
+    check_user_or_nick(event);
+    tempVar = event.content;
+    theIndex = tempVar.index('d');
+    subTempVar = tempVar.slice(theIndex,3);
+    responseValue = @user.to_s + " provided " + subTempVar.to_s;
+    event.respond responseValue;
+end;
+
+bot.message(contains:"d12") do |event|
+    check_user_or_nick(event);
+    tempVar = event.content;
+    theIndex = tempVar.index('d');
+    subTempVar = tempVar.slice(theIndex,3);
+    responseValue = @user.to_s + " provided " + subTempVar.to_s;
+    event.respond responseValue;
+end;
+
 
 
 bot.message(contains: "Roll:") do |event|
