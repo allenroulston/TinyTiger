@@ -29,8 +29,6 @@ def check_user_or_nick(event)
   end
 end
 
-def 
-
 def parse_the_d();
   theIndex = @tempVar.index('d');
   howManyDice = @tempVar.slice(0,(theIndex));
