@@ -36,9 +36,9 @@ bot.message(contains: "rth") do |event|
      theResult = tempResult.slice(7,10);
      number = theResult.to_i;
      if number > 12 then
-         responseValue = "The  Combat  Roll, to  hit, by  " + theName + "  of " + theResult + " is a HIT!    Please roll the  damage, " + theName;
+         responseValue = "The  Combat  Roll  made  by  " + theName + "  of " + theResult + " is a HIT!    Please roll the  damage, " + theName;
       else
-         responseValue = "The  Combat  Roll, to  hit, by  " + theName + "  of " + theResult + " is a MISS!";        
+         responseValue = "The  Combat  Roll  made  by  " + theName + "  of " + theResult + " is a MISS!";        
       end;
      event.respond responseValue;
 end;
