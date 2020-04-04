@@ -38,8 +38,12 @@ end;
 bot.message(contains: ".i") do |event|
      check_user_or_nick(event)
      inputStr = event.content; mod = 0;
-     lenInputStr = inputStr.length;
      docMsg = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \n For Advantage / Disadvantage append an  a or d => .i1a "
+     lenInputStr = inputStr.length;
+     if lenInputStr > 2 then
+        char3 = inputStr.slice(2,1)
+        char3chk = char3.index("-1234567890ad");
+     end;
      
      if (inputStr.slice(0,2) == '.i';) then;
        
@@ -50,7 +54,7 @@ bot.message(contains: ".i") do |event|
              mod = (inputStr.slice(2,lenInputStr)).to_i;
          end;   
          theRoll = (rand 20) + 1;
-         say = @user.to_s + " has rolled initiative " + theRoll.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s;
+         say = @user.to_s + " has rolled initiative " + theRoll.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s + "  ===> " + char3chk.inspect;
      else
          say = docMsg; 
      end;
