@@ -47,7 +47,7 @@ bot.message(contains: ".i") do |event|
          if (adv != nil) || (dis != nil) then;
              mod = (inputStr.slice(2,lenInputStr-1)).to_i;
          else
-             modStr = (inputStr.slice(2,lenInputStr)).to_i;
+             mod = (inputStr.slice(2,lenInputStr)).to_i;
          end;   
          theRoll = (rand 20) + 1;
          say = @user.to_s + " has rolled initiative " + theRoll.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s;
