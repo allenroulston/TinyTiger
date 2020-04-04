@@ -85,7 +85,7 @@ bot.message(contains:"d4") do |event|
     tempVar = event.content;
     theIndex = tempVar.index('d');
     subTempVar = tempVar.slice(theIndex,3);
-    responseValue = @user.to_s + " provided " + subTempVar.to_s;
+    responseValue = @user.to_s + " provided " + tempVar.to_s;
     event.respond responseValue;
 end;
 
@@ -94,7 +94,7 @@ bot.message(contains:"d6") do |event|
     tempVar = event.content;
     theIndex = tempVar.index('d');
     subTempVar = tempVar.slice(theIndex,3);
-    responseValue = @user.to_s + " provided " + subTempVar.to_s;
+    responseValue = @user.to_s + " provided " + tempVar.to_s;
     event.respond responseValue;
 end;
 
@@ -103,7 +103,7 @@ bot.message(contains:"d8") do |event|
     tempVar = event.content;
     theIndex = tempVar.index('d');
     subTempVar = tempVar.slice(theIndex,3);
-    responseValue = @user.to_s + " provided " + subTempVar.to_s;
+    responseValue = @user.to_s + " provided " + tempVar.to_s;
     event.respond responseValue;
 end;
 
@@ -112,7 +112,7 @@ bot.message(contains:"d10") do |event|
     tempVar = event.content;
     theIndex = tempVar.index('d');
     subTempVar = tempVar.slice(theIndex,3);
-    responseValue = @user.to_s + " provided " + subTempVar.to_s;
+    responseValue = @user.to_s + " provided " + tempVar.to_s;
     event.respond responseValue;
 end;
 
@@ -121,7 +121,7 @@ bot.message(contains:"d12") do |event|
     tempVar = event.content;
     theIndex = tempVar.index('d');
     subTempVar = tempVar.slice(theIndex,3);
-    responseValue = @user.to_s + " provided " + subTempVar.to_s;
+    responseValue = @user.to_s + " provided " + tempVar.to_s;
     event.respond responseValue;
 end;
 
