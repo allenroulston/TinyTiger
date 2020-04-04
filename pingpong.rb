@@ -35,6 +35,14 @@ def parse_the_d();
   return(howManyDice);
 end;
 
+bot.message(contains: ".i") do |event|
+     check_user_or_nick(event)
+     tempVar = event.content;  
+     theIndex = tempVar.index('.i');
+     tempResult = tempVar.slice(theIndex,2);
+     responseValue = "I have received a request from " + @user.to_s + " to roll initiative " + theResult;
+     event.respond responseValue;
+end;
 #bot.message(contains: "d20") do |event|
 #  @oneVar = (event.content) + " d20 roll detected";
 #end
