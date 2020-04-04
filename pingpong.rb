@@ -45,7 +45,7 @@ bot.message(contains: ".i") do |event|
      if dotI != ".i" then
        responseValue = "Rolling initiative? Use:  .i   or  .i?  where ? is a number: .i-2 "
      else
-       responseValue = "I have received a request from " + @user.to_s + " to roll initiative " + ((rand 20)+1+mod).to_s + " ;
+       responseValue = "I have received a request from " + @user.to_s + " to roll initiative " + ((rand 20)+1+mod).to_s;
      end;
      event.respond responseValue;
 end;
