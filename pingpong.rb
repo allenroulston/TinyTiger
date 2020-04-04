@@ -50,7 +50,7 @@ bot.message(contains: ".i") do |event|
          #    modStr = inputStr.slice(2,lenInputStr);
          #end;   
          theRoll = (rand 20) + 1;
-         say = @user.to_s + " has rolled initiative " + theRoll.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s + " ===> " + adv.to_s + "  " + dis.to_s;
+         say = @user.to_s + " has rolled initiative " + theRoll.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s + " ===> " + adv.inspect + " ===> " + dis.inspect;
      else
          say = docMsg; 
      end;
