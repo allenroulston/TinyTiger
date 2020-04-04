@@ -38,6 +38,9 @@ end;
 bot.message(contains: ".i") do |event|
      mod = 0;
      docProm = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \n For Advantage / Disadvantage append an  a or d (.i1a) "
+     dotI = tempVar.slice(0,2) == '.i';
+
+
      check_user_or_nick(event)
      tempVar = event.content;     
      # ensure the starting characters are ".i"
@@ -50,14 +53,10 @@ bot.message(contains: ".i") do |event|
      disFlag = numbLetter.include? 'd';
      
      
-     dotI = tempVar.slice(0,2);
-     if dotI != ".i" then
-       responseValue = docProm;
-     else
-       
-       responseValue = @user.to_s + " has rolled initiative " + ((rand 20)+1+mod).to_s + "   :: " + numbLetter.to_s + "  :: " + advFlag.to_s + " :: " + disFlag.to_s + " :last char Int?: " + check.to_s;
 
-     end;
+       
+       responseValue = @user.to_s + " has rolled initiative " + ((rand 20)+1+mod).to_s + "   :: " + numbLetter.to_s + "  :: " + advFlag.to_s + " :: " + disFlag.to_s + " :last char Int?: " + check.to_s + " :dotI: " + dotI.to_s;
+
      event.respond responseValue;
 end;
 #bot.message(contains: "d20") do |event|
