@@ -43,8 +43,8 @@ bot.message(contains: "rth") do |event|
      event.respond responseValue;
 end;
 
-bot.message(contains: "ri") do |event|
-    responseValue = "@everyone Please roll initiative as shown:  !roll d20 +?  !init  <== !init (important) ";
+bot.message(contains: "qqq") do |event|
+    responseValue = "@everyone Please roll initiative as shown:  !roll d20 +?  !qqq  <== !init (important) ";
     event.respond responseValue;
 end;
 
