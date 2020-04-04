@@ -44,7 +44,7 @@ bot.message(contains: ".i") do |event|
      dotI = inputStr.slice(0,2) == '.i';
 
      inputStrLen = inputStr.length-1 # to account for starting at 0
-     lastChar = inputStr.slice(tempVarLen,1) # obtain the last character
+     lastChar = inputStr.slice(inputStrLen,1) # obtain the last character
      check = Integer(lastChar) rescue false; # is last char an integer?
      if check == false then;
         flagAdvDis = (lastChar.include? 'a') && (lastChar.include? 'd');  # is the last character 'a' or 'd'
