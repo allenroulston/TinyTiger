@@ -21,7 +21,13 @@ bot = Discordrb::Bot.new token: token
 #bot.message(contains: "[20]") do |event|
 #  event.respond 'SOMEONE ROLLED A NATURAL TWENTY'
 #end
-
+def check_user_or_nick(event)
+  if event.user.nick != nil
+    @user = event.user.nick
+  else
+    @user = event.user.name
+  end
+end
 
 #bot.message(contains: "d20") do |event|
 #  @oneVar = (event.content) + " d20 roll detected";
@@ -49,11 +55,9 @@ bot.message(contains: "qqq") do |event|
 end;
 
 bot.message(contains: "d6") do |event|
-    userName = event.user.name;
-    userNick = event.user.nick;
+    check_user_or_nick(event);
     tempVar = event.content;
-    event.respond userName.to_s + userNick.to_s;
-    #responseValue = "Someone rolled a d6 : " + ((rand 6)+1).to_s;
+    event.respond (@user.to_s + " rolled " + ((rand 6)+1).to_s + " on a die 6";
     event.respond responseValue;
 end;
 
