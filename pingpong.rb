@@ -44,17 +44,19 @@ bot.message(contains: ".i") do |event|
        newChar1 = inputStr.slice(2,1);
        if newChar1 == "-"; then;
           minus = newChar1;
+          say = "Minus Sign detected."
        else
-          checkInt = Integer(newChar1) rescue false; # is last char an integer
-          if checkInt != true;
-            num1 = newChar1.to_i;
-            say = @user.to_s + " has rolled initiative " + ((rand 20)+1+num1).to_s;
-          else
-            say = docMsg;
-            #
-            #
-            #
-          end;
+           checkInt = Integer(newChar1) rescue false; # is last char an integer
+           if checkInt != true;
+              num1 = newChar1.to_i;
+              say = @user.to_s + " has rolled initiative " + ((rand 20)+1+num1).to_s;
+           else
+              say = docMsg;
+              #
+              #
+              #
+           end;
+           
        end; 
        
      else
