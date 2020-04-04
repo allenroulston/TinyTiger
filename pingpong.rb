@@ -42,12 +42,16 @@ bot.message(contains: ".i") do |event|
      # ensure the starting characters are ".i"
      theIndex = tempVar.index('.i');
      tempVarLen = tempVar.length-1 # to account for starting at 0
-     newTempVar = tempVar.slice(2,tempVarLen);
+     numbLetter = tempVar.slice(2,tempVarLen);
+     advFlag = numbLetter.include? 'A';
+     disFlag = numbLetter.include? 'D';
+     
+     
      dotI = tempVar.slice(0,2);
      if dotI != ".i" then
        responseValue = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \n For Advantage / Disadvantage append an  A or D (.i1A) "
      else
-       responseValue = @user.to_s + " has rolled initiative " + ((rand 20)+1+mod).to_s + "   ::::" + newTempVar.to_s;
+       responseValue = @user.to_s + " has rolled initiative " + ((rand 20)+1+mod).to_s + "   :: " + numbLetter.to_s + "  :: " + advFlag.to_s + " :: " + disFlag.to_s;
      end;
      event.respond responseValue;
 end;
