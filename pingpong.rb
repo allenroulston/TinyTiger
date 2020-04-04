@@ -36,6 +36,7 @@ def parse_the_d();
 end;
 
 bot.message(contains: ".i") do |event|
+     mod = 0;
      check_user_or_nick(event)
      tempVar = event.content;
      tempVarLen = tempVar.length;
