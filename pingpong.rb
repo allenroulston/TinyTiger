@@ -31,7 +31,7 @@ end
 
 def parse_the_d();
   theIndex = @tempVar.index('d');
-  howManyDice = @tempVar.slice(0,(theIndex-1));
+  howManyDice = @tempVar.slice(0,(theIndex));
   return(howManyDice);
 end;
 
