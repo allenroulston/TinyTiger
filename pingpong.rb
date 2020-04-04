@@ -42,11 +42,11 @@ bot.message(contains: ".i") do |event|
      lenInputStr = inputStr.length;
      if lenInputStr > 2 then
         extraChar = lenInputStr - 2; # how many characters we will check
-        extras = inputStr.slice(2,extraChar-1) # -1 accounts for placement count starts at 0
+        extras = inputStr.slice(2,extraChar) # -1 accounts for placement count starts at 0
         (0..(extraChar-1)).each do |x|;
           sample = extras.slice(x,1)   # get one character to sample
           chkResult = ("-1234567890ad").index(sample); # test this sample character     
-             if chkResult != nil then;
+             if chkResult == 0 then;
                 moreChars = false;  #if the sample character was not found set moreChars to false
              end;
         end;     
