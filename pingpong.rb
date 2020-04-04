@@ -26,6 +26,23 @@ bot = Discordrb::Bot.new token: token
 #bot.message(contains: "d20") do |event|
 #  @oneVar = (event.content) + " d20 roll detected";
 #end
+bot.message(contains: "rth") do |event|
+     comment = " Just saying."
+     tempVar = event.content;  
+     theIndex = tempVar.index('Roll:');
+     theName = tempVar.slice(0,theIndex).to_s;
+     theIndex = tempVar.index('Result:');
+     tempResult = tempVar.slice(theIndex,10);
+     theResult = tempResult.slice(7,10);
+     number = theResult.to_i;
+     if number > 13 then
+         responseValue = "Combat Roll to hit by " + theName + " of " + theResult + " is a HIT!";
+      else
+         responseValue = "Combat Roll to hit by " + theName + " of " + theResult; + " is a MISS!";        
+      end;
+     event.respond responseValue;
+end;
+
 bot.message(contains: "!init") do |event|
   @init = 1;
 end;
