@@ -44,13 +44,13 @@ bot.message(contains: ".i") do |event|
      if (inputStr.slice(0,2) == '.i';) then;
        
          adv = inputStr.index('a'); dis = inputStr.index('d');
-         if (adv + dis) > 0 then;
-            modStr = inputStr.slice(2,lenInputStr-1);
-         else
-            modStr = inputStr.slice(2,lenInputStr);
-         end;   
+         #if (adv + dis) > 0 then;
+         #    modStr = inputStr.slice(2,lenInputStr-1);
+         #else
+         #    modStr = inputStr.slice(2,lenInputStr);
+         #end;   
          theRoll = (rand 20) + 1;
-         say = @user.to_s + " has rolled initiative " + theRoll.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s;
+         say = @user.to_s + " has rolled initiative " + theRoll.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s + " ===> " + adv.to_s + "  " + dis.to_s;
      else
          say = docMsg; 
      end;
