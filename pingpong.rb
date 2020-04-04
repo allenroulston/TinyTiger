@@ -26,24 +26,25 @@ bot = Discordrb::Bot.new token: token
 #bot.message(contains: "d20") do |event|
 #  @oneVar = (event.content) + " d20 roll detected";
 #end
-
-
-bot.message(contains: "Roll:") do |event|
-  comment = " Just saying."
-  tempVar = event.content;  
-  theIndex = tempVar.index('Roll:');
-  theName = tempVar.slice(0,theIndex).to_s;
-  theIndex = tempVar.index('Result:');
-  tempResult = tempVar.slice(theIndex,10);
-  theResult = tempResult.slice(7,10);
-  number = theResult.to_i;
-  responseValue = "The survery results are in    " + theName + " rolls  = = = = = => " + theResult;
-  event.respond responseValue;
-end;
-
 bot.message(contains: " d20") do |event|
   @d20 = 1;
 end;
+
+bot.message(contains: "Roll:") do |event|
+  if @d20 == 1  then;
+     comment = " Just saying."
+     tempVar = event.content;  
+     theIndex = tempVar.index('Roll:');
+     theName = tempVar.slice(0,theIndex).to_s;
+     theIndex = tempVar.index('Result:');
+     tempResult = tempVar.slice(theIndex,10);
+     theResult = tempResult.slice(7,10);
+     number = theResult.to_i;
+     responseValue = "The survery results are in    " + theName + " rolls  = = = = = => " + theResult;
+     event.respond responseValue;
+   end;
+end;
+
 
 bot.message(contains: "Roll:") do |event|
   comment = " Just saying."
