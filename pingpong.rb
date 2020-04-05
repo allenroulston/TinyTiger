@@ -1,7 +1,6 @@
 #
 require 'discordrb'
 require 'yaml'
-require 'logger'
 
 
 #####Configuration########
@@ -310,7 +309,7 @@ bot.message(contains:"$load") do |event|
        text=File.open("zero.txt").read;
        @armour = Array.new
        @armour = text
-       logger.debug(@armour.inspect);        
+       
 
        File.open("zero.txt", 'w+') {|f| f.write(newACval)}
                 
