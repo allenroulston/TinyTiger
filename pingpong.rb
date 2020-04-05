@@ -346,19 +346,19 @@ bot.message(contains:"$c") do |event|
          if (inputStr.length == 3) && (whatIsNumAC != false) then;
              cNum = inputStr.slice(2,1);
              case cNum
-                 when 0; theFileName="zero.txt"; 
-                 when 1; theFileName="zone.txt";
-                 when 2; theFileName="ztwo.txt";
-                 when 3; theFileName="zthree.txt";
-                 when 4; theFileName="zfour.txt";
-                 when 5; theFileName="zfive.txt";
-                 when 6; theFileName="zsix.txt";
-                 when 7; theFileName="zseven.txt";
-                 when 8; theFileName="zeight.txt"; 
-                 when 9; theFileName="znine.txt";
+                 when 0; text=File.open("zero.txt").read; 
+                 when 1; text=File.open("zone.txt").read;
+                 when 2; text=File.open("ztwo.txt").read;
+                 when 3; text=File.open("zthree.txt").read;
+                 when 4; text=File.open("zfour.txt").read;
+                 when 5; text=File.open("zfive.txt").read;
+                 when 6; text=File.open("zsix.txt").read;
+                 when 7; text=File.open("zseven.txt").read;
+                 when 8; text=File.open("zeight.txt").read; 
+                 when 9; text=File.open("znine.txt").read;
              end;
              
-             text=File.open("#{theFileName}").read
+#             text=File.open("#{theFileName}").read
              acVal = text.slice(0,2);
  
 #          event.respond "The input string: "  + inputStr + "  whatIsNumAC:  " + whatIsNumAC.to_s + "  this is cNum: " + cNum.to_s;     
