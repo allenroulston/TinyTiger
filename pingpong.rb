@@ -18,6 +18,38 @@ bot = Discordrb::Bot.new token: token
 #  event.respond 'PONG';
 #end
 
+@zeroAC=10; @oneAC=10; @twoAC=10; @threeAC=10; @fourAC=10; @fiveAC=10; @sixAC=10; @sevenAC=10; @eightAC=10; @nineAC=10;
+def set_the_AC(v1,v2);
+  case v1
+       when 0; @zeroAC=v2; 
+       when 1; @oneAC=v2; 
+       when 2; @twoAC=v2; 
+       when 3; @threeAC=v2; 
+       when 4; @fourAC=v2; 
+       when 5; @fiveAC=v2; 
+       when 6; @sixAC=v2; 
+       when 7; @sevenAC=v2; 
+       when 8; @eightC=v2;          
+       when 9; @nineAC=v2; 
+  end;
+end;
+
+def find_the_creature(v1);
+  case v1
+       when 0; itis="@zeroAC"; 
+       when 1; itis="@oneAC"; 
+       when 2; itis="@twoAC"; 
+       when 3; itis="@threeAC"; 
+       when 4; itis="@fourAC"; 
+       when 5; itis="@fiveAC"; 
+       when 6; itis="@sixAC"; 
+       when 7; itis="@sevenAC"; 
+       when 8; itis="@eightC";          
+       when 9; itis="@nineAC";
+  end;
+  return(itis);
+end;
+
 def check_char_name(code);
    case code;
        when "a";  @charName = "Allen";
@@ -290,16 +322,18 @@ bot.message(contains:"!!!") do |event|
     if @user == "Allen" then;
        inputStr = event.content; # creature Number and AC should be in the string
        whatIsNumAC = Integer(inputStr.slice(3,3)) rescue false
-       if (inputStr.length == 6) && (whatIsNumAC != false) then;
+       if (inputStr.length == 6) && (whatIsNumAC != ) then;
           cNum = inputStr.slice(3,1);
           cAC = inputStr.slice(4,2);
-          say = " Creature Number:" + cNum.to_s + " now has AC:" + cAC.to_s;
+          set_the_AC(cNum,cAC);
+          critterName = find_the_creature(cNum);
+          say = " Creature Number:" + cNum.to_s + " now has AC:" + critterName ;
           event.respond say;
        end;
     end;
 end;
 
-
+# set_the_AC(v1,v2); find_the_creature(v1);
 
 
 ##########################################
