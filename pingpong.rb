@@ -317,7 +317,7 @@ bot.message(contains:"$") do |event|
              acVal = text.slice(0,2);
              acValNumber = acVal.to_i;
              newACval = (setAC).to_s+"\n";
-             File.open(theFileName, 'w+') {|f| f.write(newACval)}
+             File.open("zero.txt"), 'w+') {|f| f.write(newACval)}
 
 #          event.respond "The input string: "  + inputStr + "  setAC:  " + setAC.to_s + "  this is cNum: " + cNum.to_s; 
                 
