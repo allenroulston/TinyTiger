@@ -307,12 +307,12 @@ end;
 bot.message(contains:"!!!") do |event|
     check_user_or_nick(event);
     if @user == "Allen" then;
-       inputStr = event.content; # creature Number and AC should be in the string
-       whatIsNumAC = Integer(inputStr.slice(3,3)) rescue false
-       if (inputStr.length == 6) && (whatIsNumAC != false) then;
-          cNum = inputStr.slice(3,1);
-          setAC = inputStr.slice(4,2);
-            case cNum
+         inputStr = event.content; # creature Number and AC should be in the string
+         whatIsNumAC = Integer(inputStr.slice(3,3)) rescue false
+         if (inputStr.length == 6) && (whatIsNumAC != false) then;
+             cNum = inputStr.slice(3,1);
+             setAC = inputStr.slice(4,2);
+             case cNum
                  when 0; @zeroAC=setAC; 
                  when 1; @oneAC=setAC;
                  when 2; @twoAC=setAC;
@@ -323,20 +323,20 @@ bot.message(contains:"!!!") do |event|
                  when 7; @sevenAC=setAC;
                  when 8; @eightC=setAC;      
                  when 9; @nineAC=setAC;
-            end;
-          end;
-          case cNum
-               when 0; say = " Creature Number:" + cNum.to_s + " now has AC:" + @zeroAC; 
-               when 1; say = " Creature Number:" + cNum.to_s + " now has AC:" + @oneAC;
-               when 2; say = " Creature Number:" + cNum.to_s + " now has AC:" + @twoAC;
-               when 3; say = " Creature Number:" + cNum.to_s + " now has AC:" + @threeAC; 
-               when 4; say = " Creature Number:" + cNum.to_s + " now has AC:" + @fourAC;
-               when 5; say = " Creature Number:" + cNum.to_s + " now has AC:" + @fiveAC;
-               when 6; say = " Creature Number:" + cNum.to_s + " now has AC:" + @sixAC;
-               when 7; say = " Creature Number:" + cNum.to_s + " now has AC:" + @sevenAC;
-               when 8; say = " Creature Number:" + cNum.to_s + " now has AC:" + @eightC;      
-               when 9; say = " Creature Number:" + cNum.to_s + " now has AC:" + @nineAC;
-          end;          
+             end;
+        
+             case cNum
+                  when 0; say = " Creature Number:" + cNum.to_s + " now has AC:" + @zeroAC; 
+                  when 1; say = " Creature Number:" + cNum.to_s + " now has AC:" + @oneAC;
+                  when 2; say = " Creature Number:" + cNum.to_s + " now has AC:" + @twoAC;
+                  when 3; say = " Creature Number:" + cNum.to_s + " now has AC:" + @threeAC; 
+                  when 4; say = " Creature Number:" + cNum.to_s + " now has AC:" + @fourAC;
+                  when 5; say = " Creature Number:" + cNum.to_s + " now has AC:" + @fiveAC;
+                  when 6; say = " Creature Number:" + cNum.to_s + " now has AC:" + @sixAC;
+                  when 7; say = " Creature Number:" + cNum.to_s + " now has AC:" + @sevenAC;
+                  when 8; say = " Creature Number:" + cNum.to_s + " now has AC:" + @eightC;      
+                  when 9; say = " Creature Number:" + cNum.to_s + " now has AC:" + @nineAC;
+             end;          
           event.respond say;
        end;
     end;
