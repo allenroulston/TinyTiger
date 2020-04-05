@@ -303,6 +303,9 @@ def parse_the_d();
   return(howManyDice);
 end;
 
+#########################################
+###########  Armour Class  ##############
+#########################################
 bot.message(contains:"$load") do |event|
     check_user_or_nick(event);
     if @user == "Allen" then;
@@ -329,7 +332,20 @@ bot.message(contains:"$c") do |event|
     end;
 end;
 
-
+bot.message(contains:"$set") do |event|
+    check_user_or_nick(event);
+    if @user == "Allen" then;
+         inputStr = event.content; # creature Number and AC should be in the string
+         whatIsNumAC = Integer(inputStr.slice(4,3)) rescue false
+         if (inputStr.length == 7) && (whatIsNumAC != false) then;
+             cNum = inputStr.slice(4,1);
+             acVal = inputStr.slice(5,2);
+             @armour[cNum.to_i]=acVal.to_i;
+                 
+          event.respond "For creature " + cNum.to_s + " we set the AC:" + acVal.to_s;
+       end;
+    end;
+end;
 
 
 ##########################################
