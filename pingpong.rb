@@ -189,7 +189,7 @@ bot.message(contains: ";d") do |event|
        end;
        dmgRoll=(rand dType)+1;
        result = dmgRoll + dMod;
-       responseValue = @user.to_s + "[d" + dType.to_s + "] damage roll: [" + dmgRoll.to_s + "] + " + dMod.to_s + " = " + result.to_s;
+       responseValue = @user.to_s + " [d" + dType.to_s + "] damage roll: [" + dmgRoll.to_s + "] + " + dMod.to_s + " = " + result.to_s;
        event.respond responseValue;
     end;
 end;
@@ -212,7 +212,7 @@ bot.message(contains: ";d1") do |event|
        end;
        dmgRoll=(rand dType)+1;
        result = dmgRoll + dMod;
-       responseValue = @user.to_s + "[d" + dType.to_s + "] damage roll: [" + dmgRoll.to_s + "] + " + dMod.to_s + " = " + result.to_s;
+       responseValue = @user.to_s + " [d" + dType.to_s + "] damage roll: [" + dmgRoll.to_s + "] + " + dMod.to_s + " = " + result.to_s;
        event.respond responseValue;
     end;
 end;
