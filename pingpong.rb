@@ -344,42 +344,24 @@ bot.message(contains:"$c") do |event|
          inputStr = event.content; # creature Number and AC should be in the string
          whatIsNumAC = Integer(inputStr.slice(2,1)) rescue false
          if (inputStr.length == 3) && (whatIsNumAC != false) then;
-              cNum = inputStr.slice(2,1);
-              if cNum == 0 then;
-                 text=File.open("zero.txt").read; acVal = text.slice(0,2);
-              end;
-              if cNum == 1 then;   
-                 text=File.open("zone.txt").read; acVal = text.slice(0,2);
-              end;
-              if cNum == 2 then;                
-                  text=File.open("ztwo.txt").read; acVal = text.slice(0,2);
-              end;
-              if cNum == 3 then; 
-                  text=File.open("zthree.txt").read; acVal = text.slice(0,2);
-              end;
-              if cNum == 4 then;                 
-                  text=File.open("zfour.txt").read; acVal = text.slice(0,2);
-              end;
-              if cNum == 5 then;                 
-                  text=File.open("zfive.txt").read; acVal = text.slice(0,2);
-              end;
-              if cNum == 6 then; 
-                  text=File.open("zsix.txt").read; acVal = text.slice(0,2);
-              end;
-              if cNum == 7 then; 
-                  text=File.open("zseven.txt").read; acVal = text.slice(0,2);
-              end;
-              if cNum == 1 then;                 
-                  text=File.open("zeight.txt").read; acVal = text.slice(0,2);
-              end;  
-              if cNum == 1 then;                   
-                  text=File.open("znine.txt").read; acVal = text.slice(0,2);
-              end;
-          end;
-              
-#          event.respond "The input string: "  + inputStr + "  whatIsNumAC:  " + whatIsNumAC.to_s + "  this is cNum: " + cNum.to_s;     
-          event.respond "The current AC for creature "  +cNum + " is the value " + acVal;
+             cNum = inputStr.slice(2,1);
+             case cNum
+                 when 0; text=File.open("zero.txt").read; acVal = text.slice(0,2);
+                 when 1; text=File.open("zone.txt").read; acVal = text.slice(0,2);
+                 when 2; text=File.open("ztwo.txt").read; acVal = text.slice(0,2);
+                 when 3; text=File.open("zthree.txt").read; acVal = text.slice(0,2);
+                 when 4; text=File.open("zfour.txt").read; acVal = text.slice(0,2);
+                 when 5; text=File.open("zfive.txt").read; acVal = text.slice(0,2);
+                 when 6; text=File.open("zsix.txt").read; acVal = text.slice(0,2);
+                 when 7; text=File.open("zseven.txt").read; acVal = text.slice(0,2);
+                 when 8; text=File.open("zeight.txt").read; acVal = text.slice(0,2);
+                 when 9; text=File.open("znine.txt").read; acVal = text.slice(0,2);
+             end;
 
+ 
+#          event.respond "The input string: "  + inputStr + "  whatIsNumAC:  " + whatIsNumAC.to_s + "  this is cNum: " + cNum.to_s;     
+          event.respond "The current AC for creature "  +cNum + " is the value " + acVal.to_s;
+       end;
     end;
 end;
 
