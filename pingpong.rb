@@ -331,7 +331,7 @@ bot.message(contains:"!!!") do |event|
                acVal = line.slice(0,2);
              end
              acVal = acVal.to_i;
-             newACval = (acVal + 1).to_s;
+             newACval = (acVal + 1).to_s+"\n";
              File.open("zero.txt", 'w+') {|f| f.write(newACval)}
 
 =begin        
