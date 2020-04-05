@@ -1,7 +1,7 @@
 #
 require 'discordrb'
 require 'yaml'
-
+require 'logger'
 
 
 #####Configuration########
@@ -304,32 +304,17 @@ def parse_the_d();
   return(howManyDice);
 end;
 
-bot.message(contains:"$") do |event|
+bot.message(contains:"$load") do |event|
     check_user_or_nick(event);
     if @user == "Allen" then;
-         inputStr = event.content; # creature Number and AC should be in the string
-         whatIsNumAC = Integer(inputStr.slice(1,3)) rescue false
-         if (inputStr.length == 4) && (whatIsNumAC != false) then;
-             cNum = inputStr.slice(1,1);
-             setAC = inputStr.slice(2,2);
-#             case cNum;
-#                 when 0; theFileName = "zero.txt";
-#                 when 1; theFileName = "zone.txt";
-#             end;
+       text=File.open("zero.txt").read;
+       @armour = Array.new
+       @armour = text
+       logger.debug(@armour.inspect);        
 
-             newACval = (setAC).to_s+"\n";
-             
-             if cNum == 0 then;
-                File.open("zero.txt", 'w+') {|f| f.write(newACval)}
-             end;
-             if cNum == 1 then;
-                File.open("zone.txt", 'w+') {|f| f.write(newACval)}
-             end;
-
-#          event.respond "The input string: "  + inputStr + "  setAC:  " + setAC.to_s + "  this is cNum: " + cNum.to_s; 
+       File.open("zero.txt", 'w+') {|f| f.write(newACval)}
                 
-          event.respond "In theory, we just assigned " + setAC + " as the AC for creature number " + cNum;
-       end;
+       event.respond "Just to let you know, $load just ran.";
     end;
 end;
 
