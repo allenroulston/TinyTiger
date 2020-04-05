@@ -323,7 +323,7 @@ bot.message(contains:"$c") do |event|
          whatIsNumAC = Integer(inputStr.slice(2,1)) rescue false
          if (inputStr.length == 3) && (whatIsNumAC != false) then;
              cNum = inputStr.slice(2,1);
-             acVal = @armour[cNum].to_s;    
+             acVal = @armour[cNum.to_i].to_s;    
           event.respond "The current AC for creature "  +cNum + " is the value " + acVal;
        end;
     end;
