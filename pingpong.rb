@@ -38,11 +38,6 @@ def check_user_or_nick(event)
   end
 end
 
-def parse_the_d();
-  theIndex = @tempVar.index('d');
-  howManyDice = @tempVar.slice(0,(theIndex));
-  return(howManyDice);
-end;
 
 bot.message(contains: ".i") do |event|
      check_user_or_nick(event)
@@ -284,7 +279,30 @@ bot.message(contains:"d12.") do |event|
     event.respond responseValue;
 end;
 
+def parse_the_d();
+  theIndex = @tempVar.index('d');
+  howManyDice = @tempVar.slice(0,(theIndex));
+  return(howManyDice);
+end;
 
+bot.message(contains:"!!!") do |event|
+    check_user_or_nick(event);
+    if @user == "Allen" then;
+       inputStr = event.content; # creature Number and AC should be in the string
+       whatIsNumAC = Integer(inputStr.slice(3,3)) rescue false
+       if (inputStr.length == 6) && (whatIsNumAC != false) then;
+          cNum = inputStr.slice(3,1);
+          cAC = inputStr.slice(4,2);
+          say = " Creature Number:" + cNum.to_s + " now has AC:" + cAC.to_s;
+          event.respond say;
+       end;
+    end;
+end;
+
+
+
+
+##########################################
 bot.message(contains: "Roll:") do |event|
   comment = " Just saying."
   tempVar = event.content;  
