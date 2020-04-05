@@ -312,10 +312,13 @@ bot.message(contains:"$") do |event|
          if (inputStr.length == 4) && (whatIsNumAC != false) then;
              cNum = inputStr.slice(1,1);
              setAC = inputStr.slice(2,2);
+             case cNum;
+                 when 0; theFileName = "zero.txt";
+                 when 1; theFileName - "zone.txt";
+             end;
+                 
              
-             theFileName = "zero.txt";
-             
-             text=File.open("zero.txt").read
+             text=File.open("#{theFileName}").read
              acVal = text.slice(0,2);
              acValNumber = acVal.to_i;
              newACval = (setAC).to_s+"\n";
