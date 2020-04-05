@@ -67,11 +67,19 @@ bot.message(contains: ".i") do |event|
        # a or d found (or not) in above code
          if (adv != nil) || (dis != nil) then;  # if an a or a d were found :
              mod = (inputStr.slice(2,lenInputStr-1)).to_i;  # drop the last letter
+             rollOne = (rand 20)+1; rollTwo = (rand 20)+1; #make two rolls
+             theRolls = "[" + rollOne.to_s + "," + rollTwo.to_s +"]"
+             if adv != nil then
+                theRoll = [rollOne,rollTwo].max;
+             else
+               theRoll = [rollOne,rollTwo].min;
+             end
          else
              mod = (inputStr.slice(2,lenInputStr)).to_i;  #keep all of the characters
+             theRolls = (rand 20) + 1;
+             theRoll = theRolls;
          end;   
-         theRoll = (rand 20) + 1;
-         say = @user.to_s + " has rolled an initiative of: " + theRoll.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s;
+         say = @user.to_s + " has rolled an initiative of: " + theRolls.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s;
      else
          say = docMsg; 
      end;
