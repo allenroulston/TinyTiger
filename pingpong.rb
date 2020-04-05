@@ -20,6 +20,7 @@ bot = Discordrb::Bot.new token: token
 
 def check_char_name(code);
    case code;
+       when "a";  @charName = "Allen";
        when "c";  @charName = "Cordax Glimscale";
        when "d";  @charName = "Daisho/ Samurai War Priest";
        when "o";  @charName = "Ollodash";
@@ -132,6 +133,7 @@ bot.message(contains: ";i") do |event|
     inputName = check_char_name(code);
     if @user == inputName then; 
        case inputValue;
+            when ";ia"; mod=9;
             when ";ic"; mod=1;
             when ";id"; mod=2;
             when ";io"; mod=0;
@@ -150,18 +152,23 @@ end;
 bot.message(contains: ";a") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
-    case inputValue;
-         when ";ac"; mod=5;
-         when ";ad"; mod=5;
-         when ";ao"; mod=5;
-         when ";aq"; mod=5;
-         when ";as"; mod=5;
-         when ";az"; mod=5;
+    code = inputValue.slice(2,1);
+    inputName = check_char_name(code);
+    if @user == inputName then; 
+       case inputValue;
+            when ";aa"; mod=9;
+            when ";ac"; mod=5;
+            when ";ad"; mod=5;
+            when ";ao"; mod=5;
+            when ";aq"; mod=5;
+            when ";as"; mod=5;
+            when ";az"; mod=5;
+       end;
+       iRoll=(rand 20)+1;
+       result = iRoll + mod;
+       responseValue = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
+       event.respond responseValue;
     end;
-    iRoll=(rand 20)+1;
-    result = iRoll + mod;
-    responseValue = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
-    event.respond responseValue;
 end;
 
 bot.message(contains: "!init") do |event|
