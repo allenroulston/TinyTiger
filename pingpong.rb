@@ -311,11 +311,8 @@ bot.message(contains:"$load") do |event|
     if @user == "Allen" then;
        @armour = Array.new
        @armour = [0,1,2,3,4,5,6,7,8,9,0];
-       value0 = @armour[0]
-       value1 = @armour[1]
-       value2 = @armour[2]
                 
-       event.respond "Just to let you know, $load just ran.\n" + value0.to_s + value1.to_s + value2.to_s;
+       event.respond "Just to let you know, $load just ran.";
     end;
 end;
 
@@ -342,12 +339,25 @@ bot.message(contains:"$set") do |event|
              acVal = inputStr.slice(5,2);
              @armour[cNum.to_i]=acVal.to_i;
                  
-          event.respond "For creature " + cNum.to_s + " we set the AC:" + acVal.to_s;
+          event.respond "For creature " + cNum.to_s + " we set the AC: " + acVal.to_s;
        end;
     end;
 end;
 
-
+bot.message(contains:"$all") do |event|
+    check_user_or_nick(event);
+    if @user == "Allen" then;
+         inputStr = event.content; # creature Number and AC should be in the string
+         whatIsNumAC = Integer(inputStr.slice(4,2)) rescue false
+         if (inputStr.length == 6) && (whatIsNumAC != false) then;
+             acVal = inputStr.slice(4,2);
+             (0..9).each do |x|;
+                  @armour[x]=acVal.to_i;
+              end;                 
+          event.respond "ALL creatures now have an AC of: " + acVal.to_s;
+       end;
+    end;
+end;
 ##########################################
 bot.message(contains: "Roll:") do |event|
   comment = " Just saying."
