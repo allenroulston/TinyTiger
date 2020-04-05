@@ -312,11 +312,16 @@ bot.message(contains:"$") do |event|
          if (inputStr.length == 4) && (whatIsNumAC != false) then;
              cNum = inputStr.slice(1,1);
              setAC = inputStr.slice(2,2);
-             case cNum;
-                 when 0; theFileName = "zero.txt";
-                 when 1; theFileName = "zone.txt";
+#             case cNum;
+#                 when 0; theFileName = "zero.txt";
+#                 when 1; theFileName = "zone.txt";
+#             end;
+             if cNum == 0 then;
+                theFileName = "zero.txt";
              end;
-                 
+             if cNum == 1 then;
+                theFileName = "zone.txt";
+             end;
              
              text=File.open("#{theFileName}").read
              acVal = text.slice(0,2);
@@ -338,7 +343,15 @@ bot.message(contains:"$c") do |event|
          whatIsNumAC = Integer(inputStr.slice(2,1)) rescue false
          if (inputStr.length == 3) && (whatIsNumAC != false) then;
              cNum = inputStr.slice(2,1);
-             text=File.open("zone.txt").read;
+
+             if cNum == 0 then;
+                theFileName = "zero.txt";
+             end;
+             if cNum == 1 then;
+                theFileName = "zone.txt";
+             end;             
+             
+             text=File.open("#{{theFileName}}").read;
              acVal = text.slice(0,2);
 #          event.respond "The input string: "  + inputStr + "  whatIsNumAC:  " + whatIsNumAC.to_s + "  this is cNum: " + cNum.to_s;     
           event.respond "The current AC for creature "  +cNum + " is the value " + acVal.to_s;
