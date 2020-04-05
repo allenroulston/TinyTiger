@@ -325,13 +325,15 @@ bot.message(contains:"$") do |event|
                  when 9; theFileName="znine.txt";
              end;
              
-             text=File.open(theFileName).read
-             acVal = text.slice(0,2);
-             acValNumber = acVal.to_i;
-             newACval = (setAC).to_s+"\n";
-             File.open(theFileName, 'w+') {|f| f.write(newACval)}
-      
-          event.respond "In theory, we just assigned " + setAC + " as the AC for creature number " + cNum;
+ #            text=File.open(theFileName).read
+#             acVal = text.slice(0,2);
+#             acValNumber = acVal.to_i;
+#             newACval = (setAC).to_s+"\n";
+#             File.open(theFileName, 'w+') {|f| f.write(newACval)}
+
+          event.respond "The input string: "  + inputStr + "  whatIsNumAC:  " + whatIsNumAC.to_s;   
+                
+#          event.respond "In theory, we just assigned " + setAC + " as the AC for creature number " + cNum;
        end;
     end;
 end;
@@ -356,10 +358,11 @@ bot.message(contains:"$c") do |event|
                  when 9; theFileName="znine.txt";
              end;
              
-             text=File.open(theFileName).read
-             acVal = text.slice(0,2);
-      
-          event.respond "The current AC for creature "  +cNum + " is the value " + acVal;
+#             text=File.open(theFileName).read
+#             acVal = text.slice(0,2);
+ 
+          event.respond "The input string: "  + inputStr + "  whatIsNumAC:  " + whatIsNumAC.to_s;     
+#          event.respond "The current AC for creature "  +cNum + " is the value " + acVal;
        end;
     end;
 end;
