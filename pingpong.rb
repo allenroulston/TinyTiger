@@ -36,18 +36,18 @@ end;
 
 def find_the_creature(v1);
   case v1
-       when 0; itis="@zeroAC"; 
-       when 1; itis="@oneAC"; 
-       when 2; itis="@twoAC"; 
-       when 3; itis="@threeAC"; 
-       when 4; itis="@fourAC"; 
-       when 5; itis="@fiveAC"; 
-       when 6; itis="@sixAC"; 
-       when 7; itis="@sevenAC"; 
-       when 8; itis="@eightC";          
-       when 9; itis="@nineAC";
+       when 0; @itis="@zeroAC"; 
+       when 1; @itis="@oneAC"; 
+       when 2; @itis="@twoAC"; 
+       when 3; @itis="@threeAC"; 
+       when 4; @itis="@fourAC"; 
+       when 5; @itis="@fiveAC"; 
+       when 6; @itis="@sixAC"; 
+       when 7; @itis="@sevenAC"; 
+       when 8; @itis="@eightC";          
+       when 9; @itis="@nineAC";
   end;
-  return(itis);
+  return(@itis);
 end;
 
 def check_char_name(code);
@@ -327,7 +327,7 @@ bot.message(contains:"!!!") do |event|
           cAC = inputStr.slice(4,2);
           set_the_AC(cNum,cAC);
           critterName = find_the_creature(cNum);
-          say = " Creature Number:" + cNum.to_s + " now has AC:" + "#{critterName}" ;
+          say = " Creature Number:" + cNum.to_s + " now has AC:" + "{#{@itis}}" ;
           event.respond say;
        end;
     end;
