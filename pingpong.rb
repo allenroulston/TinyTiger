@@ -342,7 +342,7 @@ bot.message(contains:"$c") do |event|
     check_user_or_nick(event);
     if @user == "Allen" then;
          inputStr = event.content; # creature Number and AC should be in the string
-         whatIsNumAC = Integer(inputStr.slice(2,1)) rescue false
+         whatIsNumAC = Integer(inputStr.slice(3,1)) rescue false
          if (inputStr.length == 3) && (whatIsNumAC != false) then;
              cNum = inputStr.slice(3,1);
              case cNum
