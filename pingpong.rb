@@ -331,7 +331,7 @@ bot.message(contains:"$") do |event|
 #             newACval = (setAC).to_s+"\n";
 #             File.open(theFileName, 'w+') {|f| f.write(newACval)}
 
-          event.respond "The input string: "  + inputStr + "  whatIsNumAC:  " + whatIsNumAC.to_s + "  this is cNum: " + cNum.to_s; 
+          event.respond "The input string: "  + inputStr + "  setAC:  " + setAC.to_s + "  this is cNum: " + cNum.to_s; 
                 
 #          event.respond "In theory, we just assigned " + setAC + " as the AC for creature number " + cNum;
        end;
@@ -344,7 +344,7 @@ bot.message(contains:"$c") do |event|
          inputStr = event.content; # creature Number and AC should be in the string
          whatIsNumAC = Integer(inputStr.slice(2,1)) rescue false
          if (inputStr.length == 3) && (whatIsNumAC != false) then;
-             cNum = inputStr.slice(3,1);
+             cNum = inputStr.slice(2,1);
              case cNum
                  when 0; theFileName="zero.txt"; 
                  when 1; theFileName="zone.txt";
