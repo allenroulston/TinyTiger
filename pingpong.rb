@@ -316,16 +316,7 @@ bot.message(contains:"$") do |event|
 #                 when 0; theFileName = "zero.txt";
 #                 when 1; theFileName = "zone.txt";
 #             end;
-             if cNum == 0 then;
-                text=File.open("zero.txt").read;
-                             acVal = text.slice(0,2);
-             end;
-             if cNum == 1 then;
-                text=File.open("zone.txt").read;
-                             acVal = text.slice(0,2);
-             end;
-             
-             acValNumber = acVal.to_i;
+
              newACval = (setAC).to_s+"\n";
              
              if cNum == 0 then;
