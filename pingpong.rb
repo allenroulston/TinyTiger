@@ -109,9 +109,11 @@ bot.message(contains: "rth") do |event|
 end;
 
 bot.message(matches: "..i") do |event|
-    responseValue = "@everyone Please roll initiative :  ;ic  ;id  ;io  ;iq  ;is  ;iz  \nare programmed for each character with Dex mod.";
-    event.respond responseValue;
-    responseValue = "";
+    inputValue = event.content;
+    if inputValue == "..i"; then;
+       responseValue = "@everyone Please roll initiative :  ;ic  ;id  ;io  ;iq  ;is  ;iz  \nare programmed for each character with Dex mod.";
+       event.respond responseValue;
+    end;
 end;
 
 bot.message(contains: ";i") do |event|
@@ -127,7 +129,7 @@ bot.message(contains: ";i") do |event|
     end;
     iRoll=(rand 20)+1;
     result = iRoll + mod;
-    responseValue = @user.to_s + "has rolled initiative: [" + iRoll.to_s + "] " + mod.to_s + " = " + result.to_s;
+    responseValue = @user.to_s + " has rolled initiative: [" + iRoll.to_s + "] " + mod.to_s + " = " + result.to_s;
     event.respond responseValue;
 end;
 
