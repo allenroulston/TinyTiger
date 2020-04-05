@@ -42,7 +42,7 @@ bot.message(contains: ".i") do |event|
      lenInputStr = inputStr.length;
      if lenInputStr > 2 then
         extraChar = lenInputStr - 2; # how many characters we will check
-        extras = inputStr.slice(2,extraChar) # -1 accounts for placement count starts at 0
+        extras = inputStr.slice(2,extraChar) # extract extra characters
         (0..(extraChar-1)).each do |x|;
           sample = extras.slice(x,1)   # get one character to sample
           chkResult = ("-1234567890ad").index(sample); # test this sample character     
@@ -52,17 +52,24 @@ bot.message(contains: ".i") do |event|
         end;     
      end;
      
+     adv = inputStr.index('a'); dis = inputStr.index('d');  # was a d or a found in the input string?
+     if (adv != nil) || (dis != nil) then;  # if an a or a d were found :
+       endChar = extras.slice((extraCharLen-1),1); # grab the last character
+         if (endChar != "a") && (endChar != "d") then
+             moreChars = false;
+         end;
+     end;  
      
-     if ( (inputStr.slice(0,2) == '.i';) && ( moreChars == true ) )then;
-       
-         adv = inputStr.index('a'); dis = inputStr.index('d');
-         if (adv != nil) || (dis != nil) then;
-             mod = (inputStr.slice(2,lenInputStr-1)).to_i;
+     
+     if ( (inputStr.slice(0,2) == '.i';) && ( moreChars == true ) )then;  
+       # a or d found (or not) in above code
+         if (adv != nil) || (dis != nil) then;  # if an a or a d were found :
+             mod = (inputStr.slice(2,lenInputStr-1)).to_i;  # drop the last letter
          else
-             mod = (inputStr.slice(2,lenInputStr)).to_i;
+             mod = (inputStr.slice(2,lenInputStr)).to_i;  #keep all of the characters
          end;   
          theRoll = (rand 20) + 1;
-         say = @user.to_s + " has rolled initiative " + theRoll.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s + " =>" + "something";
+         say = @user.to_s + " has rolled initiative " + theRoll.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s;
      else
          say = docMsg; 
      end;
