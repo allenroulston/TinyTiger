@@ -181,7 +181,7 @@ bot.message(contains: ";d") do |event|
        case inputValue;
             when ";da"; dType=12; dMod=9;
             when ";dc"; dType=6; dMod=1;
-            when ";dd"; dType=8; dMod=3;
+            when ";dd"; dType=10; dMod=3;
             when ";do"; dType=8; dMod=3;
             when ";dq"; dType=6; dMod=3; 
             when ";ds"; dType=6; dMod=3;
@@ -189,7 +189,30 @@ bot.message(contains: ";d") do |event|
        end;
        dmgRoll=(rand dType)+1;
        result = dmgRoll + dMod;
-       responseValue = @user.to_s + " damage roll: [" + dmgRoll.to_s + "] + " + dMod.to_s + " = " + result.to_s;
+       responseValue = @user.to_s + "[d"+ dType.to_s "] damage roll: [" + dmgRoll.to_s + "] + " + dMod.to_s + " = " + result.to_s;
+       event.respond responseValue;
+    end;
+end;
+
+########## DAMAGE ##############
+bot.message(contains: ";d1") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    code = inputValue.slice(2,1);
+    inputName = check_char_name(code);
+    if @user == inputName then; 
+       case inputValue;
+            when ";d1a"; dType=12; dMod=9;
+            when ";d1c"; dType=4; dMod=1;
+            when ";d1d"; dType=4; dMod=3;
+            when ";d1o"; dType=4; dMod=3;
+            when ";d1q"; dType=4; dMod=3; 
+            when ";d1s"; dType=4; dMod=3;
+            when ";d1z"; dType=4; dMod=3;
+       end;
+       dmgRoll=(rand dType)+1;
+       result = dmgRoll + dMod;
+       responseValue = @user.to_s + "[d"+ dType.to_s "] damage roll: [" + dmgRoll.to_s + "] + " + dMod.to_s + " = " + result.to_s;
        event.respond responseValue;
     end;
 end;
