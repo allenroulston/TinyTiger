@@ -331,7 +331,7 @@ bot.message(contains:"$") do |event|
 #             newACval = (setAC).to_s+"\n";
 #             File.open(theFileName, 'w+') {|f| f.write(newACval)}
 
-          event.respond "The input string: "  + inputStr + "  whatIsNumAC:  " + whatIsNumAC.to_s;   
+          event.respond "The input string: "  + inputStr + "  whatIsNumAC:  " + whatIsNumAC.to_s + "  this is cNum: " + cNum.to_s; 
                 
 #          event.respond "In theory, we just assigned " + setAC + " as the AC for creature number " + cNum;
        end;
@@ -361,7 +361,7 @@ bot.message(contains:"$c") do |event|
 #             text=File.open(theFileName).read
 #             acVal = text.slice(0,2);
  
-          event.respond "The input string: "  + inputStr + "  whatIsNumAC:  " + whatIsNumAC.to_s;     
+          event.respond "The input string: "  + inputStr + "  whatIsNumAC:  " + whatIsNumAC.to_s + "  this is cNum: " + cNum.to_s;     
 #          event.respond "The current AC for creature "  +cNum + " is the value " + acVal;
        end;
     end;
