@@ -304,53 +304,67 @@ def parse_the_d();
   return(howManyDice);
 end;
 
-bot.message(contains:"!!!") do |event|
+bot.message(contains:"$") do |event|
     check_user_or_nick(event);
     if @user == "Allen" then;
          inputStr = event.content; # creature Number and AC should be in the string
-         whatIsNumAC = Integer(inputStr.slice(3,3)) rescue false
-         if (inputStr.length == 6) && (whatIsNumAC != false) then;
-             cNum = inputStr.slice(3,1);
-             setAC = inputStr.slice(4,2);
+         whatIsNumAC = Integer(inputStr.slice(1,3)) rescue false
+         if (inputStr.length == 4) && (whatIsNumAC != false) then;
+             cNum = inputStr.slice(1,1);
+             setAC = inputStr.slice(2,2);
              case cNum
-                 when 0; @zeroAC=setAC; 
-                 when 1; @oneAC=setAC;
-                 when 2; @twoAC=setAC;
-                 when 3; @threeAC=setAC; 
-                 when 4; @fourAC=setAC;
-                 when 5; @fiveAC=setAC;
-                 when 6; @sixAC=setAC;
-                 when 7; @sevenAC=setAC;
-                 when 8; @eightC=setAC;      
-                 when 9; @nineAC=setAC;
+                 when 0; theFileName="zero.txt"; 
+                 when 1; theFileName="zone.txt";
+                 when 2; theFileName="ztwo.txt";
+                 when 3; theFileName="zthree.txt";
+                 when 4; theFileName="zfour.txt";
+                 when 5; theFileName="zfive.txt";
+                 when 6; theFileName="zsix.txt";
+                 when 7; theFileName="zseven.txt";
+                 when 8; theFileName="zeight.txt"; 
+                 when 9; theFileName="znine.txt";
              end;
              
-             text=File.open('zero.txt').read
-             acVal = text.slice(0,4);
+             text=File.open(theFileName).read
+             acVal = text.slice(0,2);
              acValNumber = acVal.to_i;
-             newACval = (acValNumber+1).to_s+"\n";
-             File.open("zero.txt", 'w+') {|f| f.write(newACval)}
-
-=begin        
-             case cNum
-                  when 0; say = " Creature Number:" + cNum.to_s + " now has AC:" + @zeroAC.to_s; 
-                  when 1; say = " Creature Number:" + cNum.to_s + " now has AC:" + @oneAC.to_s;
-                  when 2; say = " Creature Number:" + cNum.to_s + " now has AC:" + @twoAC.to_s;
-                  when 3; say = " Creature Number:" + cNum.to_s + " now has AC:" + @threeAC.to_s; 
-                  when 4; say = " Creature Number:" + cNum.to_s + " now has AC:" + @fourAC.to_s;
-                  when 5; say = " Creature Number:" + cNum.to_s + " now has AC:" + @fiveAC.to_s;
-                  when 6; say = " Creature Number:" + cNum.to_s + " now has AC:" + @sixAC.to_s;
-                  when 7; say = " Creature Number:" + cNum.to_s + " now has AC:" + @sevenAC.to_s;
-                  when 8; say = " Creature Number:" + cNum.to_s + " now has AC:" + @eightC.to_s;      
-                  when 9; say = " Creature Number:" + cNum.to_s + " now has AC:" + @nineAC.to_s;
-             end;
-=end          
-          event.respond "We made it. Orignal value: " + acVal.to_s + "     new:" + newACval;
+             newACval = (setAC).to_s+"\n";
+             File.open(theFileName, 'w+') {|f| f.write(newACval)}
+      
+          event.respond "In theory, we just assigned " + setAC " as the AC for creature number " + cNum;
        end;
     end;
 end;
 
-# set_the_AC(v1,v2); find_the_creature(v1);
+ot.message(contains:"$c") do |event|
+    check_user_or_nick(event);
+    if @user == "Allen" then;
+         inputStr = event.content; # creature Number and AC should be in the string
+         whatIsNumAC = Integer(inputStr.slice(2,1)) rescue false
+         if (inputStr.length == 3) && (whatIsNumAC != false) then;
+             cNum = inputStr.slice(3,1);
+             case cNum
+                 when 0; theFileName="zero.txt"; 
+                 when 1; theFileName="zone.txt";
+                 when 2; theFileName="ztwo.txt";
+                 when 3; theFileName="zthree.txt";
+                 when 4; theFileName="zfour.txt";
+                 when 5; theFileName="zfive.txt";
+                 when 6; theFileName="zsix.txt";
+                 when 7; theFileName="zseven.txt";
+                 when 8; theFileName="zeight.txt"; 
+                 when 9; theFileName="znine.txt";
+             end;
+             
+             text=File.open(theFileName).read
+             acVal = text.slice(0,2);
+      
+          event.respond "The current AC for creature "  +cNum + " is the value " + acVal;
+       end;
+    end;
+end;
+
+
 
 
 ##########################################
