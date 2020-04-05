@@ -351,7 +351,7 @@ bot.message(contains:"$c") do |event|
                 theFileName = "zone.txt";
              end;             
              
-             text=File.open("#{{theFileName}}").read;
+             text=File.open("#{theFileName}").read;
              acVal = text.slice(0,2);
 #          event.respond "The input string: "  + inputStr + "  whatIsNumAC:  " + whatIsNumAC.to_s + "  this is cNum: " + cNum.to_s;     
           event.respond "The current AC for creature "  +cNum + " is the value " + acVal.to_s;
