@@ -328,7 +328,7 @@ bot.message(contains:"!!!") do |event|
              text=File.open('zero.txt').read
              text.gsub!(/\r\n?/, "\n")
              text.each_line do |line|
-               acVal = line.slice(0,2);
+               acVal = line;
              end
              acVal = acVal.to_i;
              acVal = acVal + 1;
