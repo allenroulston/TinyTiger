@@ -327,7 +327,7 @@ bot.message(contains:"!!!") do |event|
           cAC = inputStr.slice(4,2);
           set_the_AC(cNum,cAC);
           critterName = find_the_creature(cNum);
-          say = " Creature Number:" + cNum.to_s + " now has AC:" + critterName ;
+          say = " Creature Number:" + cNum.to_s + " now has AC:" + "#{critterName}" ;
           event.respond say;
        end;
     end;
