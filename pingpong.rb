@@ -313,13 +313,13 @@ bot.message(contains:"$") do |event|
              cNum = inputStr.slice(1,1);
              setAC = inputStr.slice(2,2);
              
-             fileName = "zero.txt";
+             theFileName = "zero.txt";
              
              text=File.open("zero.txt").read
              acVal = text.slice(0,2);
              acValNumber = acVal.to_i;
              newACval = (setAC).to_s+"\n";
-             File.open("zero.txt", 'w+') {|f| f.write(newACval)}
+             File.open("#{theFileName}", 'w+') {|f| f.write(newACval)}
 
 #          event.respond "The input string: "  + inputStr + "  setAC:  " + setAC.to_s + "  this is cNum: " + cNum.to_s; 
                 
