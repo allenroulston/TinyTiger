@@ -314,7 +314,7 @@ bot.message(contains:"$") do |event|
              setAC = inputStr.slice(2,2);
              case cNum;
                  when 0; theFileName = "zero.txt";
-                 when 1; theFileName - "zone.txt";
+                 when 1; theFileName = "zone.txt";
              end;
                  
              
