@@ -309,11 +309,14 @@ bot.message(contains:"$load") do |event|
        text=File.open("zero.txt").read;
        @armour = Array.new
        @armour = text
+       value0 = @armour[0]
+       value1 = @armour[1]
+       value2 = @armour[2]
        
 
 #       File.open("zero.txt", 'w+') {|f| f.write(newACval)}
                 
-       event.respond "Just to let you know, $load just ran.";
+       event.respond "Just to let you know, $load just ran.\n" + value0.to_s + value1.to_s + value2.to_s;
     end;
 end;
 
