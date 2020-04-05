@@ -129,7 +129,7 @@ bot.message(contains: ";i") do |event|
     end;
     iRoll=(rand 20)+1;
     result = iRoll + mod;
-    responseValue = @user.to_s + " has rolled initiative: [" + iRoll.to_s + "] " + mod.to_s + " = " + result.to_s;
+    responseValue = @user.to_s + " has rolled initiative: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
     event.respond responseValue;
 end;
 
