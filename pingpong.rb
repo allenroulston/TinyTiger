@@ -336,7 +336,7 @@ bot.message(contains:"$") do |event|
     end;
 end;
 
-ot.message(contains:"$c") do |event|
+bot.message(contains:"$c") do |event|
     check_user_or_nick(event);
     if @user == "Allen" then;
          inputStr = event.content; # creature Number and AC should be in the string
