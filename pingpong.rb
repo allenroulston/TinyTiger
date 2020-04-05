@@ -171,6 +171,31 @@ bot.message(contains: ";a") do |event|
     end;
 end;
 
+########## DAMAGE ##############
+bot.message(contains: ";d") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    code = inputValue.slice(2,1);
+    inputName = check_char_name(code);
+    if @user == inputName then; 
+       case inputValue;
+            when ";da"; dType=12; dMod=9;
+            when ";dc"; dType=6; dMod=1;
+            when ";dd"; dType=8; dMod=3;
+            when ";do"; dType=8; dMod=3;
+            when ";dq"; dType=6; dMod=3; 
+            when ";ds"; dType=6; dMod=3;
+            when ";dz"; dType=8; dMod=3;
+       end;
+       dmgRoll=(rand dType)+1;
+       result = dmgRoll + dMod;
+       responseValue = @user.to_s + " damage roll: [" + dmgRoll.to_s + "] + " + dMod.to_s + " = " + result.to_s;
+       event.respond responseValue;
+    end;
+end;
+
+
+
 bot.message(contains: "!init") do |event|
   @init = 1;
 end;
