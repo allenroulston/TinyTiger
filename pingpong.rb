@@ -322,7 +322,7 @@ bot.message(contains:"!!!") do |event|
     if @user == "Allen" then;
        inputStr = event.content; # creature Number and AC should be in the string
        whatIsNumAC = Integer(inputStr.slice(3,3)) rescue false
-       if (inputStr.length == 6) && (whatIsNumAC != ) then;
+       if (inputStr.length == 6) && (whatIsNumAC != false) then;
           cNum = inputStr.slice(3,1);
           cAC = inputStr.slice(4,2);
           set_the_AC(cNum,cAC);
