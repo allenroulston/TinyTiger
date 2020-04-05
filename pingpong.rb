@@ -348,7 +348,7 @@ bot.message(contains:"!!!") do |event|
                   when 9; say = " Creature Number:" + cNum.to_s + " now has AC:" + @nineAC.to_s;
              end;
 =end          
-          event.respond "We made it. Orginal value: " + acVal + "     new:" + newACval;
+          event.respond "We made it. Orginal value: " + acVal.to_s + "     new:" + newACval;
        end;
     end;
 end;
