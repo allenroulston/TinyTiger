@@ -325,7 +325,7 @@ bot.message(contains:"!!!") do |event|
                  when 9; @nineAC=setAC;
              end;
              
-             File.open('zero.txt.').read
+             File.open('zero.txt').read
              text.gsub!(/\r\n?/, "\n")
              text.each_line do |line|
                acVal = line.slice(0,2);
