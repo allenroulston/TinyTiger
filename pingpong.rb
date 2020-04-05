@@ -328,7 +328,7 @@ bot.message(contains:"!!!") do |event|
              text=File.open('zero.txt').read
              text.gsub!(/\r\n?/, "\n")
              text.each_line do |line|
-               acVal = line;
+               acVal = line.slice(0,2);
              end
              acVal = acVal.to_i;
              newACval = (acVal + 1).to_s;
@@ -348,7 +348,7 @@ bot.message(contains:"!!!") do |event|
                   when 9; say = " Creature Number:" + cNum.to_s + " now has AC:" + @nineAC.to_s;
              end;
 =end          
-          event.respond "We made it. Orgianl value: " + acVal + "     new:" newACval;
+          event.respond "We made it. Orginal value: " + acVal + "     new:" + newACval;
        end;
     end;
 end;
