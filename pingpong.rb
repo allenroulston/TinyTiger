@@ -317,17 +317,23 @@ bot.message(contains:"$") do |event|
 #                 when 1; theFileName = "zone.txt";
 #             end;
              if cNum == 0 then;
-                theFileName = "zero.txt";
+                text=File.open("zero.txt").read;
+                             acVal = text.slice(0,2);
              end;
              if cNum == 1 then;
-                theFileName = "zone.txt";
+                text=File.open("zone.txt").read;
+                             acVal = text.slice(0,2);
              end;
              
-             text=File.open("#{theFileName}").read
-             acVal = text.slice(0,2);
              acValNumber = acVal.to_i;
              newACval = (setAC).to_s+"\n";
-             File.open("#{theFileName}", 'w+') {|f| f.write(newACval)}
+             
+             if cNum == 0 then;
+                File.open("zero.txt", 'w+') {|f| f.write(newACval)}
+             end;
+             if cNum == 1 then;
+                File.open("zone.txt", 'w+') {|f| f.write(newACval)}
+             end;
 
 #          event.respond "The input string: "  + inputStr + "  setAC:  " + setAC.to_s + "  this is cNum: " + cNum.to_s; 
                 
