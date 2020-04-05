@@ -53,11 +53,13 @@ bot.message(contains: ".i") do |event|
         end;     
      end;
      
+     adv = inputStr.index('a'); dis = inputStr.index('d');  # was a d or a found in the input string?
+     if (adv != nil) && (dis != nil) then; moreChars = false; end; # if both a & d found, bail out.
+     
      if moreChars == true then;   #bail if bad chars already detected
-        adv = inputStr.index('a'); dis = inputStr.index('d');  # was a d or a found in the input string?
         if (adv != nil) || (dis != nil) then;  # if an a or a d were found :
            endChar = extras.slice((extraCharLen-1),1); # grab the last character
-           if (endChar != "a") && (endChar != "d") then
+           if (endChar != "a") && (endChar != "d") then # if last character is NOT a AND not d, bail
               moreChars = false;
            end;
         end;
