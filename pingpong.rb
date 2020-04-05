@@ -40,6 +40,7 @@ bot.message(contains: ".i") do |event|
      inputStr = event.content; mod = 0; moreChars = true;
      docMsg = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \nFor Advantage/Disadvantage append an  a or d => .ia or .i2a"
      lenInputStr = inputStr.length;
+     
      if lenInputStr > 2 then
         extraCharLen = lenInputStr - 2; # how many characters we will check
         extras = inputStr.slice(2,extraCharLen) # extract extra characters
@@ -52,14 +53,15 @@ bot.message(contains: ".i") do |event|
         end;     
      end;
      
-     adv = inputStr.index('a'); dis = inputStr.index('d');  # was a d or a found in the input string?
-     if (adv != nil) || (dis != nil) then;  # if an a or a d were found :
-       endChar = extras.slice((extraCharLen-1),1); # grab the last character
-         if (endChar != "a") && (endChar != "d") then
-             moreChars = false;
-         end;
+     if moreChars == true then;   #bail if bad chars already detected
+        adv = inputStr.index('a'); dis = inputStr.index('d');  # was a d or a found in the input string?
+        if (adv != nil) || (dis != nil) then;  # if an a or a d were found :
+           endChar = extras.slice((extraCharLen-1),1); # grab the last character
+           if (endChar != "a") && (endChar != "d") then
+              moreChars = false;
+           end;
+        end;
      end;  
-     
      
      if ( (inputStr.slice(0,2) == '.i';) && ( moreChars == true ) )then;  
        # a or d found (or not) in above code
@@ -69,7 +71,7 @@ bot.message(contains: ".i") do |event|
              mod = (inputStr.slice(2,lenInputStr)).to_i;  #keep all of the characters
          end;   
          theRoll = (rand 20) + 1;
-         say = @user.to_s + " has rolled initiative " + theRoll.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s;
+         say = @user.to_s + " has rolled an initiative of: " + theRoll.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s;
      else
          say = docMsg; 
      end;
