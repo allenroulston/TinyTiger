@@ -338,7 +338,7 @@ bot.message(contains:"$c") do |event|
          whatIsNumAC = Integer(inputStr.slice(2,1)) rescue false
          if (inputStr.length == 3) && (whatIsNumAC != false) then;
              cNum = inputStr.slice(2,1);
-             text=File.open("zero.txt").read;
+             text=File.open("zone.txt").read;
              acVal = text.slice(0,2);
 #          event.respond "The input string: "  + inputStr + "  whatIsNumAC:  " + whatIsNumAC.to_s + "  this is cNum: " + cNum.to_s;     
           event.respond "The current AC for creature "  +cNum + " is the value " + acVal.to_s;
