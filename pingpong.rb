@@ -358,7 +358,7 @@ bot.message(contains:"$c") do |event|
                  when 9; theFileName="znine.txt";
              end;
              
-             text=File.open(theFileName).read
+             text=File.open("#{theFileName}").read
              acVal = text.slice(0,2);
  
 #          event.respond "The input string: "  + inputStr + "  whatIsNumAC:  " + whatIsNumAC.to_s + "  this is cNum: " + cNum.to_s;     
