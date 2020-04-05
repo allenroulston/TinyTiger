@@ -326,10 +326,10 @@ bot.message(contains:"!!!") do |event|
              end;
              
              text=File.open('zero.txt').read
-             text.gsub!(/\r\n?/, "\n")
-             text.each_line do |line|
-                  acVal = line.inspect;
-             end;
+#             text.gsub!(/\r\n?/, "\n")
+#             text.each_line do |line|
+             acVal = text.slice(0,4);
+#             end;
 #             acVal = acVal.to_i;
              newACval = (12345).to_s+"\n";
              File.open("zero.txt", 'w+') {|f| f.write(newACval)}
