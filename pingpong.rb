@@ -68,13 +68,13 @@ bot.message(contains: ".i") do |event|
          if (adv != nil) || (dis != nil) then;  # if an a or a d were found :
              mod = (inputStr.slice(2,lenInputStr-1)).to_i;  # drop the last letter
              rollOne = (rand 20)+1; rollTwo = (rand 20)+1; #make two rolls
-             theRolls = "[" + rollOne.to_s + "," + rollTwo.to_s +"]"
-             if adv != nil then
+             theRolls = "[" + rollOne.to_s + "," + rollTwo.to_s + "]";
+             if adv != nil then;
                 theRoll = [rollOne,rollTwo].max;
-             else
+             else;
                theRoll = [rollOne,rollTwo].min;
-             end
-         else
+             end;
+         else;
              mod = (inputStr.slice(2,lenInputStr)).to_i;  #keep all of the characters
              theRolls = (rand 20) + 1;
              theRoll = theRolls;
