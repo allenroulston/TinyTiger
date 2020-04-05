@@ -311,7 +311,7 @@ bot.message(contains:"$load") do |event|
        @armour = text
        
 
-       File.open("zero.txt", 'w+') {|f| f.write(newACval)}
+#       File.open("zero.txt", 'w+') {|f| f.write(newACval)}
                 
        event.respond "Just to let you know, $load just ran.";
     end;
