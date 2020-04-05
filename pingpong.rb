@@ -324,7 +324,7 @@ bot.message(contains:"!!!") do |event|
                  when 8; @eightC=setAC;      
                  when 9; @nineAC=setAC;
              end;
-        
+=begin        
              case cNum
                   when 0; say = " Creature Number:" + cNum.to_s + " now has AC:" + @zeroAC.to_s; 
                   when 1; say = " Creature Number:" + cNum.to_s + " now has AC:" + @oneAC.to_s;
@@ -336,8 +336,9 @@ bot.message(contains:"!!!") do |event|
                   when 7; say = " Creature Number:" + cNum.to_s + " now has AC:" + @sevenAC.to_s;
                   when 8; say = " Creature Number:" + cNum.to_s + " now has AC:" + @eightC.to_s;      
                   when 9; say = " Creature Number:" + cNum.to_s + " now has AC:" + @nineAC.to_s;
-             end;          
-          event.respond say;
+             end;
+=end          
+          event.respond "We made it to the end";#say;
        end;
     end;
 end;
