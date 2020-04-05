@@ -18,9 +18,17 @@ bot = Discordrb::Bot.new token: token
 #  event.respond 'PONG';
 #end
 
-#bot.message(contains: "[20]") do |event|
-#  event.respond 'SOMEONE ROLLED A NATURAL TWENTY'
-#end
+def check_char_name(code);
+   case code;
+       when "c";  @charName = "Cordax Glimscale";
+       when "d";  @charName = "Daisho/ Samurai War Priest";
+       when "o";  @charName = "Ollodash";
+       when "q";  @charName = "Quincey";
+       when "s";  @charName = "Squee / Rogue";
+       when "z";  @charName = "Zalos / Bladesinger";
+    end;
+end;
+
 def check_user_or_nick(event)
   if event.user.nick != nil
     @user = event.user.nick
@@ -111,29 +119,50 @@ end;
 bot.message(matches: ";i") do |event|
     inputValue = event.content;
     if inputValue == ";i"; then;
-       responseValue = "@everyone Please roll initiative :  ;ic  ;id  ;io  ;iq  ;is  ;iz  \nare programmed for each character with Dex mod.";
+       responseValue = "@everyone Please roll initiative:   ;ic   ;id   ;io   ;iq   ;is   ;iz  \nare programmed for each character with Dex mod.";
        event.respond responseValue;
     end;
 end;
 
+########## Unique INITIATIVE ########
 bot.message(contains: ";i") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
+    code = inputValue.slice(2,1);
+    inputName = check_char_name(code);
+    if @user == inputName then; 
+       case inputValue;
+            when ";ic"; mod=1;
+            when ";id"; mod=2;
+            when ";io"; mod=0;
+            when ";iq"; mod=3;
+            when ";is"; mod=3;
+            when ";iz"; mod=3;
+       end;
+       iRoll=(rand 20)+1;
+       result = iRoll + mod;
+       responseValue = @user.to_s + " has rolled initiative: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
+       event.respond responseValue;
+    end;
+end;
+
+######### ATTACK #########
+bot.message(contains: ";a") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
     case inputValue;
-         when ";ic"; mod=1;
-         when ";id"; mod=2;
-         when ";io"; mod=0;
-         when ";iq"; mod=3;
-         when ";is"; mod=3;
-         when ";iz"; mod=3;
+         when ";ac"; mod=5;
+         when ";ad"; mod=5;
+         when ";ao"; mod=5;
+         when ";aq"; mod=5;
+         when ";as"; mod=5;
+         when ";az"; mod=5;
     end;
     iRoll=(rand 20)+1;
     result = iRoll + mod;
-    responseValue = @user.to_s + " has rolled initiative: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
+    responseValue = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
     event.respond responseValue;
 end;
-
-
 
 bot.message(contains: "!init") do |event|
   @init = 1;
