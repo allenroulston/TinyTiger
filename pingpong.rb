@@ -331,7 +331,7 @@ bot.message(contains:"$") do |event|
              newACval = (setAC).to_s+"\n";
              File.open(theFileName, 'w+') {|f| f.write(newACval)}
       
-          event.respond "In theory, we just assigned " + setAC " as the AC for creature number " + cNum;
+          event.respond "In theory, we just assigned " + setAC + " as the AC for creature number " + cNum;
        end;
     end;
 end;
