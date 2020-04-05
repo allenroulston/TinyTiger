@@ -41,9 +41,9 @@ bot.message(contains: ".i") do |event|
      docMsg = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \n For Advantage / Disadvantage append an  a or d => .i1a "
      lenInputStr = inputStr.length;
      if lenInputStr > 2 then
-        extraChar = lenInputStr - 2; # how many characters we will check
-        extras = inputStr.slice(2,extraChar) # extract extra characters
-        (0..(extraChar-1)).each do |x|;
+        extraCharLen = lenInputStr - 2; # how many characters we will check
+        extras = inputStr.slice(2,extraCharLen) # extract extra characters
+        (0..(extraCharLen-1)).each do |x|;
           sample = extras.slice(x,1)   # get one character to sample
           chkResult = ("-1234567890ad").index(sample); # test this sample character     
              if chkResult == nil then;
