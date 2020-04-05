@@ -326,16 +326,16 @@ bot.message(contains:"!!!") do |event|
              end;
         
              case cNum
-                  when 0; say = " Creature Number:" + cNum.to_s + " now has AC:" + @zeroAC; 
-                  when 1; say = " Creature Number:" + cNum.to_s + " now has AC:" + @oneAC;
-                  when 2; say = " Creature Number:" + cNum.to_s + " now has AC:" + @twoAC;
-                  when 3; say = " Creature Number:" + cNum.to_s + " now has AC:" + @threeAC; 
-                  when 4; say = " Creature Number:" + cNum.to_s + " now has AC:" + @fourAC;
-                  when 5; say = " Creature Number:" + cNum.to_s + " now has AC:" + @fiveAC;
-                  when 6; say = " Creature Number:" + cNum.to_s + " now has AC:" + @sixAC;
-                  when 7; say = " Creature Number:" + cNum.to_s + " now has AC:" + @sevenAC;
-                  when 8; say = " Creature Number:" + cNum.to_s + " now has AC:" + @eightC;      
-                  when 9; say = " Creature Number:" + cNum.to_s + " now has AC:" + @nineAC;
+                  when 0; say = " Creature Number:" + cNum.to_s + " now has AC:" + @zeroAC.to_s; 
+                  when 1; say = " Creature Number:" + cNum.to_s + " now has AC:" + @oneAC.to_s;
+                  when 2; say = " Creature Number:" + cNum.to_s + " now has AC:" + @twoAC.to_s;
+                  when 3; say = " Creature Number:" + cNum.to_s + " now has AC:" + @threeAC.to_s; 
+                  when 4; say = " Creature Number:" + cNum.to_s + " now has AC:" + @fourAC.to_s;
+                  when 5; say = " Creature Number:" + cNum.to_s + " now has AC:" + @fiveAC.to_s;
+                  when 6; say = " Creature Number:" + cNum.to_s + " now has AC:" + @sixAC.to_s;
+                  when 7; say = " Creature Number:" + cNum.to_s + " now has AC:" + @sevenAC.to_s;
+                  when 8; say = " Creature Number:" + cNum.to_s + " now has AC:" + @eightC.to_s;      
+                  when 9; say = " Creature Number:" + cNum.to_s + " now has AC:" + @nineAC.to_s;
              end;          
           event.respond say;
        end;
