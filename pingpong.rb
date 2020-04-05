@@ -325,7 +325,7 @@ bot.message(contains:"$") do |event|
                  when 9; theFileName="znine.txt";
              end;
              
-             text=File.open(theFileName).read
+             text=File.open("#{theFileName}").read
              acVal = text.slice(0,2);
              acValNumber = acVal.to_i;
              newACval = (setAC).to_s+"\n";
