@@ -76,8 +76,8 @@ bot.message(contains: ".i") do |event|
              end;
          else;
              mod = (inputStr.slice(2,lenInputStr)).to_i;  #keep all of the characters
-             theRolls = (rand 20) + 1;
-             theRoll = theRolls;
+             theRoll = (rand 20) + 1;
+             theRolls = "[" + theRoll.to_s + "]";
          end;   
          say = @user.to_s + " has rolled an initiative of: " + theRolls.to_s + " + " + mod.to_s + " = " + (theRoll+mod).to_s;
      else
