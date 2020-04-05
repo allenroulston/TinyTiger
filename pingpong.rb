@@ -118,14 +118,15 @@ bot.message(contains: ";i") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     case inputValue;
-         when ";ci"; mod=1;
-         when ";di"; mod=2;
-         when ";oi"; mod=0;
-         when ";qi"; mod=3;
-         when ";si"; mod=3;
-         when ";zi"; mod=3;
+         when ";ic"; mod=1;
+         when ";id"; mod=2;
+         when ";io"; mod=0;
+         when ";iq"; mod=3;
+         when ";is"; mod=3;
+         when ";iz"; mod=3;
     end;
-    iRoll=(rand 20)+1; result = iRoll + mod;
+    iRoll=(rand 20)+1;
+    result = iRoll + mod;
     responseValue = @user.to_s + "has rolled initiative: [" + iRoll.to_s + "] " + mod.to_s + " = " + result.to_s;
     event.respond responseValue;
 end;
