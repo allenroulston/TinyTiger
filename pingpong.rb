@@ -346,20 +346,20 @@ bot.message(contains:"$c") do |event|
          if (inputStr.length == 3) && (whatIsNumAC != false) then;
              cNum = inputStr.slice(2,1);
              case cNum
-                 when 0; text=File.open("zero.txt").read; 
-                 when 1; text=File.open("zone.txt").read;
-                 when 2; text=File.open("ztwo.txt").read;
-                 when 3; text=File.open("zthree.txt").read;
-                 when 4; text=File.open("zfour.txt").read;
-                 when 5; text=File.open("zfive.txt").read;
-                 when 6; text=File.open("zsix.txt").read;
-                 when 7; text=File.open("zseven.txt").read;
-                 when 8; text=File.open("zeight.txt").read; 
-                 when 9; text=File.open("znine.txt").read;
+                 when 0; text=File.open("zero.txt").read; acVal = text.slice(0,2);
+                 when 1; text=File.open("zone.txt").read; acVal = text.slice(0,2);
+                 when 2; text=File.open("ztwo.txt").read; acVal = text.slice(0,2);
+                 when 3; text=File.open("zthree.txt").read; acVal = text.slice(0,2);
+                 when 4; text=File.open("zfour.txt").read; acVal = text.slice(0,2);
+                 when 5; text=File.open("zfive.txt").read; acVal = text.slice(0,2);
+                 when 6; text=File.open("zsix.txt").read; acVal = text.slice(0,2);
+                 when 7; text=File.open("zseven.txt").read; acVal = text.slice(0,2);
+                 when 8; text=File.open("zeight.txt").read; acVal = text.slice(0,2);
+                 when 9; text=File.open("znine.txt").read; acVal = text.slice(0,2);
              end;
              
 #             text=File.open("#{theFileName}").read
-             acVal = text.slice(0,2);
+#             acVal = text.slice(0,2);
  
 #          event.respond "The input string: "  + inputStr + "  whatIsNumAC:  " + whatIsNumAC.to_s + "  this is cNum: " + cNum.to_s;     
           event.respond "The current AC for creature "  +cNum + " is the value " + acVal;
