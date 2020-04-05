@@ -114,7 +114,7 @@ bot.message(matches: "..i") do |event|
     responseValue = "";
 end;
 
-bot.message(matches: ";i") do |event|
+bot.message(contains: ";i") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     case inputValue;
