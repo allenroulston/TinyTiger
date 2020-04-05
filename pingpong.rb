@@ -37,8 +37,8 @@ end;
 
 bot.message(contains: ".i") do |event|
      check_user_or_nick(event)
-     inputStr = event.content; mod = 0; moreChars = true;  extraChar = "none";
-     docMsg = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \n For Advantage / Disadvantage append an  a or d => .i1a "
+     inputStr = event.content; mod = 0; moreChars = true;
+     docMsg = "Rolling initiative? Use:  .i  or  .i-1  or  .i2   \nFor Advantage/Disadvantage append an  a or d => .ia or .i2a"
      lenInputStr = inputStr.length;
      if lenInputStr > 2 then
         extraCharLen = lenInputStr - 2; # how many characters we will check
