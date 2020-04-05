@@ -324,6 +324,16 @@ bot.message(contains:"!!!") do |event|
                  when 8; @eightC=setAC;      
                  when 9; @nineAC=setAC;
              end;
+             
+             File.open('zero.txt.').read
+             text.gsub!(/\r\n?/, "\n")
+             text.each_line do |line|
+               acVal = line.slice(0,2);
+             end
+             acVal = acVal.to_i;
+             acVal = acVal + 1;
+             File.open("zero.txt", 'w+') {|f| f.write(acVal)}
+
 =begin        
              case cNum
                   when 0; say = " Creature Number:" + cNum.to_s + " now has AC:" + @zeroAC.to_s; 
@@ -338,7 +348,7 @@ bot.message(contains:"!!!") do |event|
                   when 9; say = " Creature Number:" + cNum.to_s + " now has AC:" + @nineAC.to_s;
              end;
 =end          
-          event.respond "We made it to the end" + @zeroAC.to_s;#say;
+          event.respond "We made it to the end" + acVal.to_s;#say;
        end;
     end;
 end;
