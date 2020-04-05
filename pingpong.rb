@@ -108,9 +108,9 @@ bot.message(contains: "rth") do |event|
      event.respond responseValue;
 end;
 
-bot.message(matches: "*i") do |event|
+bot.message(matches: ";i") do |event|
     inputValue = event.content;
-    if inputValue == "..i"; then;
+    if inputValue == ";i"; then;
        responseValue = "@everyone Please roll initiative :  ;ic  ;id  ;io  ;iq  ;is  ;iz  \nare programmed for each character with Dex mod.";
        event.respond responseValue;
     end;
