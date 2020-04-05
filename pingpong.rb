@@ -198,7 +198,7 @@ end;
 bot.message(contains: ";d1") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
-    code = inputValue.slice(2,1);
+    code = inputValue.slice(3,1);
     inputName = check_char_name(code);
     if @user == inputName then; 
        case inputValue;
