@@ -331,8 +331,8 @@ bot.message(contains:"!!!") do |event|
                acVal = line;
              end
              acVal = acVal.to_i;
-             acVal = acVal + 1;
-             File.open("zero.txt", 'w+') {|f| f.write(acVal)}
+             newACval = (acVal + 1).to_s;
+             File.open("zero.txt", 'w+') {|f| f.write(newACval)}
 
 =begin        
              case cNum
