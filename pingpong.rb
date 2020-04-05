@@ -108,12 +108,13 @@ bot.message(contains: "rth") do |event|
      event.respond responseValue;
 end;
 
-bot.message(matches: "...i") do |event|
+bot.message(matches: "..i") do |event|
     responseValue = "@everyone Please roll initiative :  ;ic  ;id  ;io  ;iq  ;is  ;iz  \nare programmed for each character with Dex mod.";
     event.respond responseValue;
+    responseValue = "";
 end;
 
-bot.message(start_with: ";i") do |event|
+bot.message(matches: ";i") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     case inputValue;
