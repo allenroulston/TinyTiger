@@ -481,6 +481,26 @@ bot.message(contains: ";MM") do |event|
     event.respond responseValue;
 end;
 
+########## DAMAGE Magic Missle ##############
+bot.message(contains: ";AS") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
+         dDie = [0,1,2]; totalDmg=0;
+         (0..2).each do |x|;
+              dDie[x]=(rand 8)+1;
+              totalDmg=totalDmg + dDie[x];;
+         end;
+         responseValue = @user.to_s + " Aganazzar's Scorcher damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] = " + lesserDmg.to_s +
+                                       "\nTarget makes a DEX save to take half damage";
+    else;
+      responseValue = "Sorry, you cannot cause this damage type."
+    end;
+    event.respond responseValue;
+end;
+
+
+
 
 bot.message(contains: "!init") do |event|
   @init = 1;
