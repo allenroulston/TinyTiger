@@ -374,7 +374,7 @@ end;
 bot.message(contains: ";GB") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
-
+    dDie = [0,1,2];
     (0..2).each do |x|;
         dDie[x]=(rand 6)+1;
         totalDmg=totalDmg + dDie[x];
