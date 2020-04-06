@@ -265,7 +265,7 @@ bot.message(contains: ";d2") do |event|
     inputName = check_char_name(code);
     if @user == inputName then; 
        case inputValue;
-            when ";d2a"; dType=12; dMod=9;
+            when ";d2a"; dType=10; dMod=6;
             when ";d2c"; dType=4; dMod=1;
             when ";d2d"; dType=4; dMod=3;
             when ";d2o"; dType=4; dMod=3;
