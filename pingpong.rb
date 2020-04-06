@@ -218,7 +218,7 @@ bot.message(contains: ";ba") do |event|
                  end;
                  str_2_number(inputValue.slice(4,1)); target = @numba # @numba <= is the result
                  iRoll1=(rand 20)+1;   bless = (rand 4) + 1;
-                 result = theRoll1 + bless;
+                 result = iRoll1 + bless;
                  say = @user.to_s + " rolled a BLESSED attack: [" + iRoll1.to_s + "] + [" + bless.to_s + "] = " + result.to_s + "\n";
                  if (result < @armour[target]) then;
                     say = say + "The attack Missed!";
