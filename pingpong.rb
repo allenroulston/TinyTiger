@@ -256,7 +256,7 @@ bot.message(contains: ";SAD") do |event|
         totalDmg=totalDmg + dDie[x];
     end;
     totalDmg = totalDmg +3; #hard coded for Squee and Quincey
-    responseValue = @user.to_s + " Sneak Attack damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "] + 3 = " + totalDmg.to_s;
+    responseValue = @user.to_s + " Sneak Attack (or Grave Bolts) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "] + 3 = " + totalDmg.to_s;
     event.respond responseValue;
 end;
 
