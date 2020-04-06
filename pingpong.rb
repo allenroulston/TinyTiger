@@ -417,7 +417,7 @@ bot.message(contains: ";FB") do |event|
 end;
 
 ########## DAMAGE Shocking Grasp ##############
-bot.message(contains: ";FB") do |event|
+bot.message(contains: ";SG") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
