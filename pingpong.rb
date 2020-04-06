@@ -246,11 +246,27 @@ bot.message(contains: ";d1") do |event|
 end;
 
 ########## DAMAGE Sneak Attack ##############
+bot.message(contains: ";SAD4") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
+    totalDmg=0;
+    dDie = [0,1,2];
+    (0..2).each do |x|;
+        dDie[x]=(rand 6)+1;
+        totalDmg=totalDmg + dDie[x];
+    end;
+    dagger = (rand 4)+1;
+    totalDmg = totalDmg + dagger +3; #hard coded for Squee and Quincey
+    responseValue = @user.to_s + " Sneak Attack dagger damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dagger.to_s + "] + 3 = " + totalDmg.to_s;
+    event.respond responseValue;
+end;
+
+########## DAMAGE Booming Blade ##############
 bot.message(contains: ";SAD") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
-    totalDmg=0;
-    dDie = [0,1,2,3];
+
     (0..3).each do |x|;
         dDie[x]=(rand 6)+1;
         totalDmg=totalDmg + dDie[x];
@@ -259,6 +275,7 @@ bot.message(contains: ";SAD") do |event|
     responseValue = @user.to_s + " Sneak Attack (or Grave Bolts) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "] + 3 = " + totalDmg.to_s;
     event.respond responseValue;
 end;
+
 
 
 
