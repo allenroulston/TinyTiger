@@ -164,10 +164,12 @@ end;
 ######### ATTACK TARGETED #########
 bot.message(contains: ";t") do |event|
     inputValue = event.content; targetInt = false;
+    
     if (inputValue.length > 3) then
        target = inputValue.slice(3,1);
        targetInt = Integer(target) rescue false
     end;
+    
     if (targetInt != false) then;
        check_user_or_nick(event)
        code = inputValue.slice(2,1);
@@ -190,10 +192,11 @@ bot.message(contains: ";t") do |event|
           else;
             say = say + "The attack HIT!";
           end;
+       end;
     else;
-      say = "Something is missing. Attack needs  ;aX?   X= initial ?= target number (0 to 9)";
+    say = "Something is missing. Attack needs  ;aX?   X= initial ?= target number (0 to 9)";
     end;    
-       event.respond say;
+    event.respond say;
     end;
 end;
 
