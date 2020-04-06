@@ -17,7 +17,6 @@ bot = Discordrb::Bot.new token: token
 #  event.respond 'PONG';
 #end
 
-@zeroAC=10; @oneAC=10; @twoAC=10; @threeAC=10; @fourAC=10; @fiveAC=10; @sixAC=10; @sevenAC=10; @eightAC=10; @nineAC=10;
 @AllenABSmod=[3,4,5,3,4,5];
 @SqueeABSmod=[0,3,2,-1,1,2];
 
@@ -201,10 +200,10 @@ bot.message(contains: ";a") do |event|
                       when ";as"; mod=5;
                       when ";az"; mod=5;
                  end;
-                 str_2_number(inputValue.slice(3,1)); # @numba <= is the result
+                 str_2_number(inputValue.slice(3,1)); target = @numba # @numba <= is the result
                  iRoll=(rand 20)+1; result = iRoll + mod;
                  say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s + "\n";
-                 if (result < @armour[@numba]) then;
+                 if (result < @armour[target]) then;
                     say = say + "The attack Missed!";
                  else;
                     say = say + "The attack HIT!";
