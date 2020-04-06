@@ -265,6 +265,28 @@ bot.message(contains: ";SAD4") do |event|
   event.respond responseValue;
 end;
 
+
+########## DAMAGE Sneak Attack Dagger d4 CRITICAL ##############
+bot.message(contains: ";SAD!4") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
+       totalDmg=0;
+       dDie = [0,1,2,3,4,5];
+       (0..5).each do |x|;
+          dDie[x]=(rand 6)+1;
+          totalDmg=totalDmg + dDie[x];
+       end;
+       dagger1 = (rand 4)+1; dagger2 = (rand 4)+1;
+       totalDmg = totalDmg + dagger1 + dagger2 +3; #hard coded for Squee and Quincey
+       responseValue = @user.to_s + " Sneak Attack (dagger) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "] [" + dDie[5].to_s +
+                                      "]   [" + dagger1.to_s+ "][" + dagger2.to_s + "] + 3 = " + totalDmg.to_s;
+    else;
+       responseValue  = "You cannot use this damage type";
+    end;
+  event.respond responseValue;
+end;
+
 ########## DAMAGE Sneak Attack Short Sword d6 ##############
 bot.message(contains: ";SAD6") do |event|
     inputValue = event.content;
