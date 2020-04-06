@@ -18,6 +18,8 @@ bot = Discordrb::Bot.new token: token
 #end
 
 @zeroAC=10; @oneAC=10; @twoAC=10; @threeAC=10; @fourAC=10; @fiveAC=10; @sixAC=10; @sevenAC=10; @eightAC=10; @nineAC=10;
+@AllenABSmod=[3,4,5,3,4,5];
+@SqueeABSmod=[0,3,2,-1,1,2];
 
 
 def find_the_creature(v1);
@@ -370,7 +372,7 @@ bot.message(contains: ";SAD!8") do |event|
   event.respond responseValue;
 end;
 
-########## DAMAGE Booming Blade ##############
+########## DAMAGE Grave Bolt ##############
 bot.message(contains: ";GB") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
@@ -388,7 +390,18 @@ bot.message(contains: ";GB") do |event|
     event.respond responseValue;
 end;
 
-
+########## DAMAGE Booming Blade ##############
+bot.message(contains: ";BB") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
+        totalDmg= (rand 8) +1;  # Hard coded for Zalos
+       responseValue = @user.to_s + " Booming Blade damage: [" + totalDmg.to_s + "] = " + totalDmg.to_s;
+    else;
+      responseValue = "Sorry, you cannot cause this damage type."
+    end;
+    event.respond responseValue;
+end;
 
 
 bot.message(contains: "!init") do |event|
