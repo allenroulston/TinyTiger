@@ -373,8 +373,9 @@ bot.message(contains:"$set") do |event|
     if @user == "Allen" then;
          inputStr = event.content; # creature Number and AC should be in the string
          whatIsNumAC = Integer(inputStr.slice(4,3)) rescue false
-         if (inputStr.length == 7) && (whatIsNumAC != false) then;
-             cNum = (inputStr.slice(4,1)).to_i;
+         if (inputStr.length == 7) && (whatIsNumAC != false) then;            
+             cNum = (inputStr.slice(4,1));
+             if cNum == "0" then cNum = 0; else; cNum = cNum.to_i end;
              acVal = inputStr.slice(5,2);
              @armour[cNum]=acVal.to_i;
                  
