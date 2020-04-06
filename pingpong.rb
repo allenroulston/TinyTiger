@@ -161,9 +161,10 @@ bot.message(contains: ";i") do |event|
     end;
 end;
 
-######### ATTACK TARGETED #########
+######### ATTACK TARGETED #####################################
 bot.message(contains: ";t") do |event|
-    inputValue = event.content; targetInt = false;
+    inputValue = event.content;
+    targetInt = false;
     
     if (inputValue.length > 3) then
        target = inputValue.slice(3,1);
@@ -172,9 +173,10 @@ bot.message(contains: ";t") do |event|
     
     check_user_or_nick(event)
     code = inputValue.slice(2,1);
-    inputName = check_char_name(code);
+    inputName = check_char_name(code); # input name pulled from method up top; Discord user name
     if (targetInt != false) && (@user == inputName) then;
-          case inputValue;
+          tcode = inputValue.slice(0,3);
+          case tcode;
                when ";ta"; mod=9;
                when ";tc"; mod=5;
                when ";td"; mod=5;
