@@ -198,7 +198,7 @@ bot.message(contains: ";a") do |event|
 end;
 
 ######### ATTACK TARGETED while BLESSED #####################################
-bot.message(contains: ";ab") do |event|
+bot.message(contains: ";ba") do |event|
     inputValue = event.content;
     targetInt = false;
     valTheInnyBlessed(inputValue); #standard validation process found up top
@@ -208,13 +208,13 @@ bot.message(contains: ";ab") do |event|
         if (@user == inputName) then;
                  tcode = inputValue.slice(0,4);  # we need chars postions 0,1,2,3 to validate the character     
                  case tcode;
-                      when ";aba"; mod=7;
-                      when ";abc"; mod=5;
-                      when ";abd"; mod=5;
-                      when ";abo"; mod=5;
-                      when ";abq"; mod=5;
-                      when ";abs"; mod=5;
-                      when ";abz"; mod=5;
+                      when ";baa"; mod=7;
+                      when ";bac"; mod=5;
+                      when ";bad"; mod=5;
+                      when ";bao"; mod=5;
+                      when ";baq"; mod=5;
+                      when ";bas"; mod=5;
+                      when ";baz"; mod=5;
                  end;
                  str_2_number(inputValue.slice(4,1)); target = @numba # @numba <= is the result
                  iRoll1=(rand 20)+1; iRoll2=(rand 20)+1; 
