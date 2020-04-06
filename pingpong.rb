@@ -512,7 +512,8 @@ bot.message(contains: ";SR") do |event|
          ray2 = dDie[2] + dDie[3];
          ray3 = dDie[4] + dDie[5];
          
-         responseValue = @user.to_s + " Scorching Ray damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "] = " + ray1.to_s +
+         responseValue = @user.to_s + " Scorching Ray damage, for each of the three (3) rays: " + 
+                                      "\n[" + dDie[0].to_s + "][" + dDie[1].to_s + "] = " + ray1.to_s +
                                       "\n[" + dDie[2].to_s + "][" + dDie[3].to_s + "] = " + ray2.to_s +
                                       "\n[" + dDie[4].to_s + "][" + dDie[5].to_s + "] = " + ray3.to_s;
     else;
