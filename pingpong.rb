@@ -491,7 +491,7 @@ bot.message(contains: ";AS") do |event|
               dDie[x]=(rand 8)+1;
               totalDmg=totalDmg + dDie[x];;
          end;
-         responseValue = @user.to_s + " Aganazzar's Scorcher damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] = " + lesserDmg.to_s +
+         responseValue = @user.to_s + " Aganazzar's Scorcher damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] = " + totalDmg.to_s +
                                        "\nTarget makes a DEX save to take half damage";
     else;
       responseValue = "Sorry, you cannot cause this damage type."
