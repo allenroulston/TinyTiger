@@ -162,7 +162,7 @@ bot.message(contains: ";i") do |event|
 end;
 
 ######### ATTACK TARGETED #####################################
-bot.message(contains: ";t") do |event|
+bot.message(contains: ";a") do |event|
     inputValue = event.content;
     targetInt = false;
     
@@ -177,13 +177,13 @@ bot.message(contains: ";t") do |event|
     if (targetInt != false) && (@user == inputName) then;
             tcode = inputValue.slice(0,3);
             case tcode;
-               when ";ta"; mod=9;
-               when ";tc"; mod=5;
-               when ";td"; mod=5;
-               when ";to"; mod=5;
-               when ";tq"; mod=5;
-               when ";ts"; mod=5;
-               when ";tz"; mod=5;
+               when ";aa"; mod=9;
+               when ";ac"; mod=5;
+               when ";ad"; mod=5;
+               when ";ao"; mod=5;
+               when ";aq"; mod=5;
+               when ";as"; mod=5;
+               when ";az"; mod=5;
             end;
             iRoll=(rand 20)+1;
             result = iRoll + mod;
@@ -197,30 +197,6 @@ bot.message(contains: ";t") do |event|
        say = "Attack needs  ;aX?   X= first initial   ?= target number (0 to 9)";
     end;    
     event.respond say;
-end;
-
-
-######### ATTACK #########
-bot.message(contains: ";a") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event)
-    code = inputValue.slice(2,1);
-    inputName = check_char_name(code);
-    if @user == inputName then; 
-       case inputValue;
-            when ";aa"; mod=9;
-            when ";ac"; mod=5;
-            when ";ad"; mod=5;
-            when ";ao"; mod=5;
-            when ";aq"; mod=5;
-            when ";as"; mod=5;
-            when ";az"; mod=5;
-       end;
-       iRoll=(rand 20)+1;
-       result = iRoll + mod;
-       responseValue = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
-       event.respond responseValue;
-    end;
 end;
 
 ########## DAMAGE ##############
