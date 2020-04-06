@@ -379,7 +379,7 @@ bot.message(contains:"$set") do |event|
              acVal = inputStr.slice(5,2);
              @armour[cNum]=acVal.to_i;
                  
-          event.respond "For creature " + cNum.to_s + " we set the AC: " + acVal.to_s;
+          event.respond "Armour Class for Creature " + cNum.to_s + " was set to AC: " + acVal.to_s;
        end;
     end;
 end;
