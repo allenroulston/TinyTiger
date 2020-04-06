@@ -245,7 +245,7 @@ bot.message(contains: ";d1") do |event|
     end;
 end;
 
-########## DAMAGE Sneak Attack ##############
+########## DAMAGE Sneak Attack Dagger d4 ##############
 bot.message(contains: ";SAD4") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
@@ -265,7 +265,7 @@ bot.message(contains: ";SAD4") do |event|
   event.respond responseValue;
 end;
 
-########## DAMAGE Sneak Attack ##############
+########## DAMAGE Sneak Attack Short Sword d6 ##############
 bot.message(contains: ";SAD6") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
@@ -284,6 +284,27 @@ bot.message(contains: ";SAD6") do |event|
     end;
   event.respond responseValue;
 end;
+
+########## DAMAGE Sneak Attack Rapier d8 ##############
+bot.message(contains: ";SAD6") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
+       totalDmg=0;
+       dDie = [0,1,2];
+       (0..2).each do |x|;
+          dDie[x]=(rand 6)+1;
+          totalDmg=totalDmg + dDie[x];
+       end;
+       rapier = (rand 8)+1;
+       totalDmg = totalDmg + rapier +3; #hard coded for Squee and Quincey
+       responseValue = @user.to_s + " Sneak Attack (rapier) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "]   [" + rapier.to_s + "] + 3 = " + totalDmg.to_s;
+    else;
+       responseValue  = "You cannot use this damage type";
+    end;
+  event.respond responseValue;
+end;
+
 
 ########## DAMAGE Booming Blade ##############
 bot.message(contains: ";GB") do |event|
