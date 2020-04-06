@@ -235,10 +235,10 @@ bot.message(contains: ";ba") do |event|
 end;
 
 ########## DAMAGE ##############
-bot.message(contains: ";d") do |event|
+bot.message(contains: ";d1") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
-    code = inputValue.slice(2,1);
+    code = inputValue.slice(3,1);
     inputName = check_char_name(code);
     if @user == inputName then; 
        case inputValue;
@@ -258,7 +258,7 @@ bot.message(contains: ";d") do |event|
 end;
 
 ########## DAMAGE 1 ##############
-bot.message(contains: ";d1") do |event|
+bot.message(contains: ";d2") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     code = inputValue.slice(3,1);
@@ -684,46 +684,5 @@ bot.message(contains:"$ALL") do |event|
        end;
     end;
 end;
-##########################################
-bot.message(contains: "Roll:") do |event|
-  comment = " Just saying."
-  tempVar = event.content;  
-  theIndex = tempVar.index('Roll:');
-  theName = tempVar.slice(0,theIndex).to_s;
-  theIndex = tempVar.index('Result:');
-  tempResult = tempVar.slice(theIndex,10);
-  theResult = tempResult.slice(7,10);
-  number = theResult.to_i;
-  case number
-    when 1; comment = "  I hope that wasn't a roll to attack.";
-    when 2; comment = "  Just a flesh wound.";
-    when 3; comment = "  Maybe no one noticed.";
-    when 4; comment = "  Would have been a GREAT result on a die 4.";
-    when 5; comment = "  Meh.";
-    when 6; comment = "  You have a +10 modifier, right?";
-    when 7; comment = "  Was it your lucky number?";
-    when 8; comment = "  Great roll ... for damage.";
-    when 9; comment = "  Hopefully not a death save roll.";
-    when 10; comment = "  A solid roll for damage, too bad it was a roll to hit.";
-    when 11; comment = "  Whose side are you on?";
-    when 12; comment = "  That will hit a Kobold.";
-    when 13; comment = "  Is today a Friday?";
-    when 14; comment = "  Twice as good as a seven.";
-    when 15; comment = "  That will hit a Troll.";
-    when 16; comment = "  That hits a Bugbear.";
-    when 17; comment = "  Snap! That probably hit.";
-    when 18; comment = "  That will hit most Hobgoblins.";
-    when 19; comment = "  Critical Hit, for a Champion.";
-    when 20; comment = "  NATURAL 20!";
-    when 21..30; comment = "  That must be a hit."
-  end;
-  responseValue = theName + "rolled a"  +  theResult + "." + comment;
-  showText = rand(199)+1;
-#  if @d20 == 1 then;
-  if showText == 1 then; 
-     event.respond responseValue;
-     @d20 = 0;
-  end;
-end
 
 bot.run
