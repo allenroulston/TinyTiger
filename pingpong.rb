@@ -21,6 +21,25 @@ bot = Discordrb::Bot.new token: token
 @AllenABSmod=[3,4,5,3,4,5];
 @SqueeABSmod=[0,3,2,-1,1,2];
 
+def valTheInny(inputStr);  # use to validate the input of type ;az1. (attack by Zalos where target # 1)
+  @valTheInny = true;
+  length = inputStr.length;
+  @charInit = inputStr.slice(2,1);
+  chkLtr = ("acdoqsz").index(@charInit); # test this sample character 
+  numbVal = inputStr.slice(3,1);
+  chkNum = Integer(numbVal) rescue false;
+  if (length != 4) || (chkLtr == nil) || (chkNum == false) then;
+    @valTheInny = false;
+  end;
+end;
+
+def str_2_number(value);
+  if value = "0" then;
+     @numba = 0;
+  else
+    @numba = Integer(value);
+  end;  
+end;
 
 def find_the_creature(v1);
   case v1
@@ -167,34 +186,32 @@ end;
 bot.message(contains: ";a") do |event|
     inputValue = event.content;
     targetInt = false;
-    
-    if (inputValue.length > 3) then
-       target = inputValue.slice(3,1);
-       targetInt = Integer(target) rescue false
-    end;
-    
-    check_user_or_nick(event)
-    code = inputValue.slice(2,1);
-    inputName = check_char_name(code); # input name pulled from method up top; Discord user name
-    if (targetInt != false) && (@user == inputName) then;
-            tcode = inputValue.slice(0,3);
-            case tcode;
-               when ";aa"; mod=7;
-               when ";ac"; mod=5;
-               when ";ad"; mod=5;
-               when ";ao"; mod=5;
-               when ";aq"; mod=5;
-               when ";as"; mod=5;
-               when ";az"; mod=5;
-            end;
-            iRoll=(rand 20)+1;
-            result = iRoll + mod;
-            say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s + "\n";
-            if (result < @armour[target.to_i]) then;
-               say = say + "The attack Missed!";
-            else;
-               say = say + "The attack HIT!";
-            end;
+    valTheInny(inputValue); #standard validation process found up top
+    if (@valTheInny == true) then;    
+             check_user_or_nick(event);   nameInitial = inputValue.slice(2,1);
+             inputName = check_char_name(nameInitial); # input name pulled from method up top; Discord user name 
+        if (@user == inputName) then;
+                 tcode = inputValue.slice(0,3);       
+                 case tcode;
+                      when ";aa"; mod=7;
+                      when ";ac"; mod=5;
+                      when ";ad"; mod=5;
+                      when ";ao"; mod=5;
+                      when ";aq"; mod=5;
+                      when ";as"; mod=5;
+                      when ";az"; mod=5;
+                 end;
+                 str_2_number(inputValue.slice(3,1)); # @numba <= is the result
+                 iRoll=(rand 20)+1; result = iRoll + mod;
+                 say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s + "\n";
+                 if (result < @armour[@numba]) then;
+                    say = say + "The attack Missed!";
+                 else;
+                    say = say + "The attack HIT!";
+                 end;
+        else;
+          say = "Attack needs  ;aX?   X= first initial   ?= target number (0 to 9)";
+        end;
     else;
        say = "Attack needs  ;aX?   X= first initial   ?= target number (0 to 9)";
     end;    
