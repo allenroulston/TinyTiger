@@ -222,7 +222,7 @@ bot.message(contains: ";d") do |event|
     end;
 end;
 
-########## DAMAGE ##############
+########## DAMAGE 1 ##############
 bot.message(contains: ";d1") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
@@ -243,6 +243,21 @@ bot.message(contains: ";d1") do |event|
        responseValue = @user.to_s + " [d" + dType.to_s + "] damage roll: [" + dmgRoll.to_s + "] + " + dMod.to_s + " = " + result.to_s;
        event.respond responseValue;
     end;
+end;
+
+########## DAMAGE Sneak Attack ##############
+bot.message(contains: ";SAD") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    totalDmg=0;
+    dDie = [0,1,2,3];
+    (0..3).each do |x|;
+        dDie[x]=(rand 6)+1;
+        totalDmg=totalDmg + dDie[x];
+    end;
+    totalDmg = totalDmg +3; #hard coded for Squee and Quincey
+    responseValue = @user.to_s + " Sneak Attack damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + dDie[3].to_s + "] + 3 = " + totalDmg.to_s;
+    event.respond responseValue;
 end;
 
 
