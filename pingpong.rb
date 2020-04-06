@@ -403,6 +403,19 @@ bot.message(contains: ";BB") do |event|
     event.respond responseValue;
 end;
 
+########## DAMAGE Frost Bite ##############
+bot.message(contains: ";FB") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
+        totalDmg= (rand 6) +1;  # Hard coded for Zalos
+       responseValue = @user.to_s + "  Frost Bite damage: [" + totalDmg.to_s + "] = " + totalDmg.to_s + "\nTarget makes a CON save. Failure means Disadvantage on next attack.";
+    else;
+      responseValue = "Sorry, you cannot cause this damage type."
+    end;
+    event.respond responseValue;
+end;
+
 
 bot.message(contains: "!init") do |event|
   @init = 1;
