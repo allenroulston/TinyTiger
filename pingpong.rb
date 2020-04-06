@@ -170,11 +170,10 @@ bot.message(contains: ";t") do |event|
        targetInt = Integer(target) rescue false
     end;
     
+    check_user_or_nick(event)
+    code = inputValue.slice(2,1);
+    inputName = check_char_name(code);
     if (targetInt != false) && (@user == inputName) then;
-       check_user_or_nick(event)
-       code = inputValue.slice(2,1);
-       inputName = check_char_name(code);
- 
           case inputValue;
                when ";ta"; mod=9;
                when ";tc"; mod=5;
