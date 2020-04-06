@@ -188,7 +188,7 @@ bot.message(contains: ";t") do |event|
             iRoll=(rand 20)+1;
             result = iRoll + mod;
             say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s + "\n";
-            if (result < target.to_i) then;
+            if (result < @armour[target.to_i]) then;
                say = say + "The attack Missed!";
             else;
                say = say + "The attack HIT!";
