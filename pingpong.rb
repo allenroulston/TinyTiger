@@ -416,6 +416,20 @@ bot.message(contains: ";FB") do |event|
     event.respond responseValue;
 end;
 
+########## DAMAGE Shocking Grasp ##############
+bot.message(contains: ";FB") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
+        totalDmg= (rand 8) +1;  # Hard coded for Zalos
+       responseValue = @user.to_s + "  Shocking Grasp damage: [" + totalDmg.to_s + "] = " + totalDmg.to_s;
+    else;
+      responseValue = "Sorry, you cannot cause this damage type."
+    end;
+    event.respond responseValue;
+end;
+
+
 
 bot.message(contains: "!init") do |event|
   @init = 1;
