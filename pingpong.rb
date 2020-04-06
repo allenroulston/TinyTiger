@@ -197,7 +197,6 @@ bot.message(contains: ";t") do |event|
     say = "Something is missing. Attack needs  ;aX?   X= initial ?= target number (0 to 9)";
     end;    
     event.respond say;
-    end;
 end;
 
 
