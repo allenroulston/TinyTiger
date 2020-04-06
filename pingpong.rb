@@ -513,8 +513,8 @@ bot.message(contains: ";SR") do |event|
          ray3 = dDie[4] + dDie[5];
          
          responseValue = @user.to_s + " Scorching Ray damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "] = " + ray1.to_s +
-                                      "\n[" + dDie[2].to_s + "][" + dDie[3].to_s +"] = " ray2.to_s +
-                                      "\n[" + dDie[4].to_s + "][" + dDie[5].to_s +"] = " ray3.to_s;
+                                      "\n[" + dDie[2].to_s + "][" + dDie[3].to_s +"] = " + ray2.to_s +
+                                      "\n[" + dDie[4].to_s + "][" + dDie[5].to_s +"] = " + ray3.to_s;
     else;
       responseValue = "Sorry, you cannot cause this damage type."
     end;
