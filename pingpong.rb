@@ -286,7 +286,7 @@ bot.message(contains: ";SAD6") do |event|
 end;
 
 ########## DAMAGE Sneak Attack Rapier d8 ##############
-bot.message(contains: ";SAD6") do |event|
+bot.message(contains: ";SAD8") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
