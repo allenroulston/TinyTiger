@@ -462,7 +462,24 @@ bot.message(contains: ";CO") do |event|
     event.respond responseValue;
 end;
 
-
+########## DAMAGE Magic Missle ##############
+bot.message(contains: ";MM") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
+         dDie = [0,1,2,3]; totalDmg=0;
+         (0..3).each do |x|;
+              dDie[x]=(rand 4)+1;
+              totalDmg=totalDmg + dDie[x] + 4;
+         end;
+         lesserDmg = totalDmg - dDie[3] -1;
+         responseValue = @user.to_s + " Magic Missile damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] +3 = " + lesserDmg.to_s +
+                                       "\nUp Cast damage would add [" + dDie[3].to_s + "] +1 = " + totalDmg.to_s;
+    else;
+      responseValue = "Sorry, you cannot cause this damage type."
+    end;
+    event.respond responseValue;
+end;
 
 
 bot.message(contains: "!init") do |event|
