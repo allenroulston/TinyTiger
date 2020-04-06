@@ -217,21 +217,19 @@ bot.message(contains: ";ba") do |event|
                       when ";baz"; mod=5;
                  end;
                  str_2_number(inputValue.slice(4,1)); target = @numba # @numba <= is the result
-                 iRoll1=(rand 20)+1; iRoll2=(rand 20)+1; 
-                 theRoll = [iRoll1,iRoll2].max;
-                 bless = (rand 4) + 1;
-                 result = theRoll + bless;
-                 say = @user.to_s + " rolled a BLESSED attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "]   [" + bless.to_s + "] = " + result.to_s + "\n";
+                 iRoll1=(rand 20)+1;   bless = (rand 4) + 1;
+                 result = theRoll1 + bless;
+                 say = @user.to_s + " rolled a BLESSED attack: [" + iRoll1.to_s + "] + [" + bless.to_s + "] = " + result.to_s + "\n";
                  if (result < @armour[target]) then;
                     say = say + "The attack Missed!";
                  else;
                     say = say + "The attack HIT!";
                  end;
         else;
-          say = "Attack needs  ;aX?   X= first initial   ?= target number (0 to 9)";
+          say = "Blessed Attack needs  ;baX?   X= first initial   ?= target number (0 to 9)";
         end;
     else;
-       say = "Attack needs  ;aX?   X= first initial   ?= target number (0 to 9)";
+       say = "Blessed Attack needs  ;baX?   X= first initial   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
