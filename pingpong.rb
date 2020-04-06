@@ -34,7 +34,7 @@ def valTheInny(inputStr);  # use to validate the input of type ;az1. (attack by 
 end;
 
 def str_2_number(value);
-  if value = "0" then;
+  if value == "0" then;
      @numba = 0;
   else
     @numba = Integer(value);
