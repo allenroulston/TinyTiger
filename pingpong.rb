@@ -30,7 +30,21 @@ def valTheInny(inputStr);  # use to validate the input of type ;az1. (attack by 
   if (length != 4) || (chkLtr == nil) || (chkNum == false) then;
     @valTheInny = false;
   end;
-end;
+end; 
+
+def valTheInnyBlessed(inputStr);  # use to validate the input of type ;az1. (attack by Zalos where target # 1)
+    @valTheInnyBlessed = true;
+    length = inputStr.length;
+    @charInit = inputStr.slice(3,1);
+    chkLtr = ("acdoqsz").index(@charInit); # test this sample character 
+    numbVal = inputStr.slice(4,1);
+    chkNum = Integer(numbVal) rescue false;
+    if (length != 5) || (chkLtr == nil) || (chkNum == false) then;
+      @valTheInnyBlessed = false;
+    end;
+end;  
+  
+
 
 def str_2_number(value);
   if value == "0" then;
@@ -38,22 +52,6 @@ def str_2_number(value);
   else
     @numba = Integer(value);
   end;  
-end;
-
-def find_the_creature(v1);
-  case v1
-       when 0; @itis="@zeroAC"; 
-       when 1; @itis="@oneAC"; 
-       when 2; @itis="@twoAC"; 
-       when 3; @itis="@threeAC"; 
-       when 4; @itis="@fourAC"; 
-       when 5; @itis="@fiveAC"; 
-       when 6; @itis="@sixAC"; 
-       when 7; @itis="@sevenAC"; 
-       when 8; @itis="@eightC";          
-       when 9; @itis="@nineAC";
-  end;
-  return(@itis);
 end;
 
 def check_char_name(code);
@@ -130,25 +128,7 @@ bot.message(contains: ".i") do |event|
      
      event.respond say;
 end;
-#bot.message(contains: "d20") do |event|
-#  @oneVar = (event.content) + " d20 roll detected";
-#end
-bot.message(contains: "rth") do |event|
-     comment = " Just saying."
-     tempVar = event.content;  
-     theIndex = tempVar.index('Roll:');
-     theName = tempVar.slice(0,theIndex).to_s;
-     theIndex = tempVar.index('Result:');
-     tempResult = tempVar.slice(theIndex,10);
-     theResult = tempResult.slice(7,10);
-     number = theResult.to_i;
-     if number > 12 then
-         responseValue = "The  Combat  Roll  made  by  " + theName + "  of " + theResult + " is a HIT!    Please roll the  damage, " + theName;
-      else
-         responseValue = "The  Combat  Roll  made  by  " + theName + "  of " + theResult + " is a MISS!";        
-      end;
-     event.respond responseValue;
-end;
+
 
 bot.message(matches: ";i") do |event|
     inputValue = event.content;
@@ -203,6 +183,45 @@ bot.message(contains: ";a") do |event|
                  str_2_number(inputValue.slice(3,1)); target = @numba # @numba <= is the result
                  iRoll=(rand 20)+1; result = iRoll + mod;
                  say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s + "\n";
+                 if (result < @armour[target]) then;
+                    say = say + "The attack Missed!";
+                 else;
+                    say = say + "The attack HIT!";
+                 end;
+        else;
+          say = "Attack needs  ;aX?   X= first initial   ?= target number (0 to 9)";
+        end;
+    else;
+       say = "Attack needs  ;aX?   X= first initial   ?= target number (0 to 9)";
+    end;    
+    event.respond say;
+end;
+
+######### ATTACK TARGETED while BLESSED #####################################
+bot.message(contains: ";ab") do |event|
+    inputValue = event.content;
+    targetInt = false;
+    valTheInnyBlessed(inputValue); #standard validation process found up top
+    if (@valTheInnyBlessed == true) then;    
+             check_user_or_nick(event);   nameInitial = inputValue.slice(3,1); # position 3 is the character initial
+             inputName = check_char_name(nameInitial); # input name pulled from method up top; Discord user name 
+        if (@user == inputName) then;
+                 tcode = inputValue.slice(0,4);  # we need chars postions 0,1,2,3 to validate the character     
+                 case tcode;
+                      when ";aba"; mod=7;
+                      when ";abc"; mod=5;
+                      when ";abd"; mod=5;
+                      when ";abo"; mod=5;
+                      when ";abq"; mod=5;
+                      when ";abs"; mod=5;
+                      when ";abz"; mod=5;
+                 end;
+                 str_2_number(inputValue.slice(4,1)); target = @numba # @numba <= is the result
+                 iRoll1=(rand 20)+1; iRoll2=(rand 20)+1; 
+                 theRoll = [iRoll1,iRoll2].max;
+                 bless = (rand 4) + 1;
+                 result = theRoll + bless;
+                 say = @user.to_s + " rolled a BLESSED attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "]   [" + bless.to_s + "] = " + result.to_s + "\n";
                  if (result < @armour[target]) then;
                     say = say + "The attack Missed!";
                  else;
