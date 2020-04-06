@@ -454,10 +454,8 @@ bot.message(contains: ";CO") do |event|
               totalDmg=totalDmg + dDie[x];
          end;
          lesserDmg = totalDmg - dDie[3];
-         
-
-       responseValue = @user.to_s + " Chromatic Orb damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] = " + lesserDmg.to_s +"\n" +
-                                       "Up Cast damage would add [" + dDie[3].to_s + "] = " + totalDmg.to_s;
+         responseValue = @user.to_s + " Chromatic Orb damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] = " + lesserDmg.to_s +
+                                       "\nUp Cast damage would add [" + dDie[3].to_s + "] = " + totalDmg.to_s;
     else;
       responseValue = "Sorry, you cannot cause this damage type."
     end;
