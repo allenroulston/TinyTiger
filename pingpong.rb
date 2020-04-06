@@ -170,11 +170,11 @@ bot.message(contains: ";t") do |event|
        targetInt = Integer(target) rescue false
     end;
     
-    if (targetInt != false) then;
+    if (targetInt != false) && (@user == inputName) then;
        check_user_or_nick(event)
        code = inputValue.slice(2,1);
        inputName = check_char_name(code);
-       if @user == inputName then; 
+ 
           case inputValue;
                when ";ta"; mod=9;
                when ";tc"; mod=5;
@@ -194,7 +194,7 @@ bot.message(contains: ";t") do |event|
           end;
        end;
     else;
-    say = "Something is missing. Attack needs  ;aX?   X= initial ?= target number (0 to 9)";
+    say = "Attack needs  ;aX?   X= first initial   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
