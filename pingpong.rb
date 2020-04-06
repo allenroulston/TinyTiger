@@ -279,7 +279,7 @@ bot.message(contains: ";SAD!4") do |event|
        end;
        dagger1 = (rand 4)+1; dagger2 = (rand 4)+1;
        totalDmg = totalDmg + dagger1 + dagger2 +3; #hard coded for Squee and Quincey
-       responseValue = @user.to_s + " CRITICAL Sneak Attack (dagger) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "] [" + dDie[5].to_s +
+       responseValue = @user.to_s + " CRITICAL Sneak Attack (dagger) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "][" + dDie[5].to_s +
                                       "]   [" + dagger1.to_s+ "][" + dagger2.to_s + "] + 3 = " + totalDmg.to_s;
     else;
        responseValue  = "You cannot use this damage type";
@@ -307,7 +307,7 @@ bot.message(contains: ";SAD6") do |event|
   event.respond responseValue;
 end;
 
-########## DAMAGE Sneak Attack Dagger d4 CRITICAL ##############
+########## DAMAGE Sneak Attack Short Sword d6 CRITICAL ##############
 bot.message(contains: ";SAD!6") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
@@ -320,7 +320,7 @@ bot.message(contains: ";SAD!6") do |event|
        end;
        short1 = (rand 6)+1; short2 = (rand 6)+1;
        totalDmg = totalDmg + short1 + short2 +3; #hard coded for Squee and Quincey
-       responseValue = @user.to_s + " CRITICAL Sneak Attack (short sword) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "] [" + dDie[5].to_s +
+       responseValue = @user.to_s + " CRITICAL Sneak Attack (short sword) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "][" + dDie[5].to_s +
                                       "]   [" + short1.to_s+ "][" + short2.to_s + "] + 3 = " + totalDmg.to_s;
     else;
        responseValue  = "You cannot use this damage type";
@@ -349,6 +349,26 @@ bot.message(contains: ";SAD8") do |event|
   event.respond responseValue;
 end;
 
+########## DAMAGE Sneak Attack Rapier d8 CRITICAL ##############
+bot.message(contains: ";SAD!8") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
+       totalDmg=0;
+       dDie = [0,1,2,3,4,5];
+       (0..5).each do |x|;
+          dDie[x]=(rand 6)+1;
+          totalDmg=totalDmg + dDie[x];
+       end;
+       rapier1 = (rand 8)+1; rapier2 = (rand 8)+1;
+       totalDmg = totalDmg + rapier1 + rapier2 +3; #hard coded for Squee and Quincey
+       responseValue = @user.to_s + " CRITICAL Sneak Attack (rapier) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "][" + dDie[5].to_s +
+                                      "]   [" + rapier1.to_s+ "][" + rapier2.to_s + "] + 3 = " + totalDmg.to_s;
+    else;
+       responseValue  = "You cannot use this damage type";
+    end;
+  event.respond responseValue;
+end;
 
 ########## DAMAGE Booming Blade ##############
 bot.message(contains: ";GB") do |event|
