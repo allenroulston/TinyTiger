@@ -279,7 +279,7 @@ bot.message(contains: ";SAD!4") do |event|
        end;
        dagger1 = (rand 4)+1; dagger2 = (rand 4)+1;
        totalDmg = totalDmg + dagger1 + dagger2 +3; #hard coded for Squee and Quincey
-       responseValue = @user.to_s + " Sneak Attack (dagger) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "] [" + dDie[5].to_s +
+       responseValue = @user.to_s + " CRITICAL Sneak Attack (dagger) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "] [" + dDie[5].to_s +
                                       "]   [" + dagger1.to_s+ "][" + dagger2.to_s + "] + 3 = " + totalDmg.to_s;
     else;
        responseValue  = "You cannot use this damage type";
