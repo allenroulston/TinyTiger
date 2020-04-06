@@ -349,7 +349,7 @@ bot.message(contains:"$load") do |event|
     check_user_or_nick(event);
     if @user == "Allen" then;
        @armour = Array.new
-       @armour = [0,1,2,3,4,5,6,7,8,9,0];
+       @armour = [12,12,12,12,12,12,12,12,12,12,12];
                 
        event.respond "Just to let you know, $load just ran.";
     end;
@@ -383,7 +383,7 @@ bot.message(contains:"$set") do |event|
     end;
 end;
 
-bot.message(contains:"$all") do |event|
+bot.message(contains:"$ALL") do |event|
     check_user_or_nick(event);
     if @user == "Allen" then;
          inputStr = event.content; # creature Number and AC should be in the string
