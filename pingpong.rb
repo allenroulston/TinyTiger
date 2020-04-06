@@ -365,7 +365,7 @@ bot.message(contains: ";SAD!8") do |event|
        responseValue = @user.to_s + " CRITICAL Sneak Attack (rapier) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "][" + dDie[5].to_s +
                                       "]   [" + rapier1.to_s+ "][" + rapier2.to_s + "] + 3 = " + totalDmg.to_s;
     else;
-       responseValue  = "You cannot use this damage type";
+       responseValue  = "You cannot cause this damage type.";
     end;
   event.respond responseValue;
 end;
@@ -374,13 +374,17 @@ end;
 bot.message(contains: ";GB") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
-    dDie = [0,1,2]; totalDmg=0;
-    (0..2).each do |x|;
-        dDie[x]=(rand 6)+1;
-        totalDmg=totalDmg + dDie[x];
+    if (@user.slice(0,2) == "Sq") || (@user.slice(0,2) == "Al") then
+         dDie = [0,1,2]; totalDmg=0;
+         (0..2).each do |x|;
+              dDie[x]=(rand 6)+1;
+              totalDmg=totalDmg + dDie[x];
+         end;
+       totalDmg = totalDmg +3; #hard coded for Squee and Quincey
+       responseValue = @user.to_s + " Grave Bolt damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "]  + 3 = " + totalDmg.to_s;
+    else;
+      responseValue = "Sorry, you cannot cause this damage type."
     end;
-    totalDmg = totalDmg +3; #hard coded for Squee and Quincey
-    responseValue = @user.to_s + " Grave Bolt damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "]  + 3 = " + totalDmg.to_s;
     event.respond responseValue;
 end;
 
