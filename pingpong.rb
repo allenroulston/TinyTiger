@@ -161,6 +161,43 @@ bot.message(contains: ";i") do |event|
     end;
 end;
 
+######### ATTACK TARGETED #########
+bot.message(contains: ";t") do |event|
+    inputValue = event.content; targetInt = false;
+    if (inputValue.length > 3) then
+       target = inputValue.slice(3,1);
+       targetInt = Integer(target) rescue false
+    end;
+    if (targetInt != false) then;
+       check_user_or_nick(event)
+       code = inputValue.slice(2,1);
+       inputName = check_char_name(code);
+       if @user == inputName then; 
+          case inputValue;
+               when ";aa"; mod=9;
+               when ";ac"; mod=5;
+               when ";ad"; mod=5;
+               when ";ao"; mod=5;
+               when ";aq"; mod=5;
+               when ";as"; mod=5;
+               when ";az"; mod=5;
+          end;
+          iRoll=(rand 20)+1;
+          result = iRoll + mod;
+          say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s + "\n";
+          if (result < target.to_i) then;
+            say = say + "The attack Missed!";
+          else;
+            say = say + "The attack HIT!";
+          end;
+    else;
+      say = "Something is missing. Attack needs  ;aX?   X= initial ?= target number (0 to 9)";
+    end;    
+       event.respond say;
+    end;
+end;
+
+
 ######### ATTACK #########
 bot.message(contains: ";a") do |event|
     inputValue = event.content;
