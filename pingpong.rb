@@ -481,7 +481,7 @@ bot.message(contains: ";MM") do |event|
     event.respond responseValue;
 end;
 
-########## DAMAGE Magic Missle ##############
+########## DAMAGE Aganazzar's Scorcher ##############
 bot.message(contains: ";AS") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
@@ -499,7 +499,27 @@ bot.message(contains: ";AS") do |event|
     event.respond responseValue;
 end;
 
-
+########## DAMAGE Scorching Ray ##############
+bot.message(contains: ";SR") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
+         dDie = [0,1,2,3,4,5]; totalDmg=0;
+         (0..5).each do |x|;
+              dDie[x]=(rand 6)+1;
+         end;
+         ray1 = dDie[0] + dDie[1];
+         ray2 = dDie[2] + dDie[3];
+         ray3 = dDie[4] + dDie[5];
+         
+         responseValue = @user.to_s + " Scorching Ray damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "] = " + ray1.to_s +
+                                      "\n[" + dDie[2].to_s + "][" + dDie[3].to_s +"] = " ray2.to_s +
+                                      "\n[" + dDie[4].to_s + "][" + dDie[5].to_s +"] = " ray3.to_s;
+    else;
+      responseValue = "Sorry, you cannot cause this damage type."
+    end;
+    event.respond responseValue;
+end;
 
 
 bot.message(contains: "!init") do |event|
