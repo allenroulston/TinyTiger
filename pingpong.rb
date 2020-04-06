@@ -443,6 +443,29 @@ bot.message(contains: ";TD") do |event|
     event.respond responseValue;
 end;
 
+########## DAMAGE Chromatic Orb ##############
+bot.message(contains: ";CO") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
+         dDie = [0,1,2,3]; totalDmg=0;
+         (0..3).each do |x|;
+              dDie[x]=(rand 8)+1;
+              totalDmg=totalDmg + dDie[x];
+         end;
+         lesserDmg = totalDmg - dDie[3];
+         
+
+       responseValue = @user.to_s + " Chromatic Orb damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] = " + lesserDmg.to_s +"\n" +
+                                       "Up Cast damage would add [" + dDie[3].to_s + "] = " + totalDmg.to_s;
+    else;
+      responseValue = "Sorry, you cannot cause this damage type."
+    end;
+    event.respond responseValue;
+end;
+
+
+
 
 bot.message(contains: "!init") do |event|
   @init = 1;
