@@ -429,6 +429,19 @@ bot.message(contains: ";SG") do |event|
     event.respond responseValue;
 end;
 
+########## DAMAGE Toll of the Dead ##############
+bot.message(contains: ";TD") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
+        lDmg = (rand 8) +1; bDmg = (rand 12) +1;  # Hard coded for Zalos
+       responseValue = @user.to_s + "  Toll of the Dead damage: full HP:[" + lDmg.to_s + "]  or   Injured HP:[" + bDmg.to_s + "]\n" + 
+                                    "Target makes a WIS save to take no damage.";
+    else;
+      responseValue = "Sorry, you cannot cause this damage type."
+    end;
+    event.respond responseValue;
+end;
 
 
 bot.message(contains: "!init") do |event|
