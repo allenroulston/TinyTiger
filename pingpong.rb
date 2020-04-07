@@ -251,7 +251,7 @@ bot.message(contains: ";d1") do |event|
        end;
        dmgRoll=(rand dType)+1;
        result = dmgRoll + dMod;
-       responseValue = @user.to_s + " [d" + dType.to_s + "] damage roll: [" + dmgRoll.to_s + "] + " + dMod.to_s + " = " + result.to_s;
+       responseValue = @user.to_s + " Weapon 1 damage [d" + dType.to_s + "] damage roll: [" + dmgRoll.to_s + "] + " + dMod.to_s + " = " + result.to_s;
        event.respond responseValue;
     end;
 end;
@@ -275,7 +275,7 @@ bot.message(contains: ";d!1") do |event|
        dmgRoll1=(rand dType)+1;
        dmgRoll2=(rand dType)+1;       
        result = dmgRoll1 +dmgRoll2 + dMod;
-       responseValue = @user.to_s + "Critical Hit damage [d" + dType.to_s + "] damage roll: [" + dmgRoll1.to_s + "] + [" + dmgRoll2.to_s + "] + "  + dMod.to_s + " = " + result.to_s;
+       responseValue = @user.to_s + " Weapon 1 Critical damage [d" + dType.to_s + "] damage roll: [" + dmgRoll1.to_s + "] + [" + dmgRoll2.to_s + "] + "  + dMod.to_s + " = " + result.to_s;
        event.respond responseValue;
     end;
 end;
@@ -298,7 +298,31 @@ bot.message(contains: ";d2") do |event|
        end;
        dmgRoll=(rand dType)+1;
        result = dmgRoll + dMod;
-       responseValue = @user.to_s + " [d" + dType.to_s + "] damage roll: [" + dmgRoll.to_s + "] + " + dMod.to_s + " = " + result.to_s;
+       responseValue = @user.to_s + " Weapon 2 damage [d" + dType.to_s + "] damage roll: [" + dmgRoll.to_s + "] + " + dMod.to_s + " = " + result.to_s;
+       event.respond responseValue;
+    end;
+end;
+
+########## DAMAGE CRITICAL;d!2 ##############
+bot.message(contains: ";d!2") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    code = inputValue.slice(4,1);
+    inputName = check_char_name(code);
+    if @user == inputName then; 
+       case inputValue;
+            when ";d!1a"; dType=10; dMod=6;
+            when ";d!1c"; dType=4; dMod=1;
+            when ";d!1d"; dType=4; dMod=3;
+            when ";d!1o"; dType=4; dMod=3;
+            when ";d!1q"; dType=4; dMod=3; 
+            when ";d!1s"; dType=4; dMod=3;
+            when ";d!1z"; dType=4; dMod=3;
+       end;
+       dmgRoll1=(rand dType)+1;
+       dmgRoll2=(rand dType)+1;       
+       result = dmgRoll1 +dmgRoll2 + dMod;
+       responseValue = @user.to_s + " Weapon 2 Critical damage [d" + dType.to_s + "] damage roll: [" + dmgRoll1.to_s + "] + [" + dmgRoll2.to_s + "] + "  + dMod.to_s + " = " + result.to_s;
        event.respond responseValue;
     end;
 end;
