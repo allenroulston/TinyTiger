@@ -556,6 +556,20 @@ bot.message(contains: ";SR") do |event|
     event.respond responseValue;
 end;
 
+########## DAMAGE ACID vial ##############
+bot.message(contains: ";ACID") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+         dDie = [0,1]; totalDmg=0;
+         (0..1).each do |x|;
+              dDie[x]=(rand 6)+1;
+              totalDmg=totalDmg + dDie[x];;
+         end;
+         responseValue = @user.to_s + " has used Acid to cause disfiguration and damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "] = " + totalDmg.to_s;
+    event.respond responseValue;
+end;
+
+
 
 bot.message(contains: "!init") do |event|
   @init = 1;
