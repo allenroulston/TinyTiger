@@ -635,6 +635,18 @@ bot.message(contains: ";ACID") do |event|
     event.respond responseValue;
 end;
 
+
+bot.message(contains: ";ACID!") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+         dDie = [0,1,2,3]; totalDmg=0;
+         (0..3).each do |x|;
+              dDie[x]=(rand 6)+1;
+              totalDmg=totalDmg + dDie[x];;
+         end;
+         responseValue = @user.to_s + " has used Acid with a Critical Hit: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "] = " + totalDmg.to_s;
+    event.respond responseValue;
+end;
 ########## DAMAGE AFIRE ##############
 bot.message(contains: ";AFIRE") do |event|
     inputValue = event.content;
