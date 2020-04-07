@@ -256,6 +256,30 @@ bot.message(contains: ";d1") do |event|
     end;
 end;
 
+########## DAMAGE CRITICAL;d!1 ##############
+bot.message(contains: ";d!1") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    code = inputValue.slice(4,1);
+    inputName = check_char_name(code);
+    if @user == inputName then; 
+       case inputValue;
+            when ";d!1a"; dType=12; dMod=9;
+            when ";d!1c"; dType=6; dMod=1;
+            when ";d!1d"; dType=10; dMod=3;
+            when ";d!1o"; dType=8; dMod=3;
+            when ";d!1q"; dType=6; dMod=3; 
+            when ";d!1s"; dType=6; dMod=3;
+            when ";d!1z"; dType=8; dMod=3;
+       end;
+       dmgRoll1=(rand dType)+1;
+       dmgRoll2=(rand dType)+1;       
+       result = dmgRoll1 +dmgRoll2 + dMod;
+       responseValue = @user.to_s + "Critical Hit damage [d" + dType.to_s + "] damage roll: [" + dmgRoll1.to_s + "] + [" + dmgRoll1.to_s + "]"  + dMod.to_s + " = " + result.to_s;
+       event.respond responseValue;
+    end;
+end;
+
 ########## DAMAGE 1 ##############
 bot.message(contains: ";d2") do |event|
     inputValue = event.content;
