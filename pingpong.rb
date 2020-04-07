@@ -570,7 +570,7 @@ bot.message(contains: ";ACID") do |event|
 end;
 
 ########## DAMAGE AFIRE ##############
-bot.message(contains: ";ACID") do |event|
+bot.message(contains: ";AFIRE") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
          dDie = [0]; totalDmg=0;
