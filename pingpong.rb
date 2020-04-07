@@ -129,7 +129,6 @@ bot.message(contains: ".i") do |event|
      event.respond say;
 end;
 
-
 bot.message(matches: ";i") do |event|
     inputValue = event.content;
     if inputValue == ";i"; then;
@@ -575,7 +574,7 @@ bot.message(contains: ";AFIRE") do |event|
     check_user_or_nick(event)
          dDie = [0]; totalDmg=0;
          dDie[0]=(rand 4)+1;
-         totalDmg=totalDmg + dDie[x];;
+         totalDmg=totalDmg + dDie[0];
          responseValue = @user.to_s + " has used Alchemical Fire to cause disfiguration and damage: [" + dDie[0].to_s +  "] = " + totalDmg.to_s; + 
                                       "\nTarget keeps burning (burn baby, burn) until they use their action to extinguish the flames (DC10 Dex)";
     event.respond responseValue;
