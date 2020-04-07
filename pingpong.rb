@@ -588,7 +588,7 @@ bot.message(contains: ";HWORD") do |event|
          dDie = [0]; totalDmg=0;
          dDie[0]=(rand 4)+1;
          totalDmg=totalDmg + dDie[0] + 2;
-         responseValue = @user.to_s + " has used Healing Word to heale someone for: [" + dDie[0].to_s +  "] + 2 = " + totalDmg.to_s; + " HP";
+         responseValue = @user.to_s + " has used Healing Word to heal someone for: [" + dDie[0].to_s +  "] + 2 = " + totalDmg.to_s; + " HP";
     else;
             responseValue = "Sorry, you cannot cast the spell. " ;
     end;
