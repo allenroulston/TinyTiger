@@ -580,6 +580,22 @@ bot.message(contains: ";AFIRE") do |event|
     event.respond responseValue;
 end;
 
+########## DAMAGE AFIRE ##############
+bot.message(contains: ";HWORD") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    if (@user.slice(0,4) == "Daish") || (@user.slice(0,4) == "Allen") then
+         dDie = [0]; totalDmg=0;
+         dDie[0]=(rand 4)+1;
+         totalDmg=totalDmg + dDie[0] + 2;
+         responseValue = @user.to_s + " has used Healing Word to heale someone for: [" + dDie[0].to_s +  "] + 2 = " + totalDmg.to_s; + " HP";
+    else;
+            responseValue = "Sorry, you cannot cast the spell."
+    end;
+    event.respond responseValue;
+end;
+
+
 
 bot.message(contains: "!init") do |event|
   @init = 1;
