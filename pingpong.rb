@@ -495,6 +495,25 @@ bot.message(contains: ";CO") do |event|
     event.respond responseValue;
 end;
 
+########## DAMAGE Dragon Breath ##############
+bot.message(contains: ";DB") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
+         dDie = [0,1,2]; totalDmg=0;
+         (0..2).each do |x|;
+              dDie[x]=(rand 6)+1;
+              totalDmg=totalDmg + dDie[x];
+         end;
+         responseValue = @user.to_s + " Dragon Breath damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] +3 = " + totalDmg.to_s +
+                                       "\nHalf damage to target with a successful DEX save";
+    else;
+      responseValue = "Sorry, you cannot cause this damage type."
+    end;
+    event.respond responseValue;
+end;
+
+
 ########## DAMAGE Magic Missle ##############
 bot.message(contains: ";MM") do |event|
     inputValue = event.content;
