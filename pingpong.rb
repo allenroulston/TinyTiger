@@ -275,7 +275,7 @@ bot.message(contains: ";d!1") do |event|
        dmgRoll1=(rand dType)+1;
        dmgRoll2=(rand dType)+1;       
        result = dmgRoll1 +dmgRoll2 + dMod;
-       responseValue = @user.to_s + "Critical Hit damage [d" + dType.to_s + "] damage roll: [" + dmgRoll1.to_s + "] + [" + dmgRoll1.to_s + "]"  + dMod.to_s + " = " + result.to_s;
+       responseValue = @user.to_s + "Critical Hit damage [d" + dType.to_s + "] damage roll: [" + dmgRoll1.to_s + "] + [" + dmgRoll2.to_s + "] + "  + dMod.to_s + " = " + result.to_s;
        event.respond responseValue;
     end;
 end;
