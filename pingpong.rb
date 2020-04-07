@@ -635,8 +635,7 @@ bot.message(contains: ";ACID") do |event|
     event.respond responseValue;
 end;
 
-
-bot.message(contains: ";ACID!") do |event|
+bot.message(contains: ";!ACID") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
          dDie = [0,1,2,3]; totalDmg=0;
@@ -647,6 +646,7 @@ bot.message(contains: ";ACID!") do |event|
          responseValue = @user.to_s + " has used Acid with a Critical Hit: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "] = " + totalDmg.to_s;
     event.respond responseValue;
 end;
+
 ########## DAMAGE AFIRE ##############
 bot.message(contains: ";AFIRE") do |event|
     inputValue = event.content;
@@ -655,6 +655,18 @@ bot.message(contains: ";AFIRE") do |event|
          dDie[0]=(rand 4)+1;
          totalDmg=totalDmg + dDie[0];
          responseValue = @user.to_s + " has used Alchemical Fire to cause disfiguration and damage: [" + dDie[0].to_s +  "] = " + totalDmg.to_s; + 
+                                      "\nTarget keeps burning (burn baby, burn) until they use their action to extinguish the flames (DC10 Dex)";
+    event.respond responseValue;
+end;
+
+########## DAMAGE AFIRE! ##############
+bot.message(contains: ";!AFIRE") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+         dDie = [0,1]; totalDmg=0;
+         dDie[0]=(rand 4)+1; dDie[1]=(rand 4)+1;
+         totalDmg=totalDmg + dDie[0] + dDie[1];
+         responseValue = @user.to_s + " has used Alchemical Fire with a Critical Hit: [" + dDie[0].to_s + "][" + dDie[1].to_s + "] = " + totalDmg.to_s; + 
                                       "\nTarget keeps burning (burn baby, burn) until they use their action to extinguish the flames (DC10 Dex)";
     event.respond responseValue;
 end;
