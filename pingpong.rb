@@ -569,6 +569,17 @@ bot.message(contains: ";ACID") do |event|
     event.respond responseValue;
 end;
 
+########## DAMAGE AFIRE ##############
+bot.message(contains: ";ACID") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+         dDie = [0]; totalDmg=0;
+         dDie[x]=(rand 4)+1;
+         totalDmg=totalDmg + dDie[x];;
+         responseValue = @user.to_s + " has used Alchemical Fire to cause disfiguration and damage: [" + dDie[0].to_s +  "] = " + totalDmg.to_s; + 
+                                      "\nTarget keeps burning (burn baby, burn) until they use their action to extinguish the flames (DC10 Dex)";
+    event.respond responseValue;
+end;
 
 
 bot.message(contains: "!init") do |event|
