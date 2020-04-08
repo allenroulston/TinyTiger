@@ -150,23 +150,12 @@ end;
 bot.message(contains: ";i") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
-    code = inputValue.slice(2,1);
-    inputName = check_char_name(code);
-    if @user == inputName then; 
-       case inputValue;
-            when ";ia"; mod=9;
-            when ";ic"; mod=1;
-            when ";id"; mod=2;
-            when ";io"; mod=0;
-            when ";iq"; mod=3;
-            when ";is"; mod=3;
-            when ";iz"; mod=3;
-       end;
-       iRoll=(rand 20)+1;
-       result = iRoll + mod;
-       responseValue = @user.to_s + " has rolled initiative: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
-       event.respond responseValue;
-    end;
+    get_the_player();
+    mod = @player[@playerIndex][3];
+    initRoll=(rand 20)+1;
+    result = initRoll + mod;
+    responseValue = @user.to_s + " has rolled initiative: [" + iinitRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
+    event.respond responseValue;
 end;
 
 ######### ATTACK TARGETED #####################################
