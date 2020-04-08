@@ -848,10 +848,12 @@ end;
 
 def get_the_player();
     player5Char = @user.slice(0,5); #taking first 5 characters of @user
+    y=0; #used to track the current index value for the array
     @player.each do |x|;
-           if x[0][0] == player5Char then; # find the player Index matching player5Char
-              @playerIndex = x;
+           if x[0] == player5Char then; # find the player Index matching player5Char
+              @playerIndex = y;
            end;
+      y=y+1
     end;
 end;
 
