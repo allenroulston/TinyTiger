@@ -794,8 +794,8 @@ bot.message(contains:"$Wlist") do |event|
     check_user_or_nick(event);
     get_the_player(); # this assigns a value to @playerIndex
     say = @user + ", your current weapon damage die is set to: " + @weapon[(@player[@playerIndex][2])].to_s + "\n\n";
-    say = say +  "To change weapons, assign a new damage die value using: $Wset* \n" +
-                 "where * is an Integer, $set2, as shown below:\n\n";
+    say = say +  "To change weapons, assign a new damage die value using: $Wset \n" +
+                 "with an Integer, as shown below. Such as $Wset3 \n\n";
     (0..5).each do |x|;
           say = say +  @weapon[x] + " <=> " + x.to_s  + "    ";
     end;                 
