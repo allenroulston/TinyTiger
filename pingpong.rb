@@ -188,7 +188,7 @@ bot.message(contains: ";rth") do |event|
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
                                   " = " + (mod + @damage1).to_s + " points of damage.";
                    else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + [" + @damage2.to_s + "] + " +
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "] + " +
                                   mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
                    end;
               else
@@ -196,7 +196,7 @@ bot.message(contains: ";rth") do |event|
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
                                   " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
                    else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + [" + @damage2.to_s + "] + [" + @damage3.to_s +
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
                                  "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
                    end;              
               end;
