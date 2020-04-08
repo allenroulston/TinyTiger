@@ -788,7 +788,6 @@ bot.message(contains:"$Wlist") do |event|
           say = say + "         " + @weapon[0];
     end;                 
     event.respond say;
-    end;
 end;
 
 bot.message(contains:"$set") do |event|
