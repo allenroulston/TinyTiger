@@ -7,6 +7,7 @@ require 'yaml'
 junk = YAML.load(File.read("data.yml"));
 token = junk[0]+junk[1]+junk[2];
 @armour = YAML.load(File.read("armourClass.yml"));
+@weapon = YAML.load(File.read("weaponDamage.yml"));
 
 
 prefix = "!" # Your bot's prefix
@@ -76,6 +77,7 @@ def check_user_or_nick(event)
     @user = event.user.name
   end
 end
+
 
 
 bot.message(contains: ".i") do |event|
@@ -776,6 +778,17 @@ bot.message(contains:"$c") do |event|
             end;           
     end;
     event.respond say;
+end;
+
+bot.message(contains:"$Wlist") do |event|
+    check_user_or_nick(event);
+    say = "";
+    say = say + @user ", using $Wset? assign weapon damage (where ? = one number below:\n";
+    (0..5).each do |x|;
+          say = say + "         " + @weapon[0];
+    end;                 
+    event.respond say;
+    end;
 end;
 
 bot.message(contains:"$set") do |event|
