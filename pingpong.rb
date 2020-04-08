@@ -770,9 +770,10 @@ end;
 bot.message(contains:"$c") do |event|
     check_user_or_nick(event); say = "";
     if @user == "Allen" then; # as long as the user is Allen, perform the following
-             (0..9).each do |x|;
+            (0..9).each do |x|;
                 acVal = @armour[x].to_s;
-                say = say + " Creature " + x.to_s + " has Armour Class " + acVal + "\n";           
+                say = say + " Creature " + x.to_s + " has Armour Class " + acVal + "\n";
+            end;           
     end;
     event.respond say;
 end;
