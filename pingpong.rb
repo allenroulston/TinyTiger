@@ -141,13 +141,14 @@ end;
 bot.message(matches: ";i") do |event|
     inputValue = event.content;
     if inputValue == ";i"; then;
-       responseValue = "@everyone Please roll initiative:   ;ic   ;id   ;io   ;iq   ;is   ;iz  \nare programmed for each character with Dex mod.";
+       responseValue = "@everyone Please roll initiative:   ;init \n
+                        The bot knows your character ability scores.";
        event.respond responseValue;
     end;
 end;
 
 ########## Unique INITIATIVE ########
-bot.message(contains: ";i") do |event|
+bot.message(contains: ";init") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     get_the_player();
