@@ -849,7 +849,7 @@ end;
 def get_the_player();
     player5Char = @user.slice(0,5); #taking first 5 characters of @user
     @player.each do |x|;
-           if x[0] == player5Char then; # find the player Index matching player5Char
+           if x[0][0] == player5Char then; # find the player Index matching player5Char
               @playerIndex = x;
            end;
     end;
