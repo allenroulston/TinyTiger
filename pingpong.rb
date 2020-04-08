@@ -23,7 +23,7 @@ owner = 690339632529015005 # Your user ID
 
 def get_the_player(player5Char);
     @player.each do |x|;
-           if @player[x][1] == player5Char then; # find the player Index matching player5Char
+           if @player[x][1].to_s == player5Char then; # find the player Index matching player5Char
               @playerIndex = x[0];
            end;
     end;
