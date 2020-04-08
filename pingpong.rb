@@ -13,13 +13,13 @@ owner = 690339632529015005 # Your user ID
 @armour = YAML.load(File.read("armourClass.yml"));
 @weapon = YAML.load(File.read("weaponDamage.yml"));
 
-@player = [["0", "Corda", 5],
-           ["1", "Daish", 5],
-           ["2", "Ollod", 5],
-           ["3", "Quinc", 5],
-           ["4", "Squee", 5],
-           ["5", "Zalos", 5],
-           ["6", "Allen", 5]];
+@player = [[0, "Corda", 5],
+           [1, "Daish", 5],
+           [2, "Ollod", 5],
+           [3, "Quinc", 5],
+           [4, "Squee", 5],
+           [5, "Zalos", 5],
+           [6, "Allen", 5]];
 
 def get_the_player(player5Char);
     @player.each do |x|;
