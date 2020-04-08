@@ -21,10 +21,11 @@ owner = 690339632529015005 # Your user ID
            ["5", "Zalos", 5]];
 
 def get_the_player(player5Char);
-  @player.each do |x|;
-    if @player[x][1] == player5Chare then;
-      @playerIndex = x[0];
-  end;
+    @player.each do |x|;
+           if @player[x][1] == player5Chare then;
+              @playerIndex = x[0];
+           end;
+    end;
 end;
 
 
@@ -817,15 +818,15 @@ bot.message(contains:"$Wset") do |event|
     weaponInt = inputStr.slice(5,1)
     validate_integer(weaponInt) # sets @intVal as an integer or false
     if @intVal != false then;   # if the string can be made into an INTEGER
-       str_2_number(weaponInt); # this will turn a string integer into an INTEGER
-       if @numba < 6 then;   # we have less than 6 choices
+          str_2_number(weaponInt); # this will turn a string integer into an INTEGER
+          if @numba < 6 then;   # we have less than 6 choices
              @player[@playerIndex][2] = @weapon[@numba];  #assign the character weapon damage die value
              say = "Your weapon damage has be set to " + @player[@playerIndex][2].to_s;
-       else;
-          say = "Sorry, $Wset requires this format: $Wset?  where ? is a single number ( 0 to 5 )";         
-       end;
+          else;
+              say = "Sorry, $Wset requires this format: $Wset?  where ? is a single number ( 0 to 5 )";         
+          end;
     else
-      say = "Sorry, $Wset requires this format: $Wset?  where ? is a single number ( 0 to 5 )"; 
+       say = "Sorry, $Wset requires this format: $Wset?  where ? is a single number ( 0 to 5 )"; 
     end;
     event.respond say;
 end;
