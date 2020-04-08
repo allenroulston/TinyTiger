@@ -888,6 +888,7 @@ def roll_damage(damType);
      when "1d8"; @damage = (rand 8)+1; @damage1 = -99;
      when "1d6"; @damage = (rand 6)+1; @damage1 = -99;
      when "1d4"; @damage = (rand 4)+1; @damage1 = -99;
+  end;
 end;
 
 
