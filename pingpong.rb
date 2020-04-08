@@ -787,7 +787,7 @@ end;
 bot.message(contains:"$Wlist") do |event|
     check_user_or_nick(event);
     get_the_player(); # this assigns a value to @playerIndex
-    say = @user + ", your current weapon damage die is set to: " + @weapon[(@player[@playerIndex][2])].to_s + "\n\n";
+    say = @user + ", your current weapon damage die is set to: " + @weapon[(@player[@playerIndex][1])].to_s + "\n\n";
     say = say +  "To change weapons, assign a new damage die value using: $Wset \n" +
                  "with an Integer, as shown below. Such as $Wset3 \n\n";
     (0..5).each do |x|;
@@ -849,8 +849,8 @@ end;
 def get_the_player();
     player5Char = @user.slice(0,5); #taking first 5 characters of @user
     @player.each do |x|;
-           if x[1] == player5Char then; # find the player Index matching player5Char
-              @playerIndex = x[0];
+           if x[0] == player5Char then; # find the player Index matching player5Char
+              @playerIndex = x;
            end;
     end;
 end;
