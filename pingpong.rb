@@ -12,6 +12,7 @@ owner = 690339632529015005 # Your user ID
 
 @armour = YAML.load(File.read("armourClass.yml"));
 @weapon = YAML.load(File.read("weaponDamage.yml"));
+@player = YAML.load(File.read("ABSmods.yml"));
 
 def check_user_or_nick(event)
   if event.user.nick != nil
@@ -20,14 +21,7 @@ def check_user_or_nick(event)
     @user = event.user.name
   end
 end
-
-@player = [[0, "Corda", 5],
-           [1, "Daish", 5],
-           [2, "Ollod", 5],
-           [3, "Quinc", 5],
-           [4, "Squee", 5],
-           [5, "Zalos", 5],
-           [6, "Allen", 5]];
+ 
 
 #####End Configuration####
 
@@ -810,8 +804,8 @@ bot.message(contains:"$Wset") do |event|
     if @intVal != false then;   # if the string can be made into an INTEGER
           str_2_number(weaponInt); # this will turn a string integer into an INTEGER => @numba
           if @numba <= @weapon.length then;   # value cannot be higher than number of weapons
-             @player[@playerIndex][2] = @numba;  #assign the character weapon damage die value
-             say = "Your weapon damage has be set to " + @weapon[(@player[@playerIndex][2])].to_s;
+             @player[@playerIndex][1] = @numba;  #assign the character weapon damage die value
+             say = "Your weapon damage has be set to " + @weapon[(@player[@playerIndex][1])].to_s;
           else;
               say = "Sorry, $Wset requires this format: $Wset?  where ? is a single number ( 0 to 5 )";         
           end;
