@@ -783,7 +783,7 @@ end;
 bot.message(contains:"$Wlist") do |event|
     check_user_or_nick(event);
     say = "";
-    say = say + @user ", using $Wset? assign weapon damage (where ? = one number below:\n";
+    say = say + @user + ", using $Wset? assign weapon damage (where ? = one number below:\n";
     (0..5).each do |x|;
           say = say + "         " + @weapon[0];
     end;                 
