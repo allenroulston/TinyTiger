@@ -193,7 +193,7 @@ bot.message(contains: ";rth") do |event|
                    end;
               else
                    if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s +"] + " + mod.to_s 
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s 
                              + " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
                    else;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + [" + @damage2.to_s + "] + ["
