@@ -6,6 +6,9 @@ require 'yaml'
 #####Configuration########
 junk = YAML.load(File.read("data.yml"));
 token = junk[0]+junk[1]+junk[2];
+@armour = YAML.load(File.read("armourClass.yml"));
+
+
 prefix = "!" # Your bot's prefix
 owner = 690339632529015005 # Your user ID
 
@@ -635,6 +638,7 @@ bot.message(contains: ";ACID") do |event|
     event.respond responseValue;
 end;
 
+########## DAMAGE !ACID vial ##############
 bot.message(contains: ";!ACID") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
@@ -659,7 +663,7 @@ bot.message(contains: ";AFIRE") do |event|
     event.respond responseValue;
 end;
 
-########## DAMAGE AFIRE! ##############
+########## DAMAGE !AFIRE ##############
 bot.message(contains: ";!AFIRE") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
