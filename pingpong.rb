@@ -181,12 +181,12 @@ bot.message(contains: ";rth") do |event|
           else;
               say = say + "The attack HIT!";
               #check for iRoll to be 20 for a CRIT
-              roll_damage(@player[@playerIndex][1]); #damage die type in @player
+              roll_damage(@weapon(@player[@playerIndex][1])); #damage die type in @player
               #@damage & @damage1 now have values
               if @damage1 == -99 then;
-                say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s #+ "] + " + mod.to_s + " = " + (mod + @damage1).to_s;
+                say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s + " = " + (mod + @damage1).to_s;
               else;
-                say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s #+ "] + [" + @damage2.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2).to_s;
+                say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + [" + @damage2.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2).to_s;
               end;
           end;
           
