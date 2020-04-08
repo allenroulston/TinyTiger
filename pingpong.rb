@@ -766,27 +766,15 @@ end;
 #########################################
 ###########  Armour Class  ##############
 #########################################
-bot.message(contains:"$load") do |event|
-    check_user_or_nick(event);
-    if @user == "Allen" then;
-       @armour = Array.new
-       @armour = [12,12,12,12,12,12,12,12,12,12,12];
-                
-       event.respond "Just to let you know, $load just ran, all Armour Classes are now 12.";
-    end;
-end;
 
 bot.message(contains:"$c") do |event|
-    check_user_or_nick(event);
-    if @user == "Allen" then;
-         inputStr = event.content; # creature Number and AC should be in the string
-         whatIsNumAC = Integer(inputStr.slice(2,1)) rescue false
-         if (inputStr.length == 3) && (whatIsNumAC != false) then;
-             cNum = inputStr.slice(2,1);
-             acVal = @armour[cNum.to_i].to_s;    
-          event.respond "The current AC for creature "  +cNum + " is the value " + acVal;
-       end;
+    check_user_or_nick(event); say = "";
+    if @user == "Allen" then; # as long as the user is Allen, perform the following
+             (0..9).each do |x|;
+                acVal = @armour[x].to_s;
+                say = say + " Creature " + x.to_s + " has Armour Class " + acVal + "\n";           
     end;
+    event.respond say;
 end;
 
 bot.message(contains:"$set") do |event|
