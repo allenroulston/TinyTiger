@@ -164,7 +164,7 @@ bot.message(contains: ";init") do |event|
     event.respond responseValue;
 end;
 
-######### easy ATTACK TARGET creature #####################################  @weapon[(@player[@playerIndex][1])].to_s
+######### easy ATTACK TARGET creature #####################################
 bot.message(contains: ";rth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
@@ -185,19 +185,19 @@ bot.message(contains: ";rth") do |event|
               #@damage & @damage1 now have values
               if iRoll != 20 then;
                    if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s 
-                                + " = " + (mod + @damage1).to_s + " points of damage.";
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
+                                  " = " + (mod + @damage1).to_s + " points of damage.";
                    else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + [" + @damage2.to_s + "] + " 
-                                + mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + [" + @damage2.to_s + "] + " +
+                                  mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
                    end;
               else
                    if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s 
-                             + " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
+                                  " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
                    else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + [" + @damage2.to_s + "] + [" + @damage3.to_s 
-                                + "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + [" + @damage2.to_s + "] + [" + @damage3.to_s +
+                                 "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
                    end;              
               end;
           end;
