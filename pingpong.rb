@@ -785,7 +785,7 @@ bot.message(contains:"$Wlist") do |event|
     say = "";
     say = say + @user + ", using $Wset? assign weapon damage (where ? = one number below:\n";
     (0..5).each do |x|;
-          say = say + "         " + @weapon[0];
+          say = say + "         " + x.to_s +": " + @weapon[x] + "\n";
     end;                 
     event.respond say;
 end;
