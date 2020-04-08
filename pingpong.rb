@@ -155,7 +155,7 @@ bot.message(contains: ";init") do |event|
     mod = @player[@playerIndex][3];
     initRoll=(rand 20)+1;
     result = initRoll + mod;
-    responseValue = @user.to_s + " has rolled initiative: [" + iinitRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
+    responseValue = @user.to_s + " has rolled initiative: [" + initRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
     event.respond responseValue;
 end;
 
