@@ -13,6 +13,14 @@ owner = 690339632529015005 # Your user ID
 @armour = YAML.load(File.read("armourClass.yml"));
 @weapon = YAML.load(File.read("weaponDamage.yml"));
 
+def check_user_or_nick(event)
+  if event.user.nick != nil
+    @user = event.user.nick
+  else
+    @user = event.user.name
+  end
+end
+
 @player = [[0, "Corda", 5],
            [1, "Daish", 5],
            [2, "Ollod", 5],
@@ -21,7 +29,9 @@ owner = 690339632529015005 # Your user ID
            [5, "Zalos", 5],
            [6, "Allen", 5]];
 
-def get_the_player(player5Char);
+def get_the_player();
+    check_user_or_nick(event); # assigns a name to @user  
+    player5Char = @user.slice(0,5); #taking first 5 characters of @user
     @player.each do |x|;
            if x[1] == player5Char then; # find the player Index matching player5Char
               @playerIndex = x[0];
@@ -33,10 +43,6 @@ end;
 #####End Configuration####
 
 bot = Discordrb::Bot.new token: token 
-
-#bot.message(with_text: 'ping') do |event|
-#  event.respond 'PONG';
-#end
 
 @AllenABSmod=[3,4,5,3,4,5];
 @SqueeABSmod=[0,3,2,-1,1,2];
@@ -91,13 +97,7 @@ def check_char_name(code);
     end;
 end;
 
-def check_user_or_nick(event)
-  if event.user.nick != nil
-    @user = event.user.nick
-  else
-    @user = event.user.name
-  end
-end
+
 
 
 
@@ -803,19 +803,18 @@ end;
 
 bot.message(contains:"$Wlist") do |event|
     check_user_or_nick(event);
-    say = "";
-    say = say + @user + ", using $Wset? assign weapon damage (where ? = one number below:\n";
+    get_the_player(); # this assigns a value to @playerIndex
+    say = @user + ", your current weapon damage die is set to: " + @player[@playerIndex][2].to_s + "\n\n";
+    say = say + @user + ", using $Wset? assign weapon damage (where ? = one number below:\n\n";
     (0..5).each do |x|;
-          say = say + "         " + x.to_s + ": " + @weapon[x] + "\n";
+          say = say + "         " + x.to_s + ": " + @weapon[x];
     end;                 
     event.respond say;
 end;
 
 bot.message(contains:"$Wset") do |event|
     inputStr = event.content; # this should contain "$Wset#" where # is a single digit
-    check_user_or_nick(event); # assigns a name to @user
-    player5Char = @user.slice(0,5); #taking first 5 characters of @user
-    get_the_player(player5Char); # this assigns a value to @playerIndex
+    get_the_player(); # this assigns a value to @playerIndex
     weaponInt = inputStr.slice(5,1)
     validate_integer(weaponInt) # sets @intVal as an integer or false
     if @intVal != false then;   # if the string can be made into an INTEGER
