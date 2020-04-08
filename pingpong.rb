@@ -183,12 +183,13 @@ bot.message(contains: ";rth") do |event|
               #check for iRoll to be 20 for a CRIT
               roll_damage(@player[@playerIndex][1]); #damage die type in @player
               #@damage & @damage1 now have values
-              if damage1 == -99 then;
-                say = say + "\n"+ @player[@playerIndex][1] + " rolled [" + damage + "] + " + mod.to_s + " = " + (mod+damage1).to_s;
+              if @damage1 == -99 then;
+                say = say + "\n"+ @player[@playerIndex][1] + " rolled [" + @damage1 + "] + " + mod.to_s + " = " + (mod+@damage1).to_s;
               else;
-                say = say + "\n["+ @player[@playerIndex][1] + " rolled [" + damage + "] + [" + damage2 + "] + " + mod.to_s + " = " + (mod+damage1+damage2).to_s;
+                say = say + "\n["+ @player[@playerIndex][1] + " rolled [" + @damage1 + "] + [" + @damage2 + "] + " + mod.to_s + " = " + (mod+@damage1+@damage2).to_s;
               end;
           end;
+          
     else;
        say = "Attack needs  ;aX?   X= first initial   ?= target number (0 to 9)";
     end;    
