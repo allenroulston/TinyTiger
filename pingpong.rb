@@ -196,8 +196,8 @@ bot.message(contains: ";rth") do |event|
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s 
                              + " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
                    else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + [" + @damage2.to_s + "] + ["
-                                + @damage3.to_s + "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + [" + @damage2.to_s + "] + [" + @damage3.to_s 
+                                + "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
                    end;              
               end;
           end;
@@ -900,7 +900,7 @@ def roll_damage(damType);
      when "1d10"; @damage1 = (rand 10)+1; @damage2 = -99; @damage3 = (rand 10)+1; @damage4 = -99;
      when "1d8"; @damage1 = (rand 8)+1; @damage2 = -99; @damage3 = (rand 8)+1; @damage4 = -99;
      when "1d6"; @damage1 = (rand 6)+1; @damage2 = -99; @damage3 = (rand 6)+1; @damage4 = -99;
-     when "1d4"; @damage1 = (rand 4)+1; @damage2 = -99; @damage1 = (rand 4)+1; @damage2 = -99;
+     when "1d4"; @damage1 = (rand 4)+1; @damage2 = -99; @damage3 = (rand 4)+1; @damage4 = -99;
   end;
 end;
 
