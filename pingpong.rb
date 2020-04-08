@@ -180,12 +180,21 @@ bot.message(contains: ";rth") do |event|
               say = say + "The attack Missed!";
           else;
               say = say + "The attack HIT!";
+              #check for iRoll to be 20 for a CRIT
+              roll_damage(@player[@playerIndex][1]); #damage die type in @player
+              #@damage & @damage1 now have values
+              if damage1 == -99 then;
+                say = say + "\n"+ @player[@playerIndex][1] + " rolled [" + damage + "] + " + mod.to_s + " = " + (mod+damage1).to_s;
+              else;
+                say = say + "\n["+ @player[@playerIndex][1] + " rolled [" + damage + "] + [" + damage2 "] + " + mod.to_s + " = " + (mod+damage1+damage2).to_s;
+              end;
           end;
     else;
        say = "Attack needs  ;aX?   X= first initial   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
+
 
 
 ######### ATTACK TARGETED #####################################
@@ -853,15 +862,9 @@ end;
 bot.message(contains:"$ALL") do |event|
     check_user_or_nick(event);
     if @user == "Allen" then;
-         inputStr = event.content; # creature Number and AC should be in the string
-         whatIsNumAC = Integer(inputStr.slice(4,2)) rescue false
-         if (inputStr.length == 6) && (whatIsNumAC != false) then;
-             acVal = inputStr.slice(4,2);
              (0..9).each do |x|;
-                  @armour[x]=acVal.to_i;
-              end;                 
+                  @armour[x]=acVal.to_i;      
           event.respond "ALL creatures now have an AC of: " + acVal.to_s;
-       end;
     end;
 end;
 
@@ -875,5 +878,22 @@ def get_the_player();
       y=y+1
     end;
 end;
+
+def roll_damage(damType);
+  case damType;
+     when "2d6"; @damage = (rand 6)+1; @damage1 = (rand 6)+1;    
+     when "1d12"; @damage = (rand 12)+1; @damage1 = -99;
+     when "1d10"; @damage = (rand 10)+1; @damage1 = -99;
+     when "1d8"; @damage = (rand 8)+1; @damage1 = -99;
+     when "1d6"; @damage = (rand 6)+1; @damage1 = -99;
+     when "1d4"; @damage = (rand 4)+1; @damage1 = -99;
+end;
+
+
+
+
+
+
+
 
 bot.run
