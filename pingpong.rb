@@ -184,9 +184,9 @@ bot.message(contains: ";rth") do |event|
               roll_damage(@player[@playerIndex][1]); #damage die type in @player
               #@damage & @damage1 now have values
               if @damage1 == -99 then;
-                say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage.to_s + "] + " + mod.to_s + " = " + (mod + @damage).to_s;
+                say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s #+ " rolled [" + @damage.to_s + "] + " + mod.to_s + " = " + (mod + @damage).to_s;
               else;
-                say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage.to_s + "] + [" + @damage1.to_s + "] + " + mod.to_s + " = " + (mod + @damage + @damage1).to_s;
+                say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s #+ " rolled [" + @damage.to_s + "] + [" + @damage1.to_s + "] + " + mod.to_s + " = " + (mod + @damage + @damage1).to_s;
               end;
           end;
           
