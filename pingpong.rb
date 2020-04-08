@@ -793,10 +793,10 @@ end;
 bot.message(contains:"$Wlist") do |event|
     check_user_or_nick(event);
     get_the_player(); # this assigns a value to @playerIndex
-    say = @user + ", your current weapon damage die is set to: " + @weapon[(@playerIndex[2])].to_s + "\n\n";
+    say = @user + ", your current weapon damage die is set to: " + @weapon[(@player[@playerIndex][2])].to_s + "\n\n";
     say = say + @user + ", using $Wset? assign weapon damage (where ? = one number below:\n\n";
     (0..5).each do |x|;
-          say = say + "         " + x.to_s + ": " + @weapon[x];
+          say = say + "       " + x.to_s + ": " + @weapon[x];
     end;                 
     event.respond say;
 end;
@@ -807,7 +807,7 @@ bot.message(contains:"$Wset") do |event|
     weaponInt = inputStr.slice(5,1)
     validate_integer(weaponInt) # sets @intVal as an integer or false
     if @intVal != false then;   # if the string can be made into an INTEGER
-          str_2_number(weaponInt); # this will turn a string integer into an INTEGER
+          str_2_number(weaponInt); # this will turn a string integer into an INTEGER => @numba
           if @numba <= @weapon.length then;   # value cannot be higher than number of weapons
              @player[@playerIndex][2] = @weapon[@numba];  #assign the character weapon damage die value
              say = "Your weapon damage has be set to " + @player[@playerIndex][2].to_s;
