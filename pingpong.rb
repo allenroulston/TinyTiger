@@ -186,7 +186,7 @@ bot.message(contains: ";rth") do |event|
               if damage1 == -99 then;
                 say = say + "\n"+ @player[@playerIndex][1] + " rolled [" + damage + "] + " + mod.to_s + " = " + (mod+damage1).to_s;
               else;
-                say = say + "\n["+ @player[@playerIndex][1] + " rolled [" + damage + "] + [" + damage2 "] + " + mod.to_s + " = " + (mod+damage1+damage2).to_s;
+                say = say + "\n["+ @player[@playerIndex][1] + " rolled [" + damage + "] + [" + damage2 + "] + " + mod.to_s + " = " + (mod+damage1+damage2).to_s;
               end;
           end;
     else;
