@@ -46,6 +46,15 @@ def validate_integer(numbVal);
     @intVal = Integer(numbVal) rescue false;
 end;
 
+def valTheRTH(inputStr);  # use to validate the input of type ;az1. (attack by Zalos where target # 1)
+  @valTheRTH = true;
+  length = inputStr.length;
+  numbVal = inputStr.slice(4,1);
+  chkNum = Integer(numbVal) rescue false;
+  if (length != 5) || (chkNum == false) then;
+    @valTheRTH = false;
+  end;
+end; 
 
 def valTheInnyBlessed(inputStr);  # use to validate the input of type ;az1. (attack by Zalos where target # 1)
     @valTheInnyBlessed = true;
@@ -79,10 +88,6 @@ def check_char_name(code);
        when "z";  @charName = "Zalos / Bladesinger";
     end;
 end;
-
-
-
-
 
 bot.message(contains: ".i") do |event|
      check_user_or_nick(event)
@@ -141,8 +146,8 @@ end;
 bot.message(matches: ";i") do |event|
     inputValue = event.content;
     if inputValue == ";i"; then;
-       responseValue = "@everyone Please roll initiative:   ;init \n
-                        The bot knows your character ability scores.";
+       responseValue = "@everyone Please roll initiative with command:   ;init \n"+
+                      "(The bot knows your character ability score modifiers.)";
        event.respond responseValue;
     end;
 end;
@@ -158,6 +163,30 @@ bot.message(contains: ";init") do |event|
     responseValue = @user.to_s + " has rolled initiative: [" + initRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
     event.respond responseValue;
 end;
+
+######### easy ATTACK TARGET creature #####################################
+bot.message(contains: ";rth") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event);
+    valTheRTH(inputValue); #standard validation process found up top
+    if (@valTheRTH == true) then;
+      get_the_player(); #creates the value in @playerIndex
+      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];
+      mod = [mod1,mod2].max;
+      str_2_number(inputValue.slice(4,1)); target = @numba # @numba <= is the result
+      iRoll=(rand 20)+1; result = iRoll + mod;
+      say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s + "\n";
+          if (result < @armour[target]) then;
+              say = say + "The attack Missed!";
+          else;
+              say = say + "The attack HIT!";
+          end;
+    else;
+       say = "Attack needs  ;aX?   X= first initial   ?= target number (0 to 9)";
+    end;    
+    event.respond say;
+end;
+
 
 ######### ATTACK TARGETED #####################################
 bot.message(contains: ";a") do |event|
