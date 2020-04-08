@@ -29,17 +29,6 @@ end
            [5, "Zalos", 5],
            [6, "Allen", 5]];
 
-def get_the_player();
-    check_user_or_nick(event); # assigns a name to @user  
-    player5Char = @user.slice(0,5); #taking first 5 characters of @user
-    @player.each do |x|;
-           if x[1] == player5Char then; # find the player Index matching player5Char
-              @playerIndex = x[0];
-           end;
-    end;
-end;
-
-
 #####End Configuration####
 
 bot = Discordrb::Bot.new token: token 
@@ -859,6 +848,15 @@ bot.message(contains:"$ALL") do |event|
               end;                 
           event.respond "ALL creatures now have an AC of: " + acVal.to_s;
        end;
+    end;
+end;
+
+def get_the_player();
+    player5Char = @user.slice(0,5); #taking first 5 characters of @user
+    @player.each do |x|;
+           if x[1] == player5Char then; # find the player Index matching player5Char
+              @playerIndex = x[0];
+           end;
     end;
 end;
 
