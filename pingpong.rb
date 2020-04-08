@@ -6,12 +6,27 @@ require 'yaml'
 #####Configuration########
 junk = YAML.load(File.read("data.yml"));
 token = junk[0]+junk[1]+junk[2];
-@armour = YAML.load(File.read("armourClass.yml"));
-@weapon = YAML.load(File.read("weaponDamage.yml"));
-
 
 prefix = "!" # Your bot's prefix
 owner = 690339632529015005 # Your user ID
+
+@armour = YAML.load(File.read("armourClass.yml"));
+@weapon = YAML.load(File.read("weaponDamage.yml"));
+
+@player = [["0", "Corda", 5],
+           ["1", "Daish", 5],
+           ["2", "Ollod", 5],
+           ["3", "Quinc", 5],
+           ["4", "Squee", 5],
+           ["5", "Zalos", 5]];
+
+def get_the_player(player5Char);
+  @player.each do |x|;
+    if @player[x][1] == player5Chare then;
+      @playerIndex = x[0];
+  end;
+end;
+
 
 #####End Configuration####
 
@@ -36,6 +51,11 @@ def valTheInny(inputStr);  # use to validate the input of type ;az1. (attack by 
   end;
 end; 
 
+def validate_integer(numbVal);
+    @intVal = Integer(numbVal) rescue false;
+end;
+
+
 def valTheInnyBlessed(inputStr);  # use to validate the input of type ;az1. (attack by Zalos where target # 1)
     @valTheInnyBlessed = true;
     length = inputStr.length;
@@ -48,7 +68,6 @@ def valTheInnyBlessed(inputStr);  # use to validate the input of type ;az1. (att
     end;
 end;  
   
-
 
 def str_2_number(value);
   if value == "0" then;
@@ -790,7 +809,29 @@ bot.message(contains:"$Wlist") do |event|
     event.respond say;
 end;
 
-bot.message(contains:"$set") do |event|
+bot.message(contains:"$Wset") do |event|
+    inputStr = event.content; # this should contain "$Wset#" where # is a single digit
+    check_user_or_nick(event); # assigns a name to @user
+    player5Char = @user.slice(0,5); #taking first 5 characters of @user
+    get_the_player(player5Char); # this assigns a value to @playerIndex
+    weaponInt = inputStr.slice(5,1)
+    validate_integer(weaponInt) # sets @intVal as an integer or false
+    if @intVal != false then;   # if the string can be made into an INTEGER
+       str_2_number(weaponInt); # this will turn a string integer into an INTEGER
+       if @numba < 6 then;   # we have less than 6 choices
+             @player[@playerIndex][2] = @weapon[@numba];  #assign the character weapon damage die value
+             say = "Your weapon damage has be set to " + @player[@playerIndex][2].to_s;
+       else;
+          say = "Sorry, $Wset requires this format: $Wset?  where ? is a single number ( 0 to 5 )";         
+       end;
+    else
+      say = "Sorry, $Wset requires this format: $Wset?  where ? is a single number ( 0 to 5 )"; 
+    end;
+    event.respond say;
+end;
+
+
+bot.message(contains:"$ACset") do |event|
     check_user_or_nick(event);
     if @user == "Allen" then;
          inputStr = event.content; # creature Number and AC should be in the string
@@ -800,7 +841,6 @@ bot.message(contains:"$set") do |event|
              if cNum == "0" then cNum = 0; else; cNum = cNum.to_i end;
              acVal = inputStr.slice(5,2);
              @armour[cNum]=acVal.to_i;
-                 
           event.respond "Armour Class for Creature " + cNum.to_s + " was set to AC: " + acVal.to_s;
        end;
     end;
