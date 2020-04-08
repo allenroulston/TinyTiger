@@ -797,7 +797,7 @@ bot.message(contains:"$Wlist") do |event|
     say = say + @user + ", To change weapons, assing a new damage die value using: $Wset? \n" +
                           "where ?  is an integer value, as shown below:\n\n";
     (0..5).each do |x|;
-          say = say + "       " + x.to_s + " <=> " + @weapon[x];
+          say = say +  x.to_s + " <=> " + @weapon[x] + "    ";
     end;                 
     event.respond say;
 end;
