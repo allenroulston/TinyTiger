@@ -184,9 +184,9 @@ bot.message(contains: ";rth") do |event|
               roll_damage(@player[@playerIndex][1]); #damage die type in @player
               #@damage & @damage1 now have values
               if @damage1 == -99 then;
-                say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s #+ " rolled [" + @damage.to_s + "] + " + mod.to_s + " = " + (mod + @damage).to_s;
+                say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s #+ "] + " + mod.to_s + " = " + (mod + @damage1).to_s;
               else;
-                say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s #+ " rolled [" + @damage.to_s + "] + [" + @damage1.to_s + "] + " + mod.to_s + " = " + (mod + @damage + @damage1).to_s;
+                say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s #+ "] + [" + @damage2.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2).to_s;
               end;
           end;
           
@@ -883,12 +883,12 @@ end;
 
 def roll_damage(damType);
   case damType;
-     when "2d6"; @damage = (rand 6)+1; @damage1 = (rand 6)+1;    
-     when "1d12"; @damage = (rand 12)+1; @damage1 = -99;
-     when "1d10"; @damage = (rand 10)+1; @damage1 = -99;
-     when "1d8"; @damage = (rand 8)+1; @damage1 = -99;
-     when "1d6"; @damage = (rand 6)+1; @damage1 = -99;
-     when "1d4"; @damage = (rand 4)+1; @damage1 = -99;
+     when "2d6"; @damage1 = (rand 6)+1; @damage2 = (rand 6)+1;    
+     when "1d12"; @damage1 = (rand 12)+1; @damage2 = -99;
+     when "1d10"; @damage1 = (rand 10)+1; @damage2 = -99;
+     when "1d8"; @damage1 = (rand 8)+1; @damage2 = -99;
+     when "1d6"; @damage1 = (rand 6)+1; @damage2 = -99;
+     when "1d4"; @damage1 = (rand 4)+1; @damage2 = -99;
   end;
 end;
 
