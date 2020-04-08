@@ -772,7 +772,7 @@ bot.message(contains:"$c") do |event|
     if @user == "Allen" then; # as long as the user is Allen, perform the following
             (0..9).each do |x|;
                 acVal = @armour[x].to_s;
-                say = say + " Creature " + x.to_s + " has Armour Class " + acVal + "\n";
+                say = say + "Creature " + x.to_s + " has Armour Class " + acVal + "\n";
             end;           
     end;
     event.respond say;
