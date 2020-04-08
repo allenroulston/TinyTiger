@@ -863,7 +863,8 @@ bot.message(contains:"$ALL") do |event|
     check_user_or_nick(event);
     if @user == "Allen" then;
              (0..9).each do |x|;
-                  @armour[x]=acVal.to_i;      
+                  @armour[x]=acVal.to_i; 
+             end;     
           event.respond "ALL creatures now have an AC of: " + acVal.to_s;
     end;
 end;
@@ -888,12 +889,6 @@ def roll_damage(damType);
      when "1d6"; @damage = (rand 6)+1; @damage1 = -99;
      when "1d4"; @damage = (rand 4)+1; @damage1 = -99;
 end;
-
-
-
-
-
-
 
 
 bot.run
