@@ -809,7 +809,7 @@ bot.message(contains:"$Wset") do |event|
     if @intVal != false then;   # if the string can be made into an INTEGER
           str_2_number(weaponInt); # this will turn a string integer into an INTEGER => @numba
           if @numba <= @weapon.length then;   # value cannot be higher than number of weapons
-             @player[@playerIndex][2] = @weapon[@numba];  #assign the character weapon damage die value
+             @player[@playerIndex][2] = @numba;  #assign the character weapon damage die value
              say = "Your weapon damage has be set to " + @weapon[(@player[@playerIndex][2])].to_s;
           else;
               say = "Sorry, $Wset requires this format: $Wset?  where ? is a single number ( 0 to 5 )";         
