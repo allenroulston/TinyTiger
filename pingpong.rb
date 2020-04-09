@@ -178,6 +178,21 @@ bot.message(contains: ";ainit") do |event|
     responseValue = @user.to_s + " has rolled initiative with ADVANTAGE: [" + initRoll1.to_s + "][" + initRoll2.to_s + "] + "  + mod.to_s + " = " + result.to_s;
     event.respond responseValue;
 end;
+
+########## DisAdvantage Unique INITIATIVE ########
+bot.message(contains: ";dinit") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+    get_the_player();
+    mod = @player[@playerIndex][3];
+    initRoll1=(rand 20)+1;    
+    initRoll2=(rand 20)+1;
+    initRoll = [initRoll1,initRoll2].min;
+    result = initRoll + mod;
+    responseValue = @user.to_s + " has rolled initiative with DIS-ADVANTAGE: [" + initRoll1.to_s + "][" + initRoll2.to_s + "] + "  + mod.to_s + " = " + result.to_s;
+    event.respond responseValue;
+end;
+
 ######### easy ATTACK TARGET creature #####################################
 bot.message(contains: ";rth") do |event|
     inputValue = event.content;
