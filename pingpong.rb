@@ -58,6 +58,15 @@ def valTheRTH(inputStr);  # use to validate the input of type ;az1. (attack by Z
   end;
 end;
 
+def valTheARTH(inputStr);  # use to validate the input of type ;az1. (attack by Zalos where target # 1)
+  @valTheARTH = true;
+  length = inputStr.length;
+  numbVal = inputStr.slice(5,1);
+  chkNum = Integer(numbVal) rescue false;
+  if (length != 6) || (chkNum == false) then;
+    @valTheARTH = false;
+  end;
+end;
 
 def valTheBRTH(inputStr);  # use to validate the input of type ;az1. (attack by Zalos where target # 1)
   @valTheBRTH = true;
@@ -241,12 +250,12 @@ end;
 bot.message(contains: ";arth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
-    valTheRTH(inputValue); #standard validation process found up top
-    if (@valTheRTH == true) then;
+    valTheARTH(inputValue); #standard validation process found up top
+    if (@valTheARTH == true) then;
       get_the_player(); #creates the value in @playerIndex
       mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];      profB=@player[@playerIndex][8];
       mod = [mod1,mod2].max;
-      str_2_number(inputValue.slice(4,1)); target = @numba # @numba <= is the result
+      str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
       iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
       iRoll=[iRoll1,iRoll2].max;
       result = iRoll + mod + profB;
@@ -278,7 +287,7 @@ bot.message(contains: ";arth") do |event|
           end;
           
     else;
-       say = "Roll To Hit needs  ;rth   ?= target number (0 to 9)";
+       say = "Advanatage Roll To Hit needs  ;arth   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
