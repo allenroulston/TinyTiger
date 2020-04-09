@@ -232,7 +232,7 @@ bot.message(contains: ";rth") do |event|
           end;
           
     else;
-       say = "Roll To Hit needs  ;rth   ?= target number (0 to 9)";
+       say = "Blessed Roll To Hit needs  ;rth   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
