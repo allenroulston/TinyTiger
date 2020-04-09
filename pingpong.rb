@@ -301,10 +301,10 @@ bot.message(contains: ";drth") do |event|
     if (@valTheARTH == true) then;
       get_the_player(); #creates the value in @playerIndex
       mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];      profB=@player[@playerIndex][8];
-      mod = [mod1,mod2].min;
+      mod = [mod1,mod2].max;
       str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
       iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
-      iRoll=[iRoll1,iRoll2].max;
+      iRoll=[iRoll1,iRoll2].min;
       result = iRoll + mod + profB;
       say = @user.to_s + " rolled an DISADVANTAGE attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
           if (result < @armour[target]) then;
