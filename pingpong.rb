@@ -200,8 +200,8 @@ bot.message(contains: ";rth") do |event|
     valTheRTH(inputValue); #standard validation process found up top
     if (@valTheRTH == true) then;
       get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];
-      mod = [mod1,mod2].max;
+      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];      profBonus=@player[@playerIndex][8];
+      mod = [mod1,mod2].max + profBonus;
       str_2_number(inputValue.slice(4,1)); target = @numba # @numba <= is the result
       iRoll=(rand 20)+1; result = iRoll + mod;
       say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] + " + mod.to_s + " = " + result.to_s + "\n";
@@ -245,8 +245,8 @@ bot.message(contains: ";brth") do |event|
     valTheBRTH(inputValue); #standard validation process found up top
     if (@valTheBRTH == true) then;
       get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];
-      mod = [mod1,mod2].max;
+      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];     profBonus=@player[@playerIndex][8];
+      mod = [mod1,mod2].max + profBonus;
       str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
       blessDie = (rand 4)+1;
       iRoll=(rand 20)+1; result = iRoll + mod + blessDie;
