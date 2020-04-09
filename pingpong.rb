@@ -204,7 +204,7 @@ bot.message(contains: ";rth") do |event|
           end;
           
     else;
-       say = "Attack needs  ;aX?   X= first initial   ?= target number (0 to 9)";
+       say = "Roll To Hit needs  ;rth   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -214,7 +214,7 @@ end;
 bot.message(contains: ";brth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
-    valTheRTH(inputValue); #standard validation process found up top
+    valTheBRTH(inputValue); #standard validation process found up top
     if (@valTheBRTH == true) then;
       get_the_player(); #creates the value in @playerIndex
       mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];
@@ -250,7 +250,7 @@ bot.message(contains: ";brth") do |event|
           end;
           
     else;
-       say = "Attack needs  ;aX?   X= first initial   ?= target number (0 to 9)";
+       say = "Blessed Roll To Hit needs  ;brth?    ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
