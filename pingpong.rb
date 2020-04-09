@@ -84,7 +84,7 @@ def valTheABRTH(inputStr);  # use to validate the input of type ;az1. (attack by
   numbVal = inputStr.slice(6,1);
   chkNum = Integer(numbVal) rescue false;
   if (length != 7) || (chkNum == false) then;
-    @valTheBRTH = false;
+    @valTheABRTH = false;
   end;
 end; 
 
