@@ -241,7 +241,7 @@ bot.message(contains: ";rth") do |event|
           end;
           
     else;
-       say = "Roll To Hit needs  ;rth   ?= target number (0 to 9)";
+       say = "Roll To Hit needs  ;rth?   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -287,7 +287,7 @@ bot.message(contains: ";arth") do |event|
           end;
           
     else;
-       say = "Advanatage Roll To Hit needs  ;arth   ?= target number (0 to 9)";
+       say = "Advanatage Roll To Hit needs  ;arth?   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -334,7 +334,7 @@ bot.message(contains: ";drth") do |event|
           end;
           
     else;
-       say = "DisAdvanatage Roll To Hit needs  ;drth   ?= target number (0 to 9)";
+       say = "DisAdvanatage Roll To Hit needs  ;drth?   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
