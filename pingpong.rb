@@ -246,7 +246,7 @@ bot.message(contains: ";rth") do |event|
     event.respond say;
 end;
 
-######### easy ATTACK TARGET creature #####################################
+######### easy ADVANTAGE ATTACK TARGET creature #####################################
 bot.message(contains: ";arth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
@@ -259,7 +259,7 @@ bot.message(contains: ";arth") do |event|
       iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
       iRoll=[iRoll1,iRoll2].max;
       result = iRoll + mod + profB;
-      say = @user.to_s + " rolled an attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+      say = @user.to_s + " rolled an ADVANTAGE attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
           if (result < @armour[target]) then;
               say = say + "The attack Missed!";
           else;
@@ -288,6 +288,53 @@ bot.message(contains: ";arth") do |event|
           
     else;
        say = "Advanatage Roll To Hit needs  ;arth   ?= target number (0 to 9)";
+    end;    
+    event.respond say;
+end;
+
+
+######### easy DISADVANTAGE ATTACK TARGET creature #####################################
+bot.message(contains: ";drth") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event);
+    valTheARTH(inputValue); #standard validation process found up top
+    if (@valTheARTH == true) then;
+      get_the_player(); #creates the value in @playerIndex
+      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];      profB=@player[@playerIndex][8];
+      mod = [mod1,mod2].min;
+      str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
+      iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
+      iRoll=[iRoll1,iRoll2].max;
+      result = iRoll + mod + profB;
+      say = @user.to_s + " rolled an DISADVANTAGE attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+          if (result < @armour[target]) then;
+              say = say + "The attack Missed!";
+          else;
+              say = say + "The attack HIT!";
+              #check for iRoll to be 20 for a CRIT
+              roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
+              #@damage & @damage1 now have values
+              if iRoll != 20 then;
+                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
+                                  " = " + (mod + @damage1).to_s + " points of damage.";
+                   else;
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] [" + @damage2.to_s + "] + " +
+                                  mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
+                   end;
+              else
+                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
+                                  " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
+                   else;
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
+                                 "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
+                   end;              
+              end;
+          end;
+          
+    else;
+       say = "DisAdvanatage Roll To Hit needs  ;drth   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
