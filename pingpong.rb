@@ -250,7 +250,7 @@ bot.message(contains: ";brth") do |event|
       str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
       blessDie = (rand 4)+1;
       iRoll=(rand 20)+1; result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "]  [" + blessDie.to_s + "]  +" + mod.to_s + profB.to_s + " = " + result.to_s + "\n";
+      say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "]  [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
           if (result < @armour[target]) then;
               say = say + "The attack Missed!";
           else;
