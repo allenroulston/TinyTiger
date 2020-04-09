@@ -406,8 +406,9 @@ bot.message(contains: ";abrth") do |event|
       mod = [mod1,mod2].max;
       str_2_number(inputValue.slice(6,1)); target = @numba # @numba <= is the result
       blessDie = (rand 4)+1;
-      iRoll=(rand 20)+1; result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled a Blessed Advantage attack: [" + iRoll.to_s + "]  [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+      iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
+      iRoll=[iRoll1,iRoll2].max;   result = iRoll + mod + profB + blessDie;
+      say = @user.to_s + " rolled a Blessed Advantage attack: [" + iRoll.to_s + "][" + iRoll.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
           if (result < @armour[target]) then;
               say = say + "The attack Missed!";
           else;
