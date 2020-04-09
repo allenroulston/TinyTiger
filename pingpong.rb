@@ -78,6 +78,16 @@ def valTheBRTH(inputStr);  # use to validate the input of type ;az1. (attack by 
   end;
 end; 
 
+def valTheABRTH(inputStr);  # use to validate the input of type ;az1. (attack by Zalos where target # 1)
+  @valTheABRTH = true;
+  length = inputStr.length;
+  numbVal = inputStr.slice(6,1);
+  chkNum = Integer(numbVal) rescue false;
+  if (length != 7) || (chkNum == false) then;
+    @valTheBRTH = false;
+  end;
+end; 
+
 
 def str_2_number(value);
   if value == "0" then;
@@ -385,6 +395,50 @@ bot.message(contains: ";brth") do |event|
     event.respond say;
 end;
 
+######### easy ADVANTAGE BLESSED ATTACK TARGET creature #####################################
+bot.message(contains: ";abrth") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event);
+    valTheABRTH(inputValue); #standard validation process found up top
+    if (@valTheABRTH == true) then;
+      get_the_player(); #creates the value in @playerIndex
+      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];     profB=@player[@playerIndex][8];
+      mod = [mod1,mod2].max;
+      str_2_number(inputValue.slice(6,1)); target = @numba # @numba <= is the result
+      blessDie = (rand 4)+1;
+      iRoll=(rand 20)+1; result = iRoll + mod + profB + blessDie;
+      say = @user.to_s + " rolled a Blessed Advantage attack: [" + iRoll.to_s + "]  [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+          if (result < @armour[target]) then;
+              say = say + "The attack Missed!";
+          else;
+              say = say + "The attack HIT!";
+              #check for iRoll to be 20 for a CRIT
+              roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
+              #@damage & @damage1 now have values
+              if iRoll != 20 then;
+                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
+                                  " = " + (mod + @damage1).to_s + " points of damage.";
+                   else;
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "] + " +
+                                  mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
+                   end;
+              else
+                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
+                                  " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
+                   else;
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
+                                 "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
+                   end;              
+              end;
+          end;
+          
+    else;
+       say = "Advantage Blessed Roll To Hit needs  ;abrth?    ?= target number (0 to 9)";
+    end;    
+    event.respond say;
+end;
 
 
 ########## DAMAGE Sneak Attack Dagger d4 ##############
