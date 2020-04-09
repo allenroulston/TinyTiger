@@ -42,9 +42,11 @@ def valTheInny(inputStr);  # use to validate the input of type ;az1. (attack by 
   end;
 end; 
 
+
 def validate_integer(numbVal);
     @intVal = Integer(numbVal) rescue false;
 end;
+
 
 def valTheRTH(inputStr);  # use to validate the input of type ;az1. (attack by Zalos where target # 1)
   @valTheRTH = true;
@@ -54,20 +56,19 @@ def valTheRTH(inputStr);  # use to validate the input of type ;az1. (attack by Z
   if (length != 5) || (chkNum == false) then;
     @valTheRTH = false;
   end;
+end;
+
+
+def valTheBRTH(inputStr);  # use to validate the input of type ;az1. (attack by Zalos where target # 1)
+  @valTheBRTH = true;
+  length = inputStr.length;
+  numbVal = inputStr.slice(5,1);
+  chkNum = Integer(numbVal) rescue false;
+  if (length != 6) || (chkNum == false) then;
+    @valTheBRTH = false;
+  end;
 end; 
 
-def valTheInnyBlessed(inputStr);  # use to validate the input of type ;az1. (attack by Zalos where target # 1)
-    @valTheInnyBlessed = true;
-    length = inputStr.length;
-    @charInit = inputStr.slice(3,1);
-    chkLtr = ("acdoqsz").index(@charInit); # test this sample character 
-    numbVal = inputStr.slice(4,1);
-    chkNum = Integer(numbVal) rescue false;
-    if (length != 5) || (chkLtr == nil) || (chkNum == false) then;
-      @valTheInnyBlessed = false;
-    end;
-end;  
-  
 
 def str_2_number(value);
   if value == "0" then;
@@ -188,7 +189,7 @@ bot.message(contains: ";rth") do |event|
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
                                   " = " + (mod + @damage1).to_s + " points of damage.";
                    else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "] + " +
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] [" + @damage2.to_s + "] + " +
                                   mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
                    end;
               else
@@ -209,6 +210,50 @@ bot.message(contains: ";rth") do |event|
 end;
 
 
+######### easy BLESSED ATTACK TARGET creature #####################################
+bot.message(contains: ";brth") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event);
+    valTheRTH(inputValue); #standard validation process found up top
+    if (@valTheBRTH == true) then;
+      get_the_player(); #creates the value in @playerIndex
+      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];
+      mod = [mod1,mod2].max;
+      str_2_number(inputValue.slice(4,1)); target = @numba # @numba <= is the result
+      blessDie = (rand 4)+1;
+      iRoll=(rand 20)+1; result = iRoll + mod + blessDie;
+      say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "]  [" + blessDie.to_s + "]  + " + mod.to_s + " = " + result.to_s + "\n";
+          if (result < @armour[target]) then;
+              say = say + "The attack Missed!";
+          else;
+              say = say + "The attack HIT!";
+              #check for iRoll to be 20 for a CRIT
+              roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
+              #@damage & @damage1 now have values
+              if iRoll != 20 then;
+                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
+                                  " = " + (mod + @damage1).to_s + " points of damage.";
+                   else;
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "] + " +
+                                  mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
+                   end;
+              else
+                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
+                                  " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
+                   else;
+                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
+                                 "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
+                   end;              
+              end;
+          end;
+          
+    else;
+       say = "Attack needs  ;aX?   X= first initial   ?= target number (0 to 9)";
+    end;    
+    event.respond say;
+end;
 
 ######### ATTACK TARGETED #####################################
 bot.message(contains: ";a") do |event|
