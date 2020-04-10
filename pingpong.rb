@@ -890,20 +890,44 @@ bot.message(contains:"d6.") do |event|
     event.respond say;
 end;
 
+################## d8. ##########################
 bot.message(contains:"d8.") do |event|
-    check_user_or_nick(event);
-    @tempVar = event.content;
-    parse_the_d();   #sets value of @howManyDice
-    responseValue = @user.to_s + " provided " + @tempVar.to_s + "  How many d8? :" + howManyDice.to_s;
-    event.respond responseValue;
+    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d();  # uses @tempVar to set value of @howManyDice
+    chkNum = Integer(@howManyDice) rescue false;
+    if ( chkNum == false ) then;
+       say = " d8. requires  ?d8.? where ? are integers (1 to 9)."
+    else
+       str_2_number(@howManyDice); #sets the value of @numba
+       say = @user.to_s + " rolled " + @numba.to_s + "d8 " + "\n";
+       die=[0,0,0,0,0,0,0,0,0]; total=0;
+       (0..(@numba-1)).each do |x|;
+           die[x]=(rand 6)+1;
+           say = say + "[" + die[x].to_s + "]";
+           total=total + die[x];
+       end;
+       say = say + " = " + total.to_s;
+    end;
+    event.respond say;
 end;
 
+################## d10. ##########################
 bot.message(contains:"d10.") do |event|
-    check_user_or_nick(event);
-    @tempVar = event.content;
-    parse_the_d();   #sets value of @howManyDice
-    responseValue = @user.to_s + " provided " + @tempVar.to_s + "  How many d10? :" + howManyDice.to_s;
-    event.respond responseValue;
+    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d();  # uses @tempVar to set value of @howManyDice
+    chkNum = Integer(@howManyDice) rescue false;
+    if ( chkNum == false ) then;
+       say = " d10. requires  ?d10.? where ? are integers (1 to 9)."
+    else
+       str_2_number(@howManyDice); #sets the value of @numba
+       say = @user.to_s + " rolled " + @numba.to_s + "d10 " + "\n";
+       die=[0,0,0,0,0,0,0,0,0]; total=0;
+       (0..(@numba-1)).each do |x|;
+           die[x]=(rand 6)+1;
+           say = say + "[" + die[x].to_s + "]";
+           total=total + die[x];
+       end;
+       say = say + " = " + total.to_s;
+    end;
+    event.respond say;
 end;
 
 bot.message(contains:"d12.") do |event|
