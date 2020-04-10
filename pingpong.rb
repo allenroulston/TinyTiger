@@ -229,10 +229,14 @@ bot.message(contains: ";rth") do |event|
           else;
               say = say + "The attack HIT!";
               #check for iRoll to be 20 for a CRIT
+              thePlayerIndex = @playerIndex;
+              theWeaponIndex = @player[@playerIndex][1];
+              theDamageRoll = @weapon[(@player[@playerIndex][1])];
               roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
               #@damage & @damage1 now have values
               if iRoll != 20 then;
                    if @weapon[(@player[@playerIndex][1])] != "2d6" then;
+                     say = say + "P-Index:" + thePlayerIndex.to_s +  "    W-Index:" + theWeaponIndex.to_s + "   theDamage:" + theDamageRoll.to_s + "\n";
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
                                   " = " + (mod + @damage1).to_s + " points of damage.";
                    else;
