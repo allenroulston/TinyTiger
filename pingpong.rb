@@ -865,7 +865,8 @@ bot.message(contains:"d4.") do |event|
            say = say + "[" + die[x].to_s + "]";
            total=total + die[x];
        end;
-       say = say + " = " + total.to_s;
+       total = total + @whatPlus;
+       say = say + " + " + @whatPlus + " = " + total.to_s;
     end;
     event.respond say;
 end;
@@ -971,9 +972,18 @@ bot.message(contains:"d20.") do |event|
 end;
 
 def parse_the_d();
-  theIndex = @tempVar.index('d');
-  @howManyDice = @tempVar.slice(0,(theIndex));
+  theIndex1 = @tempVar.index('d');
+  @howManyDice = @tempVar.slice(0,(theIndex1));
   if @howManyDice == "0" then @howManyDice =1; end;
+  theIndex2 = @tempVar.index('.');
+  tempVarLen = @tempVar.length;
+  @whatPlus = @tempVar.slice((theIndex2+1),(tempVarLen-theIndex2))
+  validate_integer(@whatPlus);
+  if @intVal == false then; 
+     @whatPlus = 0;
+  else;
+    @whatPlus = Integer(@whatPlus);
+  end;
 end;
 
 #########################################
