@@ -866,7 +866,7 @@ bot.message(contains:"d4.") do |event|
            total=total + die[x];
        end;
        total = total + @whatPlus;
-       say = say + " + " + @whatPlus + " = " + total.to_s;
+       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
     end;
     event.respond say;
 end;
