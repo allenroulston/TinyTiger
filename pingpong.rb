@@ -852,17 +852,28 @@ end;
 
 ############################################
 bot.message(contains:"d4.") do |event|
-    check_user_or_nick(event);
-    @tempVar = event.content;
-    howManyDice = parse_the_d();
-    responseValue = @user.to_s + " provided " + @tempVar.to_s + "  How many d4? :" + howManyDice.to_s;
-    event.respond responseValue;
+    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d();  # uses @tempVar to set value of @howManyDice
+    chkNum = Integer(@howManyDice) rescue false;
+    if ( chkNum == false ) then;
+       say = " d4. requires  ?d4.? where ? are integers (1 to 9)."
+    else
+       str_2_number(@howManydice); #sets the value of @numba
+       say = @user.to_s + " rolled " + @howManyDice.to_s + "d4 " + "\n";
+       die=[0,0,0,0,0,0,0,0,0]; total=0;
+       (0..(@howManyDice).each do |x|;
+           die[x]=(rand 4)+1;
+           say = say + "[" + die[x].to_s + "]";
+           total=total + die[x];
+       end;
+       say = say + " = " + total.to_s;
+    end;
+    event.respond say;
 end;
 
 bot.message(contains:"d6.") do |event|
   check_user_or_nick(event);
   @tempVar = event.content;
-  howManyDice = parse_the_d();
+  parse_the_d();  #sets value of @howManyDice
   responseValue = @user.to_s + " provided " + @tempVar.to_s + "  How many d6? :" + howManyDice.to_s;
   event.respond responseValue;
 end;
@@ -870,7 +881,7 @@ end;
 bot.message(contains:"d8.") do |event|
     check_user_or_nick(event);
     @tempVar = event.content;
-    howManyDice = parse_the_d();
+    parse_the_d();   #sets value of @howManyDice
     responseValue = @user.to_s + " provided " + @tempVar.to_s + "  How many d8? :" + howManyDice.to_s;
     event.respond responseValue;
 end;
@@ -878,7 +889,7 @@ end;
 bot.message(contains:"d10.") do |event|
     check_user_or_nick(event);
     @tempVar = event.content;
-    howManyDice = parse_the_d();
+    parse_the_d();   #sets value of @howManyDice
     responseValue = @user.to_s + " provided " + @tempVar.to_s + "  How many d10? :" + howManyDice.to_s;
     event.respond responseValue;
 end;
@@ -886,15 +897,15 @@ end;
 bot.message(contains:"d12.") do |event|
     check_user_or_nick(event);
     @tempVar = event.content;
-    howManyDice = parse_the_d();
+    parse_the_d();    #sets value of @howManyDice
     responseValue = @user.to_s + " provided " + @tempVar.to_s + "  How many d12? :" + howManyDice.to_s;
     event.respond responseValue;
 end;
 
 def parse_the_d();
   theIndex = @tempVar.index('d');
-  howManyDice = @tempVar.slice(0,(theIndex));
-  return(howManyDice);
+  @howManyDice = @tempVar.slice(0,(theIndex));
+  if @howManyDice == "0" then @howManyDice =1; end;
 end;
 
 #########################################
