@@ -858,9 +858,9 @@ bot.message(contains:"d4.") do |event|
        say = " d4. requires  ?d4.? where ? are integers (1 to 9)."
     else
        str_2_number(@howManyDice); #sets the value of @numba
-       say = @user.to_s + " rolled " + @howManyDice.to_s + "d4 " + "\n";
+       say = @user.to_s + " rolled " + @numba.to_s + "d4 " + "\n";
        die=[0,0,0,0,0,0,0,0,0]; total=0;
-       (0..@howManyDice).each do |x|;
+       (0..@numba).each do |x|;
            die[x]=(rand 4)+1;
            say = say + "[" + die[x].to_s + "]";
            total=total + die[x];
