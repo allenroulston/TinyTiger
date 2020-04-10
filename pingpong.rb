@@ -858,7 +858,7 @@ bot.message(contains:"d4.") do |event|
        say = " d4. requires  ?d4.? where ? are integers (1 to 9)."
     else
        str_2_number(@howManyDice); #sets the value of @numba
-       say = @user.to_s + " rolled " + @numba.to_s + "d4 " + "\n";
+       say = @user.to_s + " rolled " + @numba.to_s + "d4 " + " + " + @whatPlus.to_s + "\n";
        die=[0,0,0,0,0,0,0,0,0]; total=0;
        (0..(@numba-1)).each do |x|;
            die[x]=(rand 4)+1;
@@ -879,7 +879,7 @@ bot.message(contains:"d6.") do |event|
        say = " d6. requires  ?d6.? where ? are integers (1 to 9)."
     else
        str_2_number(@howManyDice); #sets the value of @numba
-       say = @user.to_s + " rolled " + @numba.to_s + "d6 " + "\n";
+       say = @user.to_s + " rolled " + @numba.to_s + "d6 " + " + " + @whatPlus.to_s + "\n";
        die=[0,0,0,0,0,0,0,0,0]; total=0;
        (0..(@numba-1)).each do |x|;
            die[x]=(rand 6)+1;
@@ -900,14 +900,15 @@ bot.message(contains:"d8.") do |event|
        say = " d8. requires  ?d8.? where ? are integers (1 to 9)."
     else
        str_2_number(@howManyDice); #sets the value of @numba
-       say = @user.to_s + " rolled " + @numba.to_s + "d8 " + "\n";
+       say = @user.to_s + " rolled " + @numba.to_s + "d8 " + " + " + @whatPlus.to_s + "\n";
        die=[0,0,0,0,0,0,0,0,0]; total=0;
        (0..(@numba-1)).each do |x|;
            die[x]=(rand 8)+1;
            say = say + "[" + die[x].to_s + "]";
            total=total + die[x];
        end;
-       say = say + " = " + total.to_s;
+       total = total + @whatPlus;
+       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
     end;
     event.respond say;
 end;
@@ -920,14 +921,15 @@ bot.message(contains:"d10.") do |event|
        say = " d10. requires  ?d10.? where ? are integers (1 to 9)."
     else
        str_2_number(@howManyDice); #sets the value of @numba
-       say = @user.to_s + " rolled " + @numba.to_s + "d10 " + "\n";
+       say = @user.to_s + " rolled " + @numba.to_s + "d10 " + " + " + @whatPlus.to_s + "\n";
        die=[0,0,0,0,0,0,0,0,0]; total=0;
        (0..(@numba-1)).each do |x|;
            die[x]=(rand 10)+1;
            say = say + "[" + die[x].to_s + "]";
            total=total + die[x];
        end;
-       say = say + " = " + total.to_s;
+       total = total + @whatPlus;
+       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
     end;
     event.respond say;
 end;
@@ -940,14 +942,15 @@ bot.message(contains:"d12.") do |event|
        say = " d12. requires  ?d12.? where ? are integers (1 to 9)."
     else
        str_2_number(@howManyDice); #sets the value of @numba
-       say = @user.to_s + " rolled " + @numba.to_s + "d12 " + "\n";
+       say = @user.to_s + " rolled " + @numba.to_s + "d12 " ++ " + " + @whatPlus.to_s + "\n";
        die=[0,0,0,0,0,0,0,0,0]; total=0;
        (0..(@numba-1)).each do |x|;
            die[x]=(rand 12)+1;
            say = say + "[" + die[x].to_s + "]";
            total=total + die[x];
        end;
-       say = say + " = " + total.to_s;
+       total = total + @whatPlus;
+       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
     end;
     event.respond say;
 end;
@@ -960,14 +963,15 @@ bot.message(contains:"d20.") do |event|
        say = " d20. requires  ?d20.? where ? are integers (1 to 9)."
     else
        str_2_number(@howManyDice); #sets the value of @numba
-       say = @user.to_s + " rolled " + @numba.to_s + "d20 " + "\n";
+       say = @user.to_s + " rolled " + @numba.to_s + "d20 " + " + " + @whatPlus.to_s + "\n";
        die=[0,0,0,0,0,0,0,0,0]; total=0;
        (0..(@numba-1)).each do |x|;
            die[x]=(rand 20)+1;
            say = say + "[" + die[x].to_s + "]";
            total=total + die[x];
        end;
-       say = say + " = " + total.to_s;
+       total = total + @whatPlus;
+       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
     end;
     event.respond say;
 end;
