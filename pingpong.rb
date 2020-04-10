@@ -850,7 +850,7 @@ bot.message(contains: ";HWORD") do |event|
 end;
 
 
-############################################
+##################  d4. ##########################
 bot.message(contains:"d4.") do |event|
     check_user_or_nick(event);      @tempVar = event.content;     parse_the_d();  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
@@ -870,12 +870,24 @@ bot.message(contains:"d4.") do |event|
     event.respond say;
 end;
 
+################## d6. ##########################
 bot.message(contains:"d6.") do |event|
-  check_user_or_nick(event);
-  @tempVar = event.content;
-  parse_the_d();  #sets value of @howManyDice
-  responseValue = @user.to_s + " provided " + @tempVar.to_s + "  How many d6? :" + howManyDice.to_s;
-  event.respond responseValue;
+    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d();  # uses @tempVar to set value of @howManyDice
+    chkNum = Integer(@howManyDice) rescue false;
+    if ( chkNum == false ) then;
+       say = " d6. requires  ?d6.? where ? are integers (1 to 9)."
+    else
+       str_2_number(@howManyDice); #sets the value of @numba
+       say = @user.to_s + " rolled " + @numba.to_s + "d6 " + "\n";
+       die=[0,0,0,0,0,0,0,0,0]; total=0;
+       (0..(@numba-1)).each do |x|;
+           die[x]=(rand 6)+1;
+           say = say + "[" + die[x].to_s + "]";
+           total=total + die[x];
+       end;
+       say = say + " = " + total.to_s;
+    end;
+    event.respond say;
 end;
 
 bot.message(contains:"d8.") do |event|
