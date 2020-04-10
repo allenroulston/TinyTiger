@@ -344,7 +344,7 @@ bot.message(contains: ";drth") do |event|
           end;
           
     else;
-       say = "DisAdvanatage Roll To Hit needs  ;drth?   ?= target number (0 to 9)";
+       say = "Dis-Advanatage Roll To Hit needs  ;drth?   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -441,7 +441,6 @@ bot.message(contains: ";abrth") do |event|
     event.respond say;
 end;
 
-
 ######### easy DIS-ADVANTAGE BLESSED ATTACK TARGET creature #####################################
 bot.message(contains: ";dbrth") do |event|
     inputValue = event.content;
@@ -483,10 +482,13 @@ bot.message(contains: ";dbrth") do |event|
           end;
           
     else;
-       say = "Dis-Advantage Blessed Roll To Hit needs  ;abrth?    ?= target number (0 to 9)";
+       say = "Dis-Advantage Blessed Roll To Hit needs  ;dbrth?    ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
+
+
+
 ########## DAMAGE Sneak Attack Dagger d4 ##############
 bot.message(contains: ";SAD4") do |event|
     inputValue = event.content;
