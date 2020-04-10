@@ -860,7 +860,7 @@ bot.message(contains:"d4.") do |event|
        str_2_number(@howManyDice); #sets the value of @numba
        say = @user.to_s + " rolled " + @numba.to_s + "d4 " + "\n";
        die=[0,0,0,0,0,0,0,0,0]; total=0;
-       (0..@numba).each do |x|;
+       (0..(@numba-1)).each do |x|;
            die[x]=(rand 4)+1;
            say = say + "[" + die[x].to_s + "]";
            total=total + die[x];
