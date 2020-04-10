@@ -886,7 +886,8 @@ bot.message(contains:"d6.") do |event|
            say = say + "[" + die[x].to_s + "]";
            total=total + die[x];
        end;
-       say = say + " = " + total.to_s;
+       total = total + @whatPlus;
+       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
     end;
     event.respond say;
 end;
