@@ -857,7 +857,7 @@ bot.message(contains:"d4.") do |event|
     if ( chkNum == false ) then;
        say = " d4. requires  ?d4.? where ? are integers (1 to 9)."
     else
-       str_2_number(@howManydice); #sets the value of @numba
+       str_2_number(@howManyDice); #sets the value of @numba
        say = @user.to_s + " rolled " + @howManyDice.to_s + "d4 " + "\n";
        die=[0,0,0,0,0,0,0,0,0]; total=0;
        (0..(@howManyDice)).each do |x|;
