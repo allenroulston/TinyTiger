@@ -1003,7 +1003,7 @@ end;
 ###########  Armour Class  ##############
 #########################################
 
-bot.message(contains:"$c") do |event|
+bot.message(contains:"$ACcheck") do |event|
     check_user_or_nick(event); say = "";
     if @user == "Allen" then; # as long as the user is Allen, perform the following
             (0..9).each do |x|;
@@ -1065,8 +1065,8 @@ bot.message(contains:"$ACset") do |event|
     inputStr = event.content.slice(6,3);   # creature Number and AC should be in the string
     chk = Integer(inputStr) rescue false;  # is the string an Integer?
     if ((@user == "Allen") && (chk != false) ) then;
-         cNum = (inputStr.slice(6,1)).to_i;  #creature Number
-         cAC = (inputStr.slice(7,2)).to_i;  #creature AC
+         cNum = (inputStr.slice(0,1)).to_i;  #creature Number
+         cAC = (inputStr.slice(1,2)).to_i;  #creature AC
              @armour[cNum]=cAC;
       say = "Armour Class for Creature " + cNum.to_s + " was set to AC: " + cAC.to_s;
     else;
