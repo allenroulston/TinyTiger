@@ -1062,17 +1062,19 @@ end;
 
 bot.message(contains:"$ACset") do |event|
     check_user_or_nick(event);
-    if @user == "Allen" then;
-         inputStr = event.content; # creature Number and AC should be in the string
-         whatIsNumAC = Integer(inputStr.slice(4,3)) rescue false
-         if (inputStr.length == 7) && (whatIsNumAC != false) then;            
-             cNum = (inputStr.slice(4,1));
-             if cNum == "0" then cNum = 0; else; cNum = cNum.to_i end;
-             acVal = inputStr.slice(5,2);
-             @armour[cNum]=acVal.to_i;
-          event.respond "Armour Class for Creature " + cNum.to_s + " was set to AC: " + acVal.to_s;
-       end;
+    inputStr = event.content.slice(6,3);   # creature Number and AC should be in the string
+    chk = Integer(inputStr) rescue false;  # is the string an Integer?
+    if ((@user == "Allen") && (chk != false) then;
+         cNum = (inputStr.slice(6,1)).to_i;  #creature Number
+         cAC = (inputStr.slice(7,2)).to_i;  #creature AC
+             @armour[cNum]=cAC;
+
+         end;
+      say = "Armour Class for Creature " + cNum.to_s + " was set to AC: " + cAC.to_s;
+    else;
+      say = @user.to_s + " , these is something wrong."   
     end;
+    event.respond say;
 end;
 
 bot.message(contains:"$ALL") do |event|
