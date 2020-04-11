@@ -1000,20 +1000,8 @@ def parse_the_d();
 end;
 
 #########################################
-###########  Armour Class  ##############
+###########  WEAPONS  ##############
 #########################################
-
-bot.message(contains:"$ACcheck") do |event|
-    check_user_or_nick(event); say = "";
-    if @user == "Allen" then; # as long as the user is Allen, perform the following
-            (0..9).each do |x|;
-                acVal = @armour[x].to_s;
-                say = say + "Creature " + x.to_s + " has Armour Class " + acVal + "\n";
-            end;           
-    end;
-    event.respond say;
-end;
-
 bot.message(contains:"$Wlist") do |event|
     check_user_or_nick(event);
     get_the_player(); # this assigns a value to @playerIndex
@@ -1060,6 +1048,20 @@ def get_the_player();
     end;
 end;
 
+#########################################
+###########  Armour Class  ##############
+#########################################
+bot.message(contains:"$AClist") do |event|
+    check_user_or_nick(event); say = "";
+    if @user == "Allen" then; # as long as the user is Allen, perform the following
+            (0..9).each do |x|;
+                acVal = @armour[x].to_s;
+                say = say + "Creature " + x.to_s + " has Armour Class " + acVal + "\n";
+            end;           
+    end;
+    event.respond say;
+end;
+
 bot.message(contains:"$ACset") do |event|
     check_user_or_nick(event);
     inputStr = event.content.slice(6,3);   # creature Number and AC should be in the string
@@ -1070,7 +1072,8 @@ bot.message(contains:"$ACset") do |event|
           @armour[cNum]=acVal;
           say = "Armour Class for Creature " + cNum.to_s + " was set to AC: " + acVal.to_s;
     else;
-      say = @user.to_s + " , these is something wrong. cNum:" + cNum.to_s + " acVal:" + acVal.to_s + " inputStr:" + inputStr.to_s;   
+      say = @user.to_s + " , these is something wrong. \n cNum:" + cNum.to_s + " acVal:" + acVal.to_s + " inputStr:" + inputStr.to_s;   
+      say = say + "input length:" + (inputStr.length).to_s;
     end;
     event.respond say;
 end;
