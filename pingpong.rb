@@ -1070,7 +1070,7 @@ bot.message(contains:"$ACset") do |event|
              @armour[cNum]=cAC;
       say = "Armour Class for Creature " + cNum.to_s + " was set to AC: " + cAC.to_s;
     else;
-      say = @user.to_s + " , these is something wrong."   
+      say = @user.to_s + " , these is something wrong." + chk.to_s;   
     end;
     event.respond say;
 end;
