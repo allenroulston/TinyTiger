@@ -1021,6 +1021,7 @@ bot.message(contains:"$Wlist") do |event|
     (0..5).each do |x|;
           say = say +  @weapon[x] + " <=> " + x.to_s  + "    ";
     end;                 
+    say = say + "\n\n NOTE WELL: You may notice a delayed response to this command."
     event.respond say;
 end;
 
