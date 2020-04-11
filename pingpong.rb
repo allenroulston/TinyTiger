@@ -1066,7 +1066,7 @@ bot.message(contains:"$ACset") do |event|
     creatNum = inputStr.slice(0,1); creatAC = inputStr.slice(1,2); 
     cNum = Integer(creatNum) rescue false; #creature Number
     acVal = Integer(creatAC) rescue false;  #Value of AC
-    if (inputStr.length != 3) && (cNum != false) && (acVal != false) && (@user == "Allen") then;
+    if ( (inputStr.length != 3) && (cNum != false) && (acVal != false) && (@user == "Allen") ) then;
           @armour[cNum]=acVal;
           say = "Armour Class for Creature " + cNum.to_s + " was set to AC: " + acVal.to_s;
     else;
