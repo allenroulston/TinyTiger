@@ -1084,7 +1084,7 @@ bot.message(contains:"$ALL") do |event|
              end;
              say = "ALL creatures now have an AC of: " + acVal.to_s;
     else;     
-     say = @user.to_s + ", Something isn't right";
+     say = @user.to_s + ", Something isn't right:" + acVal.to_s;
     end;
     event.respond  say;
 end;
