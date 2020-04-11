@@ -13,6 +13,7 @@ owner = 690339632529015005 # Your user ID
 @armour = YAML.load(File.read("armourClass.yml"));
 @weapon = YAML.load(File.read("weaponDamage.yml"));
 @player = YAML.load(File.read("ABSmods.yml"));
+@dataStorage =[0,1,2,3,4,5,6,7,8,9]; # used to store calculated values for a specific character transaction
 
 def check_user_or_nick(event)
   if event.user.nick != nil
@@ -1025,14 +1026,14 @@ end;
 
 bot.message(contains:"$Wset") do |event|
     inputStr = event.content; # this should contain "$Wset#" where # is a single digit
-    get_the_player(); # this assigns a value to @playerIndex
-    weaponInt = inputStr.slice(5,1)
-    validate_integer(weaponInt) # sets @intVal as an integer or false
-    if @intVal != false then;   # if the string can be made into an INTEGER
-          str_2_number(weaponInt); # this will turn a string integer into an INTEGER => @numba
-          if @numba <= @weapon.length then;   # value cannot be higher than number of weapons
-             @player[@playerIndex][1] = @numba;  #assign the character weapon damage die value
-             say = "Your weapon damage has be set to " + @weapon[(@player[@playerIndex][1])].to_s;
+    (0..(@player.length-1)).each do |y|
+        if (@player[y][0].index(@user.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
+    end;
+    weaponInt = Integer(inputStr.slice(5,1)) rescue false; #will detect integer or non integer input
+    if (pIndex != nil) && (weaponInt != false)  then; 
+       if weaponInt < 6 then;
+           @player[pIndex][1]=weaponInt;
+           say = "Your weapon damage has be set to " + @weapon[(@player[pIndex][1])].to_s;
           else;
               say = "Sorry, $Wset requires this format: $Wset?  where ? is a single number ( 0 to 5 )";         
           end;
@@ -1042,6 +1043,17 @@ bot.message(contains:"$Wset") do |event|
     event.respond say;
 end;
 
+####### GET THE PLAYER INDEX ##########
+def get_the_player();
+    player5Char = @user.slice(0,5); #taking first 5 characters of @user
+    y=0; #used to track the current index value for the array
+    @player.each do |x|;
+           if x[0] == player5Char then; # find the player Index matching player5Char
+              @playerIndex = y;
+           end;
+      y=y+1
+    end;
+end;
 
 bot.message(contains:"$ACset") do |event|
     check_user_or_nick(event);
