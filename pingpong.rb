@@ -1065,11 +1065,11 @@ bot.message(contains:"$ACset") do |event|
     inputStr = event.content.slice(6,3);   # creature Number and AC should be in the string
     cNum = Integer(inputStr(0,1)) rescue false; #creature Number
     acVal - Integer(inputStr(1,2)) rescue false;  #Value of AC
-    if (inputStr.length != 3) && (cnum != false) && (acVal != false) && (@user == "Allen") then;
+    if (inputStr.length != 3) && (cNum != false) && (acVal != false) && (@user == "Allen") then;
           @armour[cNum]=acVal;
           say = "Armour Class for Creature " + cNum.to_s + " was set to AC: " + acVal.to_s;
     else;
-      say = @user.to_s + " , these is something wrong. chk is " + chk.to_s;   
+      say = @user.to_s + " , these is something wrong. cNum:" + cNum.to + " acVal:" + acVal.to_s;   
     end;
     event.respond say;
 end;
