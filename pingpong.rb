@@ -1030,6 +1030,7 @@ bot.message(contains:"$Wset") do |event|
     (0..(@player.length-1)).each do |y|
         if (@player[y][0].index(@user.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
     end;
+    sleep (y*10);
     weaponInt = Integer(inputStr.slice(5,1)) rescue false; #will detect integer or non integer input
     if (pIndex != nil) && (weaponInt != false)  then; 
        if weaponInt < 6 then;
