@@ -1064,7 +1064,7 @@ bot.message(contains:"$ACset") do |event|
     check_user_or_nick(event);
     inputStr = event.content.slice(6,3);   # creature Number and AC should be in the string
     cNum = Integer(inputStr(0,1)) rescue false; #creature Number
-    acVal - Integer(inputStr(1,2)) rescue false;  #Value of AC
+    acVal = Integer(inputStr(1,2)) rescue false;  #Value of AC
     if (inputStr.length != 3) && (cNum != false) && (acVal != false) && (@user == "Allen") then;
           @armour[cNum]=acVal;
           say = "Armour Class for Creature " + cNum.to_s + " was set to AC: " + acVal.to_s;
