@@ -1069,7 +1069,7 @@ bot.message(contains:"$ACset") do |event|
           @armour[cNum]=acVal;
           say = "Armour Class for Creature " + cNum.to_s + " was set to AC: " + acVal.to_s;
     else;
-      say = @user.to_s + " , these is something wrong. cNum:" + cNum.to + " acVal:" + acVal.to_s;   
+      say = @user.to_s + " , these is something wrong. cNum:" + cNum.to_s + " acVal:" + acVal.to_s;   
     end;
     event.respond say;
 end;
