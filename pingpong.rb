@@ -1077,7 +1077,7 @@ end;
 
 bot.message(contains:"$ALL") do |event|
     check_user_or_nick(event);
-    acVal = Integer(event.slice(4,2)) recuse false;
+    acVal = Integer(event.slice(4,2)) rescue false;
     if (@user == "Allen") && (acVal != false) then;
              (0..9).each do |x|;
                   @armour[x]=acVal;
