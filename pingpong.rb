@@ -1063,7 +1063,7 @@ end;
 bot.message(contains:"$ACset") do |event|
     check_user_or_nick(event);
     inputStr = event.content.slice(6,3);   # creature Number and AC should be in the string
-    creatNum = inputStr(0,1); creatAC = inputStr(1,2); 
+    creatNum = inputStr.slice(0,1); creatAC = inputStr.slice(1,2); 
     cNum = Integer(creatNum) rescue false; #creature Number
     acVal = Integer(creatAC) rescue false;  #Value of AC
     if (inputStr.length != 3) && (cNum != false) && (acVal != false) && (@user == "Allen") then;
