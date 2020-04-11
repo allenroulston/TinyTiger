@@ -1077,10 +1077,11 @@ end;
 
 bot.message(contains:"$ALL") do |event|
     check_user_or_nick(event);
-    acVal = Integer(event.slice(4,2)) rescue false;
+    acVal = event.slice(4,2);
+    chkVal = Integer(acVal) rescue false
     if ( (@user == "Allen") && (acVal != false) ) then;
              (0..9).each do |x|;
-                  @armour[x]=acVal;
+                  @armour[x]=acVal.to_i;
              end;
              say = "ALL creatures now have an AC of: " + acVal.to_s;
     else;     
