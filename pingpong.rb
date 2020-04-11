@@ -1026,6 +1026,7 @@ end;
 
 bot.message(contains:"$Wset") do |event|
     inputStr = event.content; # this should contain "$Wset#" where # is a single digit
+    pIndex = nil;
     (0..(@player.length-1)).each do |y|
         if (@player[y][0].index(@user.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
     end;
