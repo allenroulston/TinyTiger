@@ -109,13 +109,11 @@ end;
 ######## HEALTH CHECK
 def health_check(currentHp, originalHp);
   perCent = currentHp/originalHp;
-  case perCent;
-     when (1.000..0.7499); @healthStat = "Healthy";
-     when (0.799.0.4999); @healthStat = "Injured";
-     when (0.4999..2499); @healthStat = "Bloodied";
-     when (0.0000..0.4999); @healthStat = "Critical";
-     when (-1.0..0.0000); @healthStat = "Dead";
-  end;
+  if perCent > 0.7499 then; @healthStat = "Healthy"; end;
+  if perCent > 0.4999 then; @healthStat = "Injured"; end;
+  if perCent > 0.2499 then; @healthStat = "Bloodied"; end;
+  if perCent > 0.0000 then; @healthStat = "Critical"; end;
+  if percent < 0.0000 then; @healthStat = "Dead"; end;
 end;
 
 bot = Discordrb::Bot.new token: token 
