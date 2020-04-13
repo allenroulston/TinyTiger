@@ -1006,11 +1006,16 @@ end;
 
 bot.message(contains:"$Wset") do |event|
     inputStr = event.content; # this should contain "$Wset#" where # is a single digit
-    check_user_or_nick(event);  pIndex = nil;  #fetch the value of @user & set pIndex
+    if event.user.nick != nil
+      theUser = event.user.nick
+    else
+      theUser = event.user.name
+    end
+    pIndex = nil;  #fetch the value of @user & set pIndex
     (0..(@player.length-1)).each do |y|  #find the @player pIndex within the array using 5 char of @user
-        if (@player[y][0].index(@user.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
+        if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
     end;
-    sleep (pIndex*2);
+#    sleep (pIndex*2);
     weaponInt = Integer(inputStr.slice(5,1)) rescue false; #will detect integer or non integer input
     if (pIndex != nil) && (weaponInt != false)  then; 
        if weaponInt < 6 then;
