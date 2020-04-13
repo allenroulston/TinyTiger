@@ -508,9 +508,7 @@ bot.message(contains: ";SAD4") do |event|
           dDie[x]=(rand 6)+1;
           totalDmg=totalDmg + dDie[x];
        end;
-       dagger = (rand 4)+1;
-       totalDmg = totalDmg + dagger +3; #hard coded for Squee and Quincey
-       responseValue = @user.to_s + " Sneak Attack (dagger) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "]   [" + dagger.to_s + "] + 3 = " + totalDmg.to_s;
+       responseValue = @user.to_s + " Sneak Attack (dagger) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] = " + totalDmg.to_s;
     else;
        responseValue  = "You cannot use this damage type";
     end;
@@ -529,10 +527,8 @@ bot.message(contains: ";SAD!4") do |event|
           dDie[x]=(rand 6)+1;
           totalDmg=totalDmg + dDie[x];
        end;
-       dagger1 = (rand 4)+1; dagger2 = (rand 4)+1;
-       totalDmg = totalDmg + dagger1 + dagger2 +3; #hard coded for Squee and Quincey
        responseValue = @user.to_s + " CRITICAL Sneak Attack (dagger) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "][" + dDie[5].to_s +
-                                      "]   [" + dagger1.to_s+ "][" + dagger2.to_s + "] + 3 = " + totalDmg.to_s;
+                                      "] = " + totalDmg.to_s;
     else;
        responseValue  = "You cannot use this damage type";
     end;
@@ -550,9 +546,7 @@ bot.message(contains: ";SAD6") do |event|
           dDie[x]=(rand 6)+1;
           totalDmg=totalDmg + dDie[x];
        end;
-       ssword = (rand 6)+1;
-       totalDmg = totalDmg + ssword +3; #hard coded for Squee and Quincey
-       responseValue = @user.to_s + " Sneak Attack (short sword) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "]   [" + ssword.to_s + "] + 3 = " + totalDmg.to_s;
+       responseValue = @user.to_s + " Sneak Attack (short sword) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] = " + totalDmg.to_s;
     else;
        responseValue  = "You cannot use this damage type";
     end;
@@ -570,10 +564,8 @@ bot.message(contains: ";SAD!6") do |event|
           dDie[x]=(rand 6)+1;
           totalDmg=totalDmg + dDie[x];
        end;
-       short1 = (rand 6)+1; short2 = (rand 6)+1;
-       totalDmg = totalDmg + short1 + short2 +3; #hard coded for Squee and Quincey
        responseValue = @user.to_s + " CRITICAL Sneak Attack (short sword) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "][" + dDie[5].to_s +
-                                      "]   [" + short1.to_s+ "][" + short2.to_s + "] + 3 = " + totalDmg.to_s;
+                                      " = " + totalDmg.to_s;
     else;
        responseValue  = "You cannot use this damage type";
     end;
@@ -592,9 +584,7 @@ bot.message(contains: ";SAD8") do |event|
           dDie[x]=(rand 6)+1;
           totalDmg=totalDmg + dDie[x];
        end;
-       rapier = (rand 8)+1;
-       totalDmg = totalDmg + rapier +3; #hard coded for Squee and Quincey
-       responseValue = @user.to_s + " Sneak Attack (rapier) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "]   [" + rapier.to_s + "] + 3 = " + totalDmg.to_s;
+       responseValue = @user.to_s + " Sneak Attack (rapier) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] = " + totalDmg.to_s;
     else;
        responseValue  = "You cannot use this damage type";
     end;
@@ -612,10 +602,9 @@ bot.message(contains: ";SAD!8") do |event|
           dDie[x]=(rand 6)+1;
           totalDmg=totalDmg + dDie[x];
        end;
-       rapier1 = (rand 8)+1; rapier2 = (rand 8)+1;
-       totalDmg = totalDmg + rapier1 + rapier2 +3; #hard coded for Squee and Quincey
+
        responseValue = @user.to_s + " CRITICAL Sneak Attack (rapier) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "][" + dDie[5].to_s +
-                                      "]   [" + rapier1.to_s+ "][" + rapier2.to_s + "] + 3 = " + totalDmg.to_s;
+                                      "] = " + totalDmg.to_s;
     else;
        responseValue  = "You cannot cause this damage type.";
     end;
@@ -1017,8 +1006,8 @@ end;
 
 bot.message(contains:"$Wset") do |event|
     inputStr = event.content; # this should contain "$Wset#" where # is a single digit
-    check_user_or_nick(event);  pIndex = nil;
-    (0..(@player.length-1)).each do |y|
+    check_user_or_nick(event);  pIndex = nil;  #fetch the value of @user & set pIndex
+    (0..(@player.length-1)).each do |y|  #find the @player pIndex within the array using 5 char of @user
         if (@player[y][0].index(@user.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
     end;
     sleep (pIndex*2);
