@@ -245,26 +245,26 @@ bot.message(contains: ";rth") do |event|
                      #say = say + "\n P-Index:" + thePlayerIndex.to_s +  "    W-Index:" + theWeaponIndex.to_s + "   theDamage:" + theDamageRoll.to_s + "\n";
                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
                                   " = " + (mod + @damage1).to_s + " points of damage.";
-                     @HP[target][0] = @HP - @damage1 - mod;
+                     @HP[target][0] = @HP[target][0] - @damage1 - mod;
                      say = say + "\n\n Creature Number " + target.to_s + " health is now " + (@HP[target][0] / @HP[target][1]).to_s;
                    else;
                      say = say + "\n P-Index:" + thePlayerIndex.to_s +  "    W-Index:" + theWeaponIndex.to_s + "   theDamage:" + theDamageRoll.to_s + "\n";
                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] [" + @damage2.to_s + "] + " +
                                   mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
-                     @HP[target][0] = @HP - @damage1 - @damage2 - mod;
+                     @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod;
                      say = say + "\n\n Creature Number " + target.to_s + " health is now " + (@HP[target][0] / @HP[target][1]).to_s;
                    end;
               else
                    if @weapon[(@player[@playerIndex][1])] != "2d6" then;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
                                   " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
-                      @HP[target][0] = @HP - @damage1 - @damage3 - mod;
+                      @HP[target][0] = @HP[target][0] - @damage1 - @damage3 - mod;
                       say = say + "\n\n Creature Number " + target.to_s + " health is now " + (@HP[target][0] / @HP[target][1]).to_s;
                                   
                    else;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
                                  "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
-                      @HP[target][0] = @HP - @damage1 - @damage2 - @damage3 - @damage4 - mod;
+                      @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - @damage3 - @damage4 - mod;
                       say = say + "\n\n Creature Number " + target.to_s + " health is now " + (@HP[target][0] / @HP[target][1]).to_s;
                    end;              
               end;
