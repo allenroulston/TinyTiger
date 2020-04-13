@@ -1027,13 +1027,9 @@ bot.message(contains:"$Wset") do |event|
         if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
     end;
     weaponInt = Integer(inputStr.slice(5,1)) rescue false; #will detect integer or non integer input
-    if (pIndex != nil) && (weaponInt != false)  then; 
-       if weaponInt < 6 then;
+    if (pIndex != nil) && (weaponInt != false) && (weaponInt < 6) then; 
            @player[pIndex][1]=weaponInt;
            say = @player[pIndex][0].to_s + " weapon damage has be set to " + @weapon[(@player[pIndex][1])].to_s;
-          else;
-              say = "Sorry, $Wset requires this format: $Wset?  where ? is a single number ( 0 to 5 )";         
-          end;
     else
        say = "Sorry, $Wset requires this format: $Wset?  where ? is a single number ( 0 to 5 )"; 
     end;
