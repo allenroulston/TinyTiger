@@ -106,14 +106,15 @@ def check_char_name(code);
     end;
 end;
 
+######## HEALTH CHECK
 def health_check(currentHp, originalHp);
   perCent = currentHp/originalHp;
   case perCent;
-     when > 0.7499; @healthStat = "Healthy";
-     when > 0.4999; @healthStat = "Injured";
-     when > 0.2499; @healthStat = "Bloodied";
-     when > 0.0000; @healthStat = "Critical";
-     when < 0.0000; @healthStat = "Dead";
+     when (1.000..0.7499); @healthStat = "Healthy";
+     when (0.799.0.4999); @healthStat = "Injured";
+     when (0.4999..2499); @healthStat = "Bloodied";
+     when (0.0000..0.4999); @healthStat = "Critical";
+     when (-1.0..0.0000); @healthStat = "Dead";
   end;
 end;
 
