@@ -1031,7 +1031,7 @@ bot.message(contains:"$Wset") do |event|
            @player[pIndex][1]=weaponInt;
            say = @player[pIndex][0].to_s + " weapon damage has be set to " + @weapon[(@player[pIndex][1])].to_s;
     else
-       say = "Sorry, $Wset requires this format: $Wset?  where ? is a single number ( 0 to 5 )"; 
+       say = "Please try: $Wset?  where ? is a single number ( 0 to 5 )"; 
     end;
     event.respond say;
 end;
