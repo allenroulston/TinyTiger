@@ -565,7 +565,7 @@ bot.message(contains: ";SAD!6") do |event|
           totalDmg=totalDmg + dDie[x];
        end;
        responseValue = @user.to_s + " CRITICAL Sneak Attack (short sword) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "][" + dDie[5].to_s +
-                                      " = " + totalDmg.to_s;
+                                      "] = " + totalDmg.to_s;
     else;
        responseValue  = "You cannot use this damage type";
     end;
