@@ -27,8 +27,6 @@ end
 
 #####End Configuration####
 
-bot = Discordrb::Bot.new token: token 
-
 def valTheInny(inputStr);  # use to validate the input of type ;az1. (attack by Zalos where target # 1)
   @valTheInny = true;
   length = inputStr.length;
@@ -107,6 +105,19 @@ def check_char_name(code);
        when "z";  @charName = "Zalos / Bladesinger";
     end;
 end;
+
+def health_check(currentHp, originalHp);
+  perCent = currentHp/originalHp;
+  case perCent;
+     when > 0.7499; @healthStat = "Healthy";
+     when > 0.4999; @healthStat = "Injured";
+     when > 0.2499; @healthStat = "Bloodied";
+     when > 0.0000; @healthStat = "Critical";
+     when < 0.0000; @healthStat = "Dead";
+  end;
+end;
+
+bot = Discordrb::Bot.new token: token 
 
 bot.message(contains: ".i") do |event|
      check_user_or_nick(event)
@@ -246,26 +257,30 @@ bot.message(contains: ";rth") do |event|
                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
                                   " = " + (mod + @damage1).to_s + " points of damage.";
                      @HP[target][0] = @HP[target][0] - @damage1 - mod;
-                     say = say + "\n\n Creature Number " + target.to_s + " health is now " + (@HP[target][0] / @HP[target][1]).to_s;
+                     health_check(@HP[target][0], @HP[target][1])
+                     say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;
                    else;
                      say = say + "\n P-Index:" + thePlayerIndex.to_s +  "    W-Index:" + theWeaponIndex.to_s + "   theDamage:" + theDamageRoll.to_s + "\n";
                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] [" + @damage2.to_s + "] + " +
                                   mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
                      @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod;
-                     say = say + "\n\n Creature Number " + target.to_s + " health is now " + (@HP[target][0] / @HP[target][1]).to_s;
+                     health_check(@HP[target][0], @HP[target][1])
+                     say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;
                    end;
               else
                    if @weapon[(@player[@playerIndex][1])] != "2d6" then;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
                                   " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
                       @HP[target][0] = @HP[target][0] - @damage1 - @damage3 - mod;
-                      say = say + "\n\n Creature Number " + target.to_s + " health is now " + (@HP[target][0] / @HP[target][1]).to_s;
+                      health_check(@HP[target][0], @HP[target][1])
+                      say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;
                                   
                    else;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
                                  "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
                       @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - @damage3 - @damage4 - mod;
-                      say = say + "\n\n Creature Number " + target.to_s + " health is now " + (@HP[target][0] / @HP[target][1]).to_s;
+                      health_check(@HP[target][0], @HP[target][1])
+                      say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;
                    end;              
               end;
           end;
