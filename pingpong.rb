@@ -175,15 +175,20 @@ end;
 
 ########## Unique INITIATIVE ########
 bot.message(contains: ";init") do |event|
+    if event.user.nick != nil
+        theUser = event.user.nick
+    else
+        theUser = event.user.name
+    end;
     inputValue = event.content;
-    check_user_or_nick(event);  pIndex = nil;
+    pIndex = nil;
     (0..(@player.length-1)).each do |y|
-        if (@player[y][0].index(@user.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
+        if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
     end;
     mod = @player[pIndex][3]+@player[pIndex][9];
     initRoll=(rand 20)+1;
     result = initRoll + mod;
-    responseValue = @user.to_s + " has rolled initiative: [" + initRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
+    responseValue = theUser.to_s + " has rolled initiative: [" + initRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
     event.respond responseValue;
 end;
 
