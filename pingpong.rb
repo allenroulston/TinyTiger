@@ -992,15 +992,21 @@ end;
 ###########  WEAPONS  ##############
 #########################################
 bot.message(contains:"$Wlist") do |event|
-    check_user_or_nick(event);
-    get_the_player(); # this assigns a value to @playerIndex
-    say = @user + ", your current weapon damage die is set to: " + @weapon[(@player[@playerIndex][1])].to_s + "\n\n";
+    if event.user.nick != nil
+       theUser = event.user.nick
+    else
+       theUser = event.user.name
+    end;
+    pIndex = nil;
+    (0..(@player.length-1)).each do |y|  #find the @player pIndex within the array using 5 char of @user
+        if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
+    end;
+    say = theUser + ", your current weapon damage die is set to: " + @weapon[(@player[pIndex][1])].to_s + "\n\n";
     say = say +  "To change weapons, assign a new damage die value using: $Wset \n" +
                  "with an Integer, as shown below. Such as $Wset3 \n\n";
     (0..5).each do |x|;
           say = say +  @weapon[x] + " <=> " + x.to_s  + "    ";
     end;                 
-    say = say + "\n\n NOTE WELL: You may notice a delayed response to this command."
     event.respond say;
 end;
 
@@ -1015,7 +1021,6 @@ bot.message(contains:"$Wset") do |event|
     (0..(@player.length-1)).each do |y|  #find the @player pIndex within the array using 5 char of @user
         if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
     end;
-#    sleep (pIndex*2);
     weaponInt = Integer(inputStr.slice(5,1)) rescue false; #will detect integer or non integer input
     if (pIndex != nil) && (weaponInt != false)  then; 
        if weaponInt < 6 then;
