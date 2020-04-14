@@ -259,7 +259,7 @@ bot.message(contains: ";rth") do |event|
                      health_check(@HP[target][0], @HP[target][1])
                      say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;
                    else;
-                     say = say + "\n P-Index:" + thePlayerIndex.to_s +  "    W-Index:" + theWeaponIndex.to_s + "   theDamage:" + theDamageRoll.to_s + "\n";
+                     #say = say + "\n P-Index:" + thePlayerIndex.to_s +  "    W-Index:" + theWeaponIndex.to_s + "   theDamage:" + theDamageRoll.to_s + "\n";
                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] [" + @damage2.to_s + "] + " +
                                   mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
                      @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod;
@@ -1126,6 +1126,17 @@ bot.message(contains:"$ALL") do |event|
     event.respond  say;
 end;
 
+
+bot.message(contains:"$HPlist") do |event|
+    check_user_or_nick(event); say = "";
+    if @user == "Allen" then; # as long as the user is Allen, perform the following
+            (0..9).each do |x|;
+                hpVal = @HP[x][0].to_s;
+                say = say + "Creature " + x.to_s + " currently has " + hpVal + " hit points.";
+            end;           
+    end;
+    event.respond say;
+end;
 
 bot.message(contains:"$HPset") do |event|
     check_user_or_nick(event);
