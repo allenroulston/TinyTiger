@@ -109,11 +109,11 @@ end;
 ######## HEALTH CHECK
 def health_check(currentHp, originalHp);
   perCent = currentHp/originalHp;
-  if perCent < 0.0000 then; @healthStat = "Dead"; end;
-  if perCent > 0.0000 then; @healthStat = "Critical"; end;
-  if perCent > 0.2499 then; @healthStat = "Bloodied"; end;
-  if perCent > 0.4999 then; @healthStat = "Injured"; end;
-  if perCent > 0.7499 then; @healthStat = "Healthy"; end;
+  if perCent < 0.00000 then; @healthStat = "Dead"; end;
+  if perCent > 0.00000 then; @healthStat = "Critical"; end;
+  if perCent > 0.24999 then; @healthStat = "Bloodied"; end;
+  if perCent > 0.49999 then; @healthStat = "Injured"; end;
+  if perCent > 0.74999 then; @healthStat = "Healthy"; end;
 end;
 
 bot = Discordrb::Bot.new token: token 
@@ -315,17 +315,29 @@ bot.message(contains: ";arth") do |event|
                    if @weapon[(@player[@playerIndex][1])] != "2d6" then;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
                                   " = " + (mod + @damage1).to_s + " points of damage.";
+                      @HP[target][0] = @HP[target][0] - @damage1 - mod;
+                      health_check(@HP[target][0], @HP[target][1])
+                      say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;                                  
                    else;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] [" + @damage2.to_s + "] + " +
                                   mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
+                      @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod;
+                      health_check(@HP[target][0], @HP[target][1])
+                      say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;
                    end;
               else
                    if @weapon[(@player[@playerIndex][1])] != "2d6" then;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
                                   " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
+                      @HP[target][0] = @HP[target][0] - @damage1 - @damage3 - mod;
+                      health_check(@HP[target][0], @HP[target][1])
+                      say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;
                    else;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
                                  "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
+                      @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - @damage3 - @damage4 - mod;
+                      health_check(@HP[target][0], @HP[target][1])
+                      say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;
                    end;              
               end;
           end;
@@ -1113,6 +1125,23 @@ bot.message(contains:"$ALL") do |event|
     end;
     event.respond  say;
 end;
+
+
+bot.message(contains:"$HPset") do |event|
+    check_user_or_nick(event);
+    inputStr = event.content.slice(6,4);   # creature Number and AC should be in the string
+    creatNum = inputStr.slice(0,1); creatHP = inputStr.slice(1,3); 
+    cNum = Integer(creatNum) rescue false; #creature Number
+    hpVal = Integer(creatHP) rescue false;  #Value of AC
+    if ( (inputStr.length == 4) && (cNum != false) && (hpVal != false) && (@user == "Allen") ) then;
+          @HP[cNum][0]=hpVal;  @HP[cNum][1]= hpVal + 0.0;
+          say = "Hit Points for Creature " + cNum.to_s + " was set to: " + hpVal.to_s + "  " + (hpVal + 0.0).to_s;
+    else;
+      say = @user.to_s + "$HPset???? where each ? is an Integer from 0 to 9."
+    end;
+    event.respond say;
+end;
+
 
 def get_the_player();
     player5Char = @user.slice(0,5); #taking first 5 characters of @user
