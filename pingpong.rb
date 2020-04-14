@@ -1132,7 +1132,7 @@ bot.message(contains:"$HPlist") do |event|
     if @user == "Allen" then; # as long as the user is Allen, perform the following
             (0..9).each do |x|;
                 hpVal = @HP[x][0].to_s;
-                say = say + "Creature " + x.to_s + " currently has " + hpVal + " hit points.";
+                say = say + "Creature " + x.to_s + " currently has " + hpVal + " hit points. \n";
             end;           
     end;
     event.respond say;
