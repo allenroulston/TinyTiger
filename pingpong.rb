@@ -1143,12 +1143,12 @@ bot.message(contains:"$HPset") do |event|
     inputStr = event.content.slice(6,4);   # creature Number and AC should be in the string
     creatNum = inputStr.slice(0,1); creatHP = inputStr.slice(1,3); 
     cNum = Integer(creatNum) rescue false; #creature Number
-    hpVal = Integer(creatHP) rescue false;  #Value of AC
-    if ( (inputStr.length == 4) && (cNum != false) && (hpVal != false) && (@user == "Allen") ) then;
+    hpVal = Integer(creatHP) rescue false;  #Value of HP
+    if ( (inputStr.length > 1) && (cNum != false) && (hpVal != false) && (@user == "Allen") ) then;
           @HP[cNum][0]=hpVal;  @HP[cNum][1]= hpVal + 0.0;
           say = "Hit Points for Creature " + cNum.to_s + " was set to: " + hpVal.to_s + "  " + (hpVal + 0.0).to_s;
     else;
-      say = @user.to_s + "$HPset???? where each ? is an Integer from 0 to 9."
+      say = @user.to_s + "$HPset?? where first ? is Target Integer and second ? is the HP integer."
     end;
     event.respond say;
 end;
