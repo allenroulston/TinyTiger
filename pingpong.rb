@@ -106,11 +106,12 @@ def check_char_name(code);
     end;
 end;
 
-######## HEALTH CHECK
+################################
+######## HEALTH CHECK ##########
 def health_check(currentHp, originalHp);
   perCent = currentHp/originalHp;
   if perCent < 0.00000 then; @healthStat = "Dead"; end;
-  if perCent > 0.00000 then; @healthStat = "Critical"; end;
+  if perCent > 0.00000 then; @healthStat = "Deformed"; end;
   if perCent > 0.24999 then; @healthStat = "Bloodied"; end;
   if perCent > 0.49999 then; @healthStat = "Injured"; end;
   if perCent > 0.74999 then; @healthStat = "Healthy"; end;
@@ -257,14 +258,14 @@ bot.message(contains: ";rth") do |event|
                                   " = " + (mod + @damage1).to_s + " points of damage.";
                      @HP[target][0] = @HP[target][0] - @damage1 - mod;
                      health_check(@HP[target][0], @HP[target][1])
-                     say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;
+                     say = say + "\n\n Creature Number " + target.to_s + " looks " + @healthStat;
                    else;
                      #say = say + "\n P-Index:" + thePlayerIndex.to_s +  "    W-Index:" + theWeaponIndex.to_s + "   theDamage:" + theDamageRoll.to_s + "\n";
                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] [" + @damage2.to_s + "] + " +
                                   mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
                      @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod;
                      health_check(@HP[target][0], @HP[target][1])
-                     say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;
+                     say = say + "\n\n Creature Number " + target.to_s + " looks " + @healthStat;
                    end;
               else
                    if @weapon[(@player[@playerIndex][1])] != "2d6" then;
@@ -272,18 +273,17 @@ bot.message(contains: ";rth") do |event|
                                   " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
                       @HP[target][0] = @HP[target][0] - @damage1 - @damage3 - mod;
                       health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;
+                      say = say + "\n\n Creature Number " + target.to_s + " looks " + @healthStat;
                                   
                    else;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
                                  "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
                       @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - @damage3 - @damage4 - mod;
                       health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;
+                      say = say + "\n\n Creature Number " + target.to_s + " looks " + @healthStat;
                    end;              
               end;
           end;
-          
     else;
        say = "Roll To Hit needs  ;rth?   ?= target number (0 to 9)";
     end;    
@@ -317,13 +317,13 @@ bot.message(contains: ";arth") do |event|
                                   " = " + (mod + @damage1).to_s + " points of damage.";
                       @HP[target][0] = @HP[target][0] - @damage1 - mod;
                       health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;                                  
+                      say = say + "\n\n Creature Number " + target.to_s + " looks " + @healthStat;                                  
                    else;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] [" + @damage2.to_s + "] + " +
                                   mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
                       @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod;
                       health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;
+                      say = say + "\n\n Creature Number " + target.to_s + " looks " + @healthStat;
                    end;
               else
                    if @weapon[(@player[@playerIndex][1])] != "2d6" then;
@@ -331,13 +331,13 @@ bot.message(contains: ";arth") do |event|
                                   " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
                       @HP[target][0] = @HP[target][0] - @damage1 - @damage3 - mod;
                       health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;
+                      say = say + "\n\n Creature Number " + target.to_s + " looks " + @healthStat;
                    else;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
                                  "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
                       @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - @damage3 - @damage4 - mod;
                       health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n\n Creature Number " + target.to_s + " is " + @healthStat;
+                      say = say + "\n\n Creature Number " + target.to_s + " looks " + @healthStat;
                    end;              
               end;
           end;
@@ -374,17 +374,29 @@ bot.message(contains: ";drth") do |event|
                    if @weapon[(@player[@playerIndex][1])] != "2d6" then;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
                                   " = " + (mod + @damage1).to_s + " points of damage.";
+                      @HP[target][0] = @HP[target][0] - @damage1 - mod;
+                      health_check(@HP[target][0], @HP[target][1])
+                      say = say + "\n\n Creature Number " + target.to_s + " looks " + @healthStat;                                  
                    else;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] [" + @damage2.to_s + "] + " +
                                   mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
+                                  @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod;
+                                  health_check(@HP[target][0], @HP[target][1])
+                                  say = say + "\n\n Creature Number " + target.to_s + " looks " + @healthStat;
                    end;
               else
                    if @weapon[(@player[@playerIndex][1])] != "2d6" then;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
                                   " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
+                                  @HP[target][0] = @HP[target][0] - @damage1 - @damage3 - mod;
+                                  health_check(@HP[target][0], @HP[target][1])
+                                  say = say + "\n\n Creature Number " + target.to_s + " looks " + @healthStat;
                    else;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
                                  "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
+                                 @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - @damage3 - @damage4 - mod;
+                                 health_check(@HP[target][0], @HP[target][1])
+                                 say = say + "\n\n Creature Number " + target.to_s + " looks " + @healthStat;
                    end;              
               end;
           end;
@@ -1148,7 +1160,7 @@ bot.message(contains:"$HPset") do |event|
           @HP[cNum][0]=hpVal;  @HP[cNum][1]= hpVal + 0.0;
           say = "Hit Points for Creature " + cNum.to_s + " was set to: " + hpVal.to_s + "  " + (hpVal + 0.0).to_s;
     else;
-      say = @user.to_s + "$HPset?? where first ? is Target Integer and second ? is the HP integer."
+      say = @user.to_s + "$HPset?? where first ? is Target Integer and second ? is the HP integers."
     end;
     event.respond say;
 end;
