@@ -1030,7 +1030,7 @@ bot.message(contains:"d20a.") do |event|
     if ( chkNum == false ) then;
        say = " d20a. requires  ?d20a.? where ? are integers (1 to 9)."
     else
-       say = @user.to_s + " rolled 2d20 with Advantage" + " + " + @whatPlus.to_s + "\n";
+       say = @user.to_s + " rolled 2d20 " + " + " + @whatPlus.to_s + " with Advantage \n";
        die=[0,0,0,0,0,0,0,0,0]; total=0;
        (0..1).each do |x|;
            die[x]=(rand 20)+1;
@@ -1038,7 +1038,7 @@ bot.message(contains:"d20a.") do |event|
        end;
        bigDie = [die[0],die[1]].max;
        total = bigDie + @whatPlus;
-       say = say + "       " + bigDie.to_s + " + " + @whatPlus.to_s + " = " + total.to_s;
+       say = say + "       [" + bigDie.to_s + "] + " + @whatPlus.to_s + " = " + total.to_s;
     end;
     event.respond say;
 end;
