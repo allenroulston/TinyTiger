@@ -899,7 +899,7 @@ end;
 
 ##################  d4. ##########################
 bot.message(contains:"d4.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d();  # uses @tempVar to set value of @howManyDice
+    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d4.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " d4. requires  ?d4.? where ? are integers (1 to 9)."
@@ -920,7 +920,7 @@ end;
 
 ################## d6. ##########################
 bot.message(contains:"d6.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d();  # uses @tempVar to set value of @howManyDice
+    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d6.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " d6. requires  ?d6.? where ? are integers (1 to 9)."
@@ -941,7 +941,7 @@ end;
 
 ################## d8. ##########################
 bot.message(contains:"d8.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d();  # uses @tempVar to set value of @howManyDice
+    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d8.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " d8. requires  ?d8.? where ? are integers (1 to 9)."
@@ -962,7 +962,7 @@ end;
 
 ################## d10. ##########################
 bot.message(contains:"d10.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d();  # uses @tempVar to set value of @howManyDice
+    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d10.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " d10. requires  ?d10.? where ? are integers (1 to 9)."
@@ -983,7 +983,7 @@ end;
 
 ################## d12. ##########################
 bot.message(contains:"d12.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d();  # uses @tempVar to set value of @howManyDice
+    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d12.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " d12. requires  ?d12.? where ? are integers (1 to 9)."
@@ -1004,7 +1004,7 @@ end;
 
 ################## d20. ##########################
 bot.message(contains:"d20.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d();  # uses @tempVar to set value of @howManyDice
+    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d20.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " d20. requires  ?d20.? where ? are integers (1 to 9)."
