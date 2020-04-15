@@ -1025,7 +1025,7 @@ end;
 
 ################## ad20. ##########################
 bot.message(contains:"ad20.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d();  # uses @tempVar to set value of @howManyDice
+    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("ad20.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " ad20. requires  ?ad20.? where ? are integers (1 to 9)."
@@ -1044,8 +1044,8 @@ bot.message(contains:"ad20.") do |event|
     event.respond say;
 end;
 
-def parse_the_d();
-  theIndex1 = @tempVar.index('d');
+def parse_the_d(incoming);
+  theIndex1 = @tempVar.index(incoming);
   @howManyDice = @tempVar.slice(0,(theIndex1));
   if ( @howManyDice == "0" || @howManyDice == "" ) then @howManyDice =1; end;
   theIndex2 = @tempVar.index('.');
