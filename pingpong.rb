@@ -1023,14 +1023,14 @@ bot.message(contains:"d20.") do |event|
     event.respond say;
 end;
 
-################## ad20. ##########################
+################## d20a. ##########################
 bot.message(contains:"d20a.") do |event|
     check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d20a.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " d20a. requires  ?d20a.? where ? are integers (1 to 9)."
     else
-       say = @user.to_s + " rolled 2d20 " + " + " + @whatPlus.to_s + " with Advantage \n";
+       say = @user.to_s + " rolled 2d20" + " + " + @whatPlus.to_s + " with Advantage \n";
        die=[0,0,0,0,0,0,0,0,0]; total=0;
        (0..1).each do |x|;
            die[x]=(rand 20)+1;
@@ -1042,6 +1042,28 @@ bot.message(contains:"d20a.") do |event|
     end;
     event.respond say;
 end;
+
+################## d20d. ##########################
+bot.message(contains:"d20d.") do |event|
+    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d20d.");  # uses @tempVar to set value of @howManyDice
+    chkNum = Integer(@howManyDice) rescue false;
+    if ( chkNum == false ) then;
+       say = " d20d. requires  ?d20d.? where ? are integers (1 to 9)."
+    else
+       say = @user.to_s + " rolled 2d20" + " + " + @whatPlus.to_s + " with Dis-Advantage \n";
+       die=[0,0,0,0,0,0,0,0,0]; total=0;
+       (0..1).each do |x|;
+           die[x]=(rand 20)+1;
+           say = say + "[" + die[x].to_s + "]";
+       end;
+       bigDie = [die[0],die[1]].min;
+       total = bigDie + @whatPlus;
+       say = say + "       [" + bigDie.to_s + "] + " + @whatPlus.to_s + " = " + total.to_s;
+    end;
+    event.respond say;
+end;
+
+
 
 def parse_the_d(incoming);
   theIndex1 = @tempVar.index(incoming);
