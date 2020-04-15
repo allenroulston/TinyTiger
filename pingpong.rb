@@ -1007,7 +1007,7 @@ bot.message(contains:"d20.") do |event|
     check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d20.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
-       say = " d20. requires  ?d20.? where ? are integers (1 to 9)."
+       say = " d20. requires  d20.  OR   ?d20.? where ? are integers (1 to 9)."
     else
        str_2_number(@howManyDice); #sets the value of @numba
        say = @user.to_s + " rolled " + @numba.to_s + "d20 " + " + " + @whatPlus.to_s + "\n";
@@ -1028,7 +1028,7 @@ bot.message(contains:"d20a.") do |event|
     check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d20a.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
-       say = " d20a. requires  ?d20a.? where ? are integers (1 to 9)."
+       say = " d20a. requires  d20a. OR  ?d20a.? where ? are integers (1 to 9)."
     else
        say = @user.to_s + " rolled 2d20" + " + " + @whatPlus.to_s + " with Advantage \n";
        die=[0,0,0,0,0,0,0,0,0]; total=0;
@@ -1048,7 +1048,7 @@ bot.message(contains:"d20d.") do |event|
     check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d20d.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
-       say = " d20d. requires  ?d20d.? where ? are integers (1 to 9)."
+       say = " d20d. requires  d20d. OR  ?d20d.? where ? are integers (1 to 9)."
     else
        say = @user.to_s + " rolled 2d20" + " + " + @whatPlus.to_s + " with Dis-Advantage \n";
        die=[0,0,0,0,0,0,0,0,0]; total=0;
