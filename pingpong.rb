@@ -1038,7 +1038,7 @@ bot.message(contains:"d20a.") do |event|
        end;
        bigDie = [die[0],die[1]].max;
        total = bigDie + @whatPlus;
-       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
+       say = say + "       " + bigDie.to_s + " + " + @whatPlus.to_s + " = " + total.to_s;
     end;
     event.respond say;
 end;
