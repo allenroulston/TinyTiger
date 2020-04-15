@@ -1023,10 +1023,31 @@ bot.message(contains:"d20.") do |event|
     event.respond say;
 end;
 
+################## ad20. ##########################
+bot.message(contains:"ad20.") do |event|
+    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d();  # uses @tempVar to set value of @howManyDice
+    chkNum = Integer(@howManyDice) rescue false;
+    if ( chkNum == false ) then;
+       say = " ad20. requires  ?ad20.? where ? are integers (1 to 9)."
+    else
+       str_2_number(@howManyDice); #sets the value of @numba
+       say = @user.to_s + " rolled " + @numba.to_s + "d20 " + " + " + @whatPlus.to_s + "\n";
+       die=[0,0,0,0,0,0,0,0,0]; total=0;
+       (0..(@numba-1)).each do |x|;
+           die[x]=(rand 20)+1;
+           say = say + "[" + die[x].to_s + "]";
+           total=total + die[x];
+       end;
+       total = total + @whatPlus;
+       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
+    end;
+    event.respond say;
+end;
+
 def parse_the_d();
   theIndex1 = @tempVar.index('d');
   @howManyDice = @tempVar.slice(0,(theIndex1));
-  if @howManyDice == "0" then @howManyDice =1; end;
+  if ( @howManyDice == "0" || @howManyDice == "" ) then @howManyDice =1; end;
   theIndex2 = @tempVar.index('.');
   tempVarLen = @tempVar.length;
   @whatPlus = @tempVar.slice((theIndex2+1),(tempVarLen-theIndex2))
