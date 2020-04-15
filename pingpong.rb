@@ -1109,6 +1109,7 @@ end;
 
 bot.message(contains:"$ACset") do |event|
     check_user_or_nick(event);
+    creatAC= false;
     inputStr = event.content.slice(6,3);   # creature Number and AC should be in the string
     strLength = inputStr.length;
     creatNum = inputStr.slice(0,1); 
@@ -1120,7 +1121,7 @@ bot.message(contains:"$ACset") do |event|
     end;
     cNum = Integer(creatNum) rescue false; #creature Number
     acVal = Integer(creatAC) rescue false;  #Value of AC
-    if ( ((strLength == 2) || strLength == 3)) && (cNum != false) && (acVal != false) && (@user == "Allen") ) then;
+    if (  (cNum != false) && (acVal != false) && (@user == "Allen") ) then;
           @armour[cNum]=acVal;
           say = "Armour Class for Creature " + cNum.to_s + " was set to AC: " + acVal.to_s;
     else;
