@@ -110,7 +110,7 @@ end;
 ######## HEALTH CHECK ##########
 def health_check(currentHp, originalHp);
   perCent = currentHp/originalHp;
-  if perCent < 0.00000 then; @healthStat = "Dead"; end;
+  if perCent < 0.00010 then; @healthStat = "Dead"; end;  # less than 0.0001 is only possible when HP = 0 or less 
   if perCent > 0.00000 then; @healthStat = "Deformed"; end;
   if perCent > 0.24999 then; @healthStat = "Bloodied"; end;
   if perCent > 0.49999 then; @healthStat = "Injured"; end;
