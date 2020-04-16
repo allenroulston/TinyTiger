@@ -597,7 +597,7 @@ bot.message(contains: ";asrth") do |event|
         if (iRoll == 20) then sayHit = "The Advantage SPELL attack is a CRITICAL HIT!" else; sayHit = "The Advantage SPELL attack HIT!" end;
         say = theUser.to_s + " rolled an Advantage SPELL attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "]    [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
         if (result < @armour[target]) then;
-            say = say + "The SPELL attack Missed!";
+            say = say + "The Advantage SPELL attack Missed!";
         else;
             say = say + sayHit; 
         end;
@@ -628,7 +628,7 @@ bot.message(contains: ";dsrth") do |event|
         if (iRoll == 20) then sayHit = "The Dis-Advantage SPELL attack is a CRITICAL HIT!" else; sayHit = "The Dis-Advantage SPELL attack HIT!" end;
         say = theUser.to_s + " rolled an Dis-Advantage SPELL attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "]    [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
         if (result < @armour[target]) then;
-            say = say + "The SPELL attack Missed!";
+            say = say + "The Dis-Advantage SPELL attack Missed!";
         else;
             say = say + sayHit; 
         end;
