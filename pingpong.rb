@@ -1354,6 +1354,11 @@ bot.message(contains:";damage") do |event|
     event.respond say;
 end;
 
+bot.message(contains:";deleteme") do |event|
+    check_user_or_nick(event);
+    event.delete;
+    event.respond "I saw that, and I deleted it.";
+end;
 
 def get_the_player();
     player5Char = @user.slice(0,5); #taking first 5 characters of @user
