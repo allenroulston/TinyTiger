@@ -1157,6 +1157,7 @@ end;
 
 ################## d20d. ##########################
 bot.message(contains:"help") do |event|
+  lyrics = Array.new
   lyrics[0]="Help me if you can, I'm feeling down";
   lyrics[1]="And I do appreciate you being 'round";
   lyrics[2]="Help me get my feet back on the ground";
