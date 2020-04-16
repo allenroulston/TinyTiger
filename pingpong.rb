@@ -1336,6 +1336,22 @@ bot.message(contains:"$HPless") do |event|
     event.respond say;
 end;
 
+bot.message(contains:";damage") do |event|
+    check_user_or_nick(event);
+       inputStr = event.content.slice(7,4);   # creature Number and AC should be in the string
+       creatNum = inputStr.slice(0,1); creatHP = inputStr.slice(1,3); 
+       cNum = Integer(creatNum) rescue false; #creature Number
+       hpVal = Integer(creatHP) rescue false;  #Value of HP
+       if ( (inputStr.length > 1) && (cNum != false) && (hpVal != false) && (@user == "Allen") ) then;
+            @HP[cNum][0]=@HP[cNum][0]-hpVal;
+            say = "Hit Points for Creature " + cNum.to_s + " , reduced by " + hpVal.to_s + " Now has " + @HP[cNum][0].to_s + " hit points.";
+            health_check(@HP[cNum][0], @HP[cNum][1])
+            say = say + "\n\n Creature Number " + cNum.to_s + " looks " + @healthStat;
+       else;
+        say = @user.to_s + ";damage?? where first ? is Target Integer and second ? is the HP integers."
+       end;
+    event.respond say;
+end;
 
 
 def get_the_player();
