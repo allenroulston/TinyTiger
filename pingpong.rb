@@ -1355,9 +1355,12 @@ bot.message(contains:";damage") do |event|
 end;
 
 bot.message(contains:";deleteme") do |event|
-    check_user_or_nick(event);
+    say = event.channel.to_s
+    say = say + "\n" + event.webhook_id.to_s;
+    say = say + "\n" + event.timestamp.to_s;
+    say = say + "\n" + event.ononce.to_s;
     #event.delete;
-    say = event.message.to_s;
+
     event.respond say;
 end;
 
