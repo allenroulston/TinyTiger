@@ -1344,7 +1344,7 @@ bot.message(contains:";damage") do |event|
        hpVal = Integer(creatHP) rescue false;  #Value of HP
        if ( (inputStr.length > 1) && (cNum != false) && (hpVal != false) && (@user == "Allen") ) then;
             @HP[cNum][0]=@HP[cNum][0]-hpVal;
-            say = "Hit Points for Creature " + cNum.to_s + " , reduced by " + " hit points.";
+            say = "Hit Points for Creature " + cNum.to_s + " , reduced by " + hpVal.to_s + " hit points.";
             health_check(@HP[cNum][0], @HP[cNum][1])
             say = say + "\n\n Creature Number " + cNum.to_s + " looks " + @healthStat;
        else;
