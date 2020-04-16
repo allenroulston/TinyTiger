@@ -1357,7 +1357,7 @@ end;
 bot.message(contains:";deleteme") do |event|
     check_user_or_nick(event);
     #event.delete;
-    say = event.inspect.to_s;
+    say = event.content.to_s;
     event.respond say;
 end;
 
