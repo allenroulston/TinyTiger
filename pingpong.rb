@@ -1155,7 +1155,13 @@ bot.message(contains:"d20d.") do |event|
     event.respond say;
 end;
 
-
+################## d20d. ##########################
+bot.message(contains:"help") do |event|
+  say = " d20.3 rolls d20 + 3     d20.-2  rolls d20 -2 \n";
+  say = say + " d20a.4 rolls Advantage d20 + 4     d20d.-5  rolls Dis-Advantage -5 \n";
+  say = say + " 2d4.2  rolls 2d4 +2  same for d6. d8. d10. d12."
+    event.respond say;
+end;
 
 def parse_the_d(incoming);
   theIndex1 = @tempVar.index(incoming);
