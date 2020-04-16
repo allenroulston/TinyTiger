@@ -594,7 +594,7 @@ bot.message(contains: ";asrth") do |event|
         profB=@player[pIndex][8]; # Assigns Proficiency Bonus
         iRoll1 = (rand 20)+1;  iRoll2 = (rand 20)+1;    iRoll= [iRoll1,iRoll2].max;
         result = iRoll + spellCastMod + profB;
-        if (iRoll == 20) then sayHit = "The SPELL attack is a CRITICAL HIT!" else; sayHit = "The SPELL attack HIT!" end;
+        if (iRoll == 20) then sayHit = "The Advantage SPELL attack is a CRITICAL HIT!" else; sayHit = "The Advantage SPELL attack HIT!" end;
         say = theUser.to_s + " rolled an Advantage SPELL attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "]    [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
         if (result < @armour[target]) then;
             say = say + "The SPELL attack Missed!";
@@ -625,7 +625,7 @@ bot.message(contains: ";dsrth") do |event|
         profB=@player[pIndex][8]; # Assigns Proficiency Bonus
         iRoll1 = (rand 20)+1;  iRoll2 = (rand 20)+1;    iRoll= [iRoll1,iRoll2].min;
         result = iRoll + spellCastMod + profB;
-        if (iRoll == 20) then sayHit = "The SPELL attack is a CRITICAL HIT!" else; sayHit = "The SPELL attack HIT!" end;
+        if (iRoll == 20) then sayHit = "The Dis-Advantage SPELL attack is a CRITICAL HIT!" else; sayHit = "The Dis-Advantage SPELL attack HIT!" end;
         say = theUser.to_s + " rolled an Dis-Advantage SPELL attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "]    [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
         if (result < @armour[target]) then;
             say = say + "The SPELL attack Missed!";
