@@ -1157,9 +1157,11 @@ end;
 
 ################## d20d. ##########################
 bot.message(contains:"help") do |event|
-  say =       "d20.3  rolls d20 + 3               d20.-2  rolls d20 -2 \n";
-  say = say + "d20a.4 rolls Advantage d20 + 4     d20d.-5  rolls Dis-Advantage -5 \n";
-  say = say + "2d4.2  rolls 2d4 +2                same for d6. d8. d10. d12."
+  say =       "d4.3  rolls 1d4 + 3         d6.-2   rolls 1d6 -2 \n";
+  say = say + "2d8.  rolls 2d8 + 0        3d8.-1   rolls 3d8 -1 \n";
+  say = say + "The same pattern applies to: d4. d6. d8. d10. d12. & d20. \n";
+  say = say + " \n"
+  say = say + "d20a.4 rolls Advantage d20 + 4     d20d.-5  rolls Dis-Advantage -5"
     event.respond say;
 end;
 
