@@ -1355,11 +1355,14 @@ bot.message(contains:";damage") do |event|
 end;
 
 bot.message(contains:";deleteme") do |event|
-    say = event.channel.to_s
-    say = say + "\n" + event.webhook_id.to_s;
-    say = say + "\n" + event.timestamp.to_s;
-    say = say + "\n" + event.ononce.to_s;
-    #event.delete;
+    say = event.author.to_s;
+    say = say + "\n" + event.channel.to_s
+    say = say + "\n" + event.content.to_s;
+    say = say + "\n" + event.file.to_s;
+    say = say + "\n" + event.message.to_s;
+    say = say + "\n" + event.saved_message.to_s;
+    say = say + "\n" + event.server.to_s;    
+    say = say + "\n" + event.timestamp.to_s;    #event.delete;
 
     event.respond say;
 end;
