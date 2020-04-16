@@ -563,10 +563,10 @@ bot.message(contains: ";srth") do |event|
         profB=@player[pIndex][8]; # Assigns Proficiency Bonus
         iRoll=(rand 20)+1;
         result = iRoll + spellCastMod + profB;
-        if (iRoll == 20) then sayHit = "The attack is a CRITICAL HIT!" else; sayHit = "The attack HIT!" end;
-        say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+        if (iRoll == 20) then sayHit = "The SPELL attack is a CRITICAL HIT!" else; sayHit = "The SPELL attack HIT!" end;
+        say = theUser.to_s + " rolled a SPELL attack: [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
         if (result < @armour[target]) then;
-            say = say + "The attack Missed!";
+            say = say + "The SPELL attack Missed!";
         else;
             say = say + sayHit; 
         end;
