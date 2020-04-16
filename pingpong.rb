@@ -1157,7 +1157,12 @@ end;
 
 ################## d20d. ##########################
 bot.message(contains:"help") do |event|
-  say =       "HELP for   d4.    d6.    d8.    d10.    d12.  and  .d20: \n";
+  lyrics[0]="Help me if you can, I'm feeling down";
+  lyrics[1]="And I do appreciate you being 'round";
+  lyrics[2]="Help me get my feet back on the ground";
+  lyrics[3]="Won't you please, please help me?";
+  say = lyrics[(rand 4)+1].to_s + " \n\n";
+  say = say + "HELP for   d4.    d6.    d8.    d10.    d12.  and  .d20: \n";
   say = say + "d4.3  rolls 1d4 + 3         d6.-2   rolls 1d6 -2 \n";
   say = say + "2d8.  rolls 2d8 + 0        3d8.-1   rolls 3d8 -1 \n";
   say = say + " \n"
