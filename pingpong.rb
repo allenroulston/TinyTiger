@@ -545,6 +545,36 @@ bot.message(contains: ";dbrth") do |event|
     event.respond say;
 end;
 
+######### easy SPELL ATTACK TARGET creature #####################################
+bot.message(contains: ";srth") do |event|
+    inputValue = event.content;
+    target = Integer(inputValue.slice(5,1)) rescue false;
+    if ( target!= false then;
+        if event.user.nick != nil
+           theUser = event.user.nick
+        else
+           theUser = event.user.name
+        end;
+        pIndex = nil;
+        (0..(@player.length-1)).each do |y|
+            if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
+        end;
+        spellCastMod = @player[pIndex[(@player[pIndex][10])]; #assigns the spell ABS mod 
+        profB=@player[pIndex][8]; # Assigns Proficiency Bonus
+        iRoll=(rand 20)+1;
+        result = iRoll + spellCastMod + profB;
+        if (iRoll == 20) then sayHit = "The attack is a CRITICAL HIT!" else; sayHit = "The attack HIT!" end;
+              say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+              if (result < @armour[target]) then;
+                  say = say + "The attack Missed!";
+              else;
+                  say = say + sayHit; 
+              end;
+    else;
+      say = "Roll To Hit needs  ;srth?   ?= target number (0 to 9)";
+    end;    
+        event.respond say;
+end;
 
 
 ########## DAMAGE Sneak Attack Dagger d4 ##############
