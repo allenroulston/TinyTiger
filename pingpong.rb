@@ -579,7 +579,7 @@ end;
 ######### easy SPELL ATTACK TARGET creature #####################################
 bot.message(contains: ";asrth") do |event|
     inputValue = event.content;
-    target = Integer(inputValue.slice(5,1)) rescue false;
+    target = Integer(inputValue.slice(6,1)) rescue false;
     if ( target!= false ) then;
         if event.user.nick != nil;
            theUser = event.user.nick;
