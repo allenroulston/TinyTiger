@@ -559,7 +559,7 @@ bot.message(contains: ";srth") do |event|
         (0..(@player.length-1)).each do |y|
             if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
         end;
-        spellCastMod = @player[pIndex[(@player[pIndex][10])]; #assigns the spell ABS mod 
+        spellCastMod = @player[pIndex][(@player[pIndex][10])]; #assigns the spell ABS mod 
         profB=@player[pIndex][8]; # Assigns Proficiency Bonus
         iRoll=(rand 20)+1;
         result = iRoll + spellCastMod + profB;
