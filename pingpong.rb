@@ -559,12 +559,13 @@ bot.message(contains: ";srth") do |event|
         (0..(@player.length-1)).each do |y|
             if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
         end;
-        spellCastMod = @player[pIndex][(@player[pIndex][10])]; #assigns the spell ABS mod 
+        spellCastMod = @player[pIndex][(@player[pIndex][10])]; #assigns the spell ABS mod
+        abs_num_to_name(@player[pIndex][10]);
         profB=@player[pIndex][8]; # Assigns Proficiency Bonus
         iRoll=(rand 20)+1;
         result = iRoll + spellCastMod + profB;
         if (iRoll == 20) then sayHit = "The SPELL attack is a CRITICAL HIT!" else; sayHit = "The SPELL attack HIT!" end;
-        say = theUser.to_s + " rolled a SPELL attack: [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+        say = theUser.to_s + " rolled a (" + @ABSname + ") SPELL attack: [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
         if (result < @armour[target]) then;
             say = say + "The SPELL attack Missed!";
         else;
@@ -1348,7 +1349,7 @@ bot.message(contains:";damage") do |event|
             health_check(@HP[cNum][0], @HP[cNum][1])
             say = say + "\n\n Creature Number " + cNum.to_s + " looks " + @healthStat;
        else;
-        say = @user.to_s + ";damage?? where first ? is Target Integer and second ? is the HP integers."
+        say = ";damage?? where first ? is Target Integer and second ? is the HP integer."
        end;
     event.respond say;
 end;
@@ -1364,6 +1365,19 @@ def get_the_player();
       y=y+1
     end;
 end;
+
+######## ABS score modifier is asigned a name
+def abs_num_to_name(numb)
+  case numb
+      when 2; @ABSname = "Strength";
+      when 3; @ABSname = "Dexterity";
+      when 4; @ABSname = "Constitution";
+      when 5; @ABSname = "Intelligence";
+      when 6; @ABSname = "Wisdom";
+      when 7; @ABSname = "Charisma";
+  end;
+end;
+
 
 def roll_damage(damType);
   case damType;
