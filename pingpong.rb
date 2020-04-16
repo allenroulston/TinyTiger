@@ -1362,7 +1362,8 @@ bot.message(contains:";deleteme") do |event|
     say = say + "\n" + event.message.to_s;
     say = say + "\n" + event.saved_message.to_s;
     say = say + "\n" + event.server.to_s;    
-    say = say + "\n" + event.timestamp.to_s;    #event.delete;
+    say = say + "\n" + event.timestamp.to_s;
+    say = say + "\n" + event.id.to_s;
 
     event.respond say;
 end;
