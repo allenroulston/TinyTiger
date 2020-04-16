@@ -1356,8 +1356,9 @@ end;
 
 bot.message(contains:";deleteme") do |event|
     check_user_or_nick(event);
-    event.delete;
-    event.respond "I saw that, and I deleted it.";
+    #event.delete;
+    say = event.inspect.to_s;
+    event.respond say;
 end;
 
 def get_the_player();
