@@ -549,11 +549,11 @@ end;
 bot.message(contains: ";srth") do |event|
     inputValue = event.content;
     target = Integer(inputValue.slice(5,1)) rescue false;
-    if ( target!= false then;
-        if event.user.nick != nil
-           theUser = event.user.nick
-        else
-           theUser = event.user.name
+    if ( target!= false ) then;
+        if event.user.nick != nil;
+           theUser = event.user.nick;
+        else;
+           theUser = event.user.name;
         end;
         pIndex = nil;
         (0..(@player.length-1)).each do |y|
@@ -564,12 +564,12 @@ bot.message(contains: ";srth") do |event|
         iRoll=(rand 20)+1;
         result = iRoll + spellCastMod + profB;
         if (iRoll == 20) then sayHit = "The attack is a CRITICAL HIT!" else; sayHit = "The attack HIT!" end;
-              say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
-              if (result < @armour[target]) then;
-                  say = say + "The attack Missed!";
-              else;
-                  say = say + sayHit; 
-              end;
+        say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+        if (result < @armour[target]) then;
+            say = say + "The attack Missed!";
+        else;
+            say = say + sayHit; 
+        end;
     else;
       say = "Roll To Hit needs  ;srth?   ?= target number (0 to 9)";
     end;    
