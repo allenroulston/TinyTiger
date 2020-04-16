@@ -1157,7 +1157,7 @@ end;
 
 ################## d20d. ##########################
 bot.message(contains:"help") do |event|
-  say =       " For d4.  d6.  d8.  d10.  d12. and .d20: \n";
+  say =       "HELP for   d4.    d6.    d8.    d10.    d12.  and  .d20: \n";
   say = say + "d4.3  rolls 1d4 + 3         d6.-2   rolls 1d6 -2 \n";
   say = say + "2d8.  rolls 2d8 + 0        3d8.-1   rolls 3d8 -1 \n";
   say = say + " \n"
