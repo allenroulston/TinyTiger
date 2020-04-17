@@ -135,7 +135,7 @@ bot.message(start_with: ";deleteme") do |event|;
 #      say = say + "\n" + event.timestamp.to_s;
 #      say = say + "\n\n" + event.author.inspect.to_s;
        say = say + "\nWhom said: " + event.content.to_s;
-       say = say "\n\nI just deleted it!";
+       say = say  + "\n\nI just deleted it!";
        event.message.delete;
 
       event.respond say;
