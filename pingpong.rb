@@ -220,6 +220,7 @@ bot.message(start_with: ";init") do |event|
     initRoll=(rand 20)+1;
     result = initRoll + mod;
     responseValue = theUser.to_s + " has rolled initiative: [" + initRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
+    event.message.delete;
     event.respond responseValue;
 end;
 
