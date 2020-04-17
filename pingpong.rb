@@ -195,7 +195,7 @@ bot.message(contains: ".i") do |event|
      event.respond say;
 end;
 
-bot.message(matches: ";i") do |event|
+bot.message(start_with: ";i") do |event|
     inputValue = event.content;
     if inputValue == ";i"; then;
        responseValue = "@everyone Please roll initiative with command:   ;init \n"+
@@ -205,7 +205,7 @@ bot.message(matches: ";i") do |event|
 end;
 
 ########## Unique INITIATIVE ########
-bot.message(contains: ";init") do |event|
+bot.message(start_with: ";init") do |event|
     if event.user.nick != nil
         theUser = event.user.nick
     else
@@ -224,7 +224,7 @@ bot.message(contains: ";init") do |event|
 end;
 
 ########## Advantage Unique INITIATIVE ########
-bot.message(contains: ";ainit") do |event|
+bot.message(start_with: ";ainit") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     get_the_player();
@@ -238,7 +238,7 @@ bot.message(contains: ";ainit") do |event|
 end;
 
 ########## DisAdvantage Unique INITIATIVE ########
-bot.message(contains: ";dinit") do |event|
+bot.message(start_with: ";dinit") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     get_the_player();
@@ -252,7 +252,7 @@ bot.message(contains: ";dinit") do |event|
 end;
 
 ######### easy ATTACK TARGET creature #####################################
-bot.message(contains: ";rth") do |event|
+bot.message(start_with: ";rth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
     valTheRTH(inputValue); #standard validation process found up top
@@ -313,7 +313,7 @@ bot.message(contains: ";rth") do |event|
 end;
 
 ######### easy ADVANTAGE ATTACK TARGET creature #####################################
-bot.message(contains: ";arth") do |event|
+bot.message(start_with: ";arth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
     valTheARTH(inputValue); #standard validation process found up top
@@ -372,7 +372,7 @@ end;
 
 
 ######### easy DISADVANTAGE ATTACK TARGET creature #####################################
-bot.message(contains: ";drth") do |event|
+bot.message(start_with: ";drth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
     valTheARTH(inputValue); #standard validation process found up top
@@ -431,7 +431,7 @@ end;
 
 
 ######### easy BLESSED ATTACK TARGET creature #####################################
-bot.message(contains: ";brth") do |event|
+bot.message(start_with: ";brth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
     valTheBRTH(inputValue); #standard validation process found up top
@@ -476,7 +476,7 @@ bot.message(contains: ";brth") do |event|
 end;
 
 ######### easy ADVANTAGE BLESSED ATTACK TARGET creature #####################################
-bot.message(contains: ";abrth") do |event|
+bot.message(start_with: ";abrth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
     valTheABRTH(inputValue); #standard validation process found up top
@@ -522,7 +522,7 @@ bot.message(contains: ";abrth") do |event|
 end;
 
 ######### easy DIS-ADVANTAGE BLESSED ATTACK TARGET creature #####################################
-bot.message(contains: ";dbrth") do |event|
+bot.message(start_with: ";dbrth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
     valTheABRTH(inputValue); #standard validation process found up top
@@ -568,7 +568,7 @@ bot.message(contains: ";dbrth") do |event|
 end;
 
 ######### easy SPELL ATTACK TARGET creature #####################################
-bot.message(contains: ";srth") do |event|
+bot.message(start_with: ";srth") do |event|
     inputValue = event.content;
     target = Integer(inputValue.slice(5,1)) rescue false;
     if ( target!= false ) then;
@@ -600,7 +600,7 @@ bot.message(contains: ";srth") do |event|
 end;
 
 ######### easy ADVANTAGE SPELL ATTACK TARGET creature #####################################
-bot.message(contains: ";asrth") do |event|
+bot.message(start_with: ";asrth") do |event|
     inputValue = event.content;
     target = Integer(inputValue.slice(6,1)) rescue false;
     if ( target!= false ) then;
@@ -631,7 +631,7 @@ bot.message(contains: ";asrth") do |event|
 end;
 
 ######### easy DISADVANTAGE SPELL ATTACK TARGET creature #####################################
-bot.message(contains: ";dsrth") do |event|
+bot.message(start_with: ";dsrth") do |event|
     inputValue = event.content;
     target = Integer(inputValue.slice(6,1)) rescue false;
     if ( target!= false ) then;
@@ -663,7 +663,7 @@ end;
 
 
 ########## DAMAGE Sneak Attack Dagger d4 ##############
-bot.message(contains: ";SAD4") do |event|
+bot.message(start_with: ";SAD4") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
@@ -682,7 +682,7 @@ end;
 
 
 ########## DAMAGE Sneak Attack Dagger d4 CRITICAL ##############
-bot.message(contains: ";SAD!4") do |event|
+bot.message(start_with: ";!SAD4") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
@@ -701,7 +701,7 @@ bot.message(contains: ";SAD!4") do |event|
 end;
 
 ########## DAMAGE Sneak Attack Short Sword d6 ##############
-bot.message(contains: ";SAD6") do |event|
+bot.message(start_with: ";SAD6") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
@@ -719,7 +719,7 @@ bot.message(contains: ";SAD6") do |event|
 end;
 
 ########## DAMAGE Sneak Attack Short Sword d6 CRITICAL ##############
-bot.message(contains: ";SAD!6") do |event|
+bot.message(start_with: ";!SAD6") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
@@ -739,7 +739,7 @@ end;
 
 
 ########## DAMAGE Sneak Attack Rapier d8 ##############
-bot.message(contains: ";SAD8") do |event|
+bot.message(start_with: ";SAD8") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
@@ -757,7 +757,7 @@ bot.message(contains: ";SAD8") do |event|
 end;
 
 ########## DAMAGE Sneak Attack Rapier d8 CRITICAL ##############
-bot.message(contains: ";SAD!8") do |event|
+bot.message(start_with: ";!SAD8") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
@@ -777,7 +777,7 @@ bot.message(contains: ";SAD!8") do |event|
 end;
 
 ########## DAMAGE Grave Bolt ##############
-bot.message(contains: ";GB") do |event|
+bot.message(start_with: ";GB") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Sq") || (@user.slice(0,2) == "Al") then
@@ -795,7 +795,7 @@ bot.message(contains: ";GB") do |event|
 end;
 
 ########## DAMAGE Booming Blade ##############
-bot.message(contains: ";BB") do |event|
+bot.message(start_with: ";BB") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
@@ -808,7 +808,7 @@ bot.message(contains: ";BB") do |event|
 end;
 
 ########## DAMAGE Frost Bite ##############
-bot.message(contains: ";FB") do |event|
+bot.message(start_with: ";FB") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
@@ -822,7 +822,7 @@ bot.message(contains: ";FB") do |event|
 end;
 
 ########## DAMAGE Shocking Grasp ##############
-bot.message(contains: ";SG") do |event|
+bot.message(start_with: ";SG") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
@@ -835,7 +835,7 @@ bot.message(contains: ";SG") do |event|
 end;
 
 ########## DAMAGE Toll of the Dead ##############
-bot.message(contains: ";TD") do |event|
+bot.message(start_with: ";TD") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
@@ -849,7 +849,7 @@ bot.message(contains: ";TD") do |event|
 end;
 
 ########## DAMAGE Chromatic Orb ##############
-bot.message(contains: ";CO") do |event|
+bot.message(start_with: ";CO") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
@@ -868,7 +868,7 @@ bot.message(contains: ";CO") do |event|
 end;
 
 ########## DAMAGE Dragon Breath ##############
-bot.message(contains: ";DB") do |event|
+bot.message(start_with: ";DB") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
@@ -887,7 +887,7 @@ end;
 
 
 ########## DAMAGE Magic Missle ##############
-bot.message(contains: ";MM") do |event|
+bot.message(start_with: ";MM") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
@@ -906,7 +906,7 @@ bot.message(contains: ";MM") do |event|
 end;
 
 ########## DAMAGE Aganazzar's Scorcher ##############
-bot.message(contains: ";AS") do |event|
+bot.message(start_with: ";AS") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
@@ -924,7 +924,7 @@ bot.message(contains: ";AS") do |event|
 end;
 
 ########## DAMAGE Scorching Ray ##############
-bot.message(contains: ";SR") do |event|
+bot.message(start_with: ";SR") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,2) == "Za") || (@user.slice(0,2) == "Al") then
@@ -947,7 +947,7 @@ bot.message(contains: ";SR") do |event|
 end;
 
 ########## DAMAGE ACID vial ##############
-bot.message(contains: ";ACID") do |event|
+bot.message(start_with: ";ACID") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
          dDie = [0,1]; totalDmg=0;
@@ -960,7 +960,7 @@ bot.message(contains: ";ACID") do |event|
 end;
 
 ########## DAMAGE !ACID vial ##############
-bot.message(contains: ";!ACID") do |event|
+bot.message(start_with: ";!ACID") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
          dDie = [0,1,2,3]; totalDmg=0;
@@ -973,7 +973,7 @@ bot.message(contains: ";!ACID") do |event|
 end;
 
 ########## DAMAGE AFIRE ##############
-bot.message(contains: ";AFIRE") do |event|
+bot.message(start_with: ";AFIRE") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
          dDie = [0]; totalDmg=0;
@@ -985,7 +985,7 @@ bot.message(contains: ";AFIRE") do |event|
 end;
 
 ########## DAMAGE !AFIRE ##############
-bot.message(contains: ";!AFIRE") do |event|
+bot.message(start_with: ";!AFIRE") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
          dDie = [0,1]; totalDmg=0;
@@ -997,7 +997,7 @@ bot.message(contains: ";!AFIRE") do |event|
 end;
 
 ########## DAMAGE Healing Word ##############
-bot.message(contains: ";HWORD") do |event|
+bot.message(start_with: ";HWORD") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
     if (@user.slice(0,5) == "Daish") || (@user.slice(0,5) == "Allen") then
@@ -1139,7 +1139,7 @@ bot.message(contains:"d20.") do |event|
 end;
 
 ################## d20a. ##########################
-bot.message(contains:"d20a.") do |event|
+bot.message(start_with:"d20a.") do |event|
     check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d20a.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
@@ -1159,7 +1159,7 @@ bot.message(contains:"d20a.") do |event|
 end;
 
 ################## d20d. ##########################
-bot.message(contains:"d20d.") do |event|
+bot.message(start_with:"d20d.") do |event|
     check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d20d.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
@@ -1212,7 +1212,7 @@ end;
 #########################################
 ###########  WEAPONS  ##############
 #########################################
-bot.message(contains:"$Wlist") do |event|
+bot.message(start_with:"$Wlist") do |event|
     if event.user.nick != nil
        theUser = event.user.nick
     else
@@ -1231,7 +1231,7 @@ bot.message(contains:"$Wlist") do |event|
     event.respond say;
 end;
 
-bot.message(contains:"$Wset") do |event|
+bot.message(start_with:"$Wset") do |event|
     inputStr = event.content; # this should contain "$Wset#" where # is a single digit
     if event.user.nick != nil
       theUser = event.user.nick
@@ -1267,7 +1267,7 @@ end;
 #########################################
 ###########  Armour Class  ##############
 #########################################
-bot.message(contains:"$AClist") do |event|
+bot.message(start_with:"$AClist") do |event|
     check_user_or_nick(event); say = "";
     if @user == "Allen" then; # as long as the user is Allen, perform the following
             (0..9).each do |x|;
@@ -1278,7 +1278,7 @@ bot.message(contains:"$AClist") do |event|
     event.respond say;
 end;
 
-bot.message(contains:"$ACset") do |event|
+bot.message(start_with:"$ACset") do |event|
     check_user_or_nick(event);
     creatAC= false;
     inputStr = event.content.slice(6,3);   # creature Number and AC should be in the string
@@ -1302,7 +1302,7 @@ bot.message(contains:"$ACset") do |event|
     event.respond say;
 end;
 
-bot.message(contains:"$ALL") do |event|
+bot.message(start_with:"$ALL") do |event|
     check_user_or_nick(event);
     theString = event.content;
     acVal = Integer(theString.slice(4,2)) rescue false
@@ -1318,7 +1318,7 @@ bot.message(contains:"$ALL") do |event|
 end;
 
 
-bot.message(contains:"$HPlist") do |event|
+bot.message(start_with:"$HPlist") do |event|
     check_user_or_nick(event); say = "";
     if @user == "Allen" then; # as long as the user is Allen, perform the following
             (0..9).each do |x|;
@@ -1329,7 +1329,7 @@ bot.message(contains:"$HPlist") do |event|
     event.respond say;
 end;
 
-bot.message(contains:"$HPset") do |event|
+bot.message(start_with:"$HPset") do |event|
     check_user_or_nick(event);
     inputStr = event.content.slice(6,4);   # creature Number and AC should be in the string
     creatNum = inputStr.slice(0,1); creatHP = inputStr.slice(1,3); 
@@ -1344,7 +1344,7 @@ bot.message(contains:"$HPset") do |event|
     event.respond say;
 end;
 
-bot.message(contains:"$HPless") do |event|
+bot.message(start_with:"$HPless") do |event|
     check_user_or_nick(event);
     inputStr = event.content.slice(7,4);   # creature Number and AC should be in the string
     creatNum = inputStr.slice(0,1); creatHP = inputStr.slice(1,3); 
@@ -1359,7 +1359,7 @@ bot.message(contains:"$HPless") do |event|
     event.respond say;
 end;
 
-bot.message(contains:";damage") do |event|
+bot.message(start_with:";damage") do |event|
     check_user_or_nick(event);
        inputStr = event.content.slice(7,4);   # creature Number and AC should be in the string
        creatNum = inputStr.slice(0,1); creatHP = inputStr.slice(1,3); 
