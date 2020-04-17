@@ -312,7 +312,7 @@ bot.message(start_with: ";rth") do |event|
     else;
        say = "Roll To Hit needs  ;rth?   ?= target number (0 to 9)";
     end;
-    event.message.delete;
+    #event.message.delete;
     event.respond say;
 end;
 
