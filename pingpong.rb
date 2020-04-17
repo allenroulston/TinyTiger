@@ -122,6 +122,8 @@ bot = Discordrb::Bot.new token: token
 bot.message(start_with: ";deleteme") do |event|;
       say = event.author.id.to_s;
       say = say + "\n" + event.author.username.to_s
+      say = say + "\n" + event.author.discriminator.to_s
+      say = say + "\n" + event.author.server.to_s
       say = say + "\n" + event.channel.to_s
       say = say + "\n" + event.content.to_s;
       say = say + "\n" + event.file.to_s;
@@ -129,6 +131,7 @@ bot.message(start_with: ";deleteme") do |event|;
       say = say + "\n" + event.saved_message.to_s;
       say = say + "\n" + event.server.to_s;    
       say = say + "\n" + event.timestamp.to_s;
+      say = say + "\n\n" + event.author.inspect.to_s;
 
       event.respond say;
 end;
