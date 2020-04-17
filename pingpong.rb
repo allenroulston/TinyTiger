@@ -125,7 +125,7 @@ bot.message(start_with: ";deleteme") do |event|;
       say = say + "\n" + event.author.discriminator.to_s
       say = say + "\n" + event.author.server.name.to_s
       say = say + "\n" + event.author.server.id.to_s
-      say = say + "\n" + event.channel.to_s
+      say = say + "\n" + event.channel.inspect.to_s
       say = say + "\n" + event.content.to_s;
       say = say + "\n" + event.file.to_s;
       say = say + "\n" + event.message.to_s;
