@@ -128,7 +128,7 @@ bot.message(start_with: ";deleteme") do |event|;
       say = say + "\n" + event.saved_message.to_s;
       say = say + "\n" + event.server.to_s;    
       say = say + "\n" + event.timestamp.to_s;
-      say = say + "\n" + event.webhook?.to_s;
+
       event.respond say;
 end;
 
