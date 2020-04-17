@@ -388,7 +388,7 @@ bot.message(start_with: ";drth") do |event|
       iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
       iRoll=[iRoll1,iRoll2].min;
       result = iRoll + mod + profB;
-      say = @user.to_s + " rolled an DISADVANTAGE attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " rolled an DISADVANTAGE attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The attack Missed!";
           else;
@@ -492,7 +492,7 @@ bot.message(start_with: ";abrth") do |event|
       blessDie = (rand 4)+1;
       iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
       iRoll=[iRoll1,iRoll2].max;   result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled a Blessed Advantage attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " rolled a Blessed Advantage attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The attack Missed!";
           else;
