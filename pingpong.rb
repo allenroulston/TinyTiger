@@ -267,9 +267,9 @@ bot.message(start_with: ";rth") do |event|
       iRoll=(rand 20)+1; result = iRoll + mod + profB;
       say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
           if (result < @armour[target]) then;
-              say = say + "The attack Missed!";
+              say = say + "The attack Missed! creature " + target.to_s;
           else;
-              say = say + "The attack HIT!";
+              say = say + "The attack HIT! creature " + target.to_s;
               #check for iRoll to be 20 for a CRIT
               thePlayerIndex = @playerIndex;
               theWeaponIndex = @player[@playerIndex][1];
