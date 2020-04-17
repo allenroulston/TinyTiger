@@ -120,22 +120,23 @@ end;
 bot = Discordrb::Bot.new token: token 
 
 bot.message(start_with: ";deleteme") do |event|;
-      say = "Message Id? " + event.message.id.to_s;
-      messyID = event.message.id;
-      event.message.delete;
-      say = say + "\n" + event.author.id.to_s;
-      say = say + "\n" + event.author.username.to_s
-      say = say + "\n" + event.author.discriminator.to_s
-      say = say + "\n" + event.author.server.name.to_s
-      say = say + "\n" + event.author.server.id.to_s
-      say = say + "\n" + event.channel.inspect.to_s
+      say = "The Message ID was: " + event.message.id.to_s;
+      say = say + "\nThe Author ID was: " + event.author.id.to_s;
+      say = say + "\nThe Autthor name was: " + event.author.username.to_s
+#      say = say + "\n" + event.author.discriminator.to_s
+#      say = say + "\n" + event.author.server.name.to_s
+#      say = say + "\n" + event.author.server.id.to_s
+#      say = say + "\n" + event.channel.inspect.to_s
 #      say = say + "\n" + event.content.to_s;
 #      say = say + "\n" + event.file.to_s;
 #      say = say + "\n" + event.message.to_s;
 #      say = say + "\n" + event.saved_message.to_s;
-      say = say + "\n" + event.server.to_s;    
-      say = say + "\n" + event.timestamp.to_s;
-      say = say + "\n\n" + event.author.inspect.to_s;
+#      say = say + "\n" + event.server.to_s;    
+#      say = say + "\n" + event.timestamp.to_s;
+#      say = say + "\n\n" + event.author.inspect.to_s;
+       say = say + "\nWhom said: " + event.content.to_s;
+       say = say "\n\nI just deleted it!";
+       event.message.delete;
 
       event.respond say;
 end;
