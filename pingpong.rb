@@ -235,6 +235,7 @@ bot.message(start_with: ";ainit") do |event|
     initRoll = [initRoll1,initRoll2].max;
     result = initRoll + mod;
     responseValue = @user.to_s + " has rolled initiative with ADVANTAGE: [" + initRoll1.to_s + "][" + initRoll2.to_s + "] + "  + mod.to_s + " = " + result.to_s;
+    event.message.delete;
     event.respond responseValue;
 end;
 
@@ -249,6 +250,7 @@ bot.message(start_with: ";dinit") do |event|
     initRoll = [initRoll1,initRoll2].min;
     result = initRoll + mod;
     responseValue = @user.to_s + " has rolled initiative with DIS-ADVANTAGE: [" + initRoll1.to_s + "][" + initRoll2.to_s + "] + "  + mod.to_s + " = " + result.to_s;
+    event.message.delete;
     event.respond responseValue;
 end;
 
