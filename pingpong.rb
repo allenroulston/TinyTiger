@@ -329,7 +329,7 @@ bot.message(start_with: ";arth") do |event|
       iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
       iRoll=[iRoll1,iRoll2].max;
       result = iRoll + mod + profB;
-      say = @user.to_s + " rolled an ADVANTAGE attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+      say = @user.to_s + " rolled an ADVANTAGE attack against Creature " + target.to_s + ": [" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
           if (result < @armour[target]) then;
               say = say + "The attack Missed!";
           else;
@@ -388,7 +388,7 @@ bot.message(start_with: ";drth") do |event|
       iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
       iRoll=[iRoll1,iRoll2].min;
       result = iRoll + mod + profB;
-      say = @user.to_s + " rolled an DISADVANTAGE attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+      say = @user.to_s + " rolled an DISADVANTAGE attack against Creature " + target.to_s + ": [" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
           if (result < @armour[target]) then;
               say = say + "The attack Missed!";
           else;
@@ -446,7 +446,7 @@ bot.message(start_with: ";brth") do |event|
       str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
       blessDie = (rand 4)+1;
       iRoll=(rand 20)+1; result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled an attack: [" + iRoll.to_s + "]  [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+      say = @user.to_s + " rolled a Blessed attack against Creature " + target.to_s + ": [" + iRoll.to_s + "]  [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
           if (result < @armour[target]) then;
               say = say + "The attack Missed!";
           else;
@@ -492,7 +492,7 @@ bot.message(start_with: ";abrth") do |event|
       blessDie = (rand 4)+1;
       iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
       iRoll=[iRoll1,iRoll2].max;   result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled a Blessed Advantage attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+      say = @user.to_s + " rolled a Blessed Advantage attack against Creature " + target.to_s + ": [" + iRoll1.to_s + "][" + iRoll2.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
           if (result < @armour[target]) then;
               say = say + "The attack Missed!";
           else;
@@ -538,7 +538,7 @@ bot.message(start_with: ";dbrth") do |event|
       blessDie = (rand 4)+1;
       iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
       iRoll=[iRoll1,iRoll2].max;   result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled a Blessed Dis-Advantage attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+      say = @user.to_s + " rolled a Blessed Dis-Advantage attack against Creature " + target.to_s + ": [" + iRoll1.to_s + "][" + iRoll2.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
           if (result < @armour[target]) then;
               say = say + "The attack Missed!";
           else;
@@ -590,7 +590,7 @@ bot.message(start_with: ";srth") do |event|
         profB=@player[pIndex][8]; # Assigns Proficiency Bonus
         iRoll=(rand 20)+1;
         result = iRoll + spellCastMod + profB;
-        if (iRoll == 20) then sayHit = "The SPELL attack is a CRITICAL HIT!" else; sayHit = "The SPELL attack HIT!" end;
+        if (iRoll == 20) then sayHit = "The SPELL attack against Creature " + target.to_s + "  is a CRITICAL HIT!" else; sayHit = "The SPELL attack against Creature " + target.to_s + "  HIT!" end;
         say = theUser.to_s + " rolled a (" + @ABSname + ") SPELL attack: [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
         if (result < @armour[target]) then;
             say = say + "The SPELL attack Missed!";
@@ -621,7 +621,7 @@ bot.message(start_with: ";asrth") do |event|
         profB=@player[pIndex][8]; # Assigns Proficiency Bonus
         iRoll1 = (rand 20)+1;  iRoll2 = (rand 20)+1;    iRoll= [iRoll1,iRoll2].max;
         result = iRoll + spellCastMod + profB;
-        if (iRoll == 20) then sayHit = "The Advantage SPELL attack is a CRITICAL HIT!" else; sayHit = "The Advantage SPELL attack HIT!" end;
+        if (iRoll == 20) then sayHit = "The Advantage SPELL attack against Creature " + target.to_s + "  is a CRITICAL HIT!" else; sayHit = "The Advantage SPELL attack against Creature " + target.to_s + "  HIT!" end;
         say = theUser.to_s + " rolled an Advantage SPELL attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "]    [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
         if (result < @armour[target]) then;
             say = say + "The Advantage SPELL attack Missed!";
@@ -652,7 +652,7 @@ bot.message(start_with: ";dsrth") do |event|
         profB=@player[pIndex][8]; # Assigns Proficiency Bonus
         iRoll1 = (rand 20)+1;  iRoll2 = (rand 20)+1;    iRoll= [iRoll1,iRoll2].min;
         result = iRoll + spellCastMod + profB;
-        if (iRoll == 20) then sayHit = "The Dis-Advantage SPELL attack is a CRITICAL HIT!" else; sayHit = "The Dis-Advantage SPELL attack HIT!" end;
+        if (iRoll == 20) then sayHit = "The Dis-Advantage SPELL attack against Creature " + target.to_s + "  is a CRITICAL HIT!" else; sayHit = "The Dis-Advantage SPELL attack against Creature " + target.to_s + "   HIT!" end;
         say = theUser.to_s + " rolled an Dis-Advantage SPELL attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "]    [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
         if (result < @armour[target]) then;
             say = say + "The Dis-Advantage SPELL attack Missed!";
