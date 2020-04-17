@@ -119,6 +119,19 @@ end;
 
 bot = Discordrb::Bot.new token: token 
 
+bot.message(start_with: ";deleteme") do |event|;
+      say = event.author.to_s;
+      say = say + "\n" + event.channel.to_s
+      say = say + "\n" + event.content.to_s;
+      say = say + "\n" + event.file.to_s;
+      say = say + "\n" + event.message.to_s;
+      say = say + "\n" + event.saved_message.to_s;
+      say = say + "\n" + event.server.to_s;    
+      say = say + "\n" + event.timestamp.to_s;
+      say = say + "\n" + event.webhook?.to_s;
+      event.respond say;
+end;
+
 bot.message(contains: ".i") do |event|
      check_user_or_nick(event)
      inputStr = event.content; mod = 0; moreChars = true;
@@ -1354,19 +1367,6 @@ bot.message(contains:";damage") do |event|
     event.respond say;
 end;
 
-bot.message(contains:";deleteme") do |event|
-    say = event.author.to_s;
-    say = say + "\n" + event.channel.to_s
-    say = say + "\n" + event.content.to_s;
-    say = say + "\n" + event.file.to_s;
-    say = say + "\n" + event.message.to_s;
-    say = say + "\n" + event.saved_message.to_s;
-    say = say + "\n" + event.server.to_s;    
-    say = say + "\n" + event.timestamp.to_s;
-    say = say + "\n" + event.id.to_s;
-
-    event.respond say;
-end;
 
 def get_the_player();
     player5Char = @user.slice(0,5); #taking first 5 characters of @user
