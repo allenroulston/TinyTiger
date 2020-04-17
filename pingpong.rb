@@ -121,6 +121,8 @@ bot = Discordrb::Bot.new token: token
 
 bot.message(start_with: ";deleteme") do |event|;
       say = "Message Id? " + event.message.id.to_s;
+      messyID = event.message.id;
+      event.message.delete;
       say = say + "\n" + event.author.id.to_s;
       say = say + "\n" + event.author.username.to_s
       say = say + "\n" + event.author.discriminator.to_s
