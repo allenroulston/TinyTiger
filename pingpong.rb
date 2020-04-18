@@ -667,116 +667,90 @@ end;
 
 
 ########## DAMAGE Sneak Attack Dagger d4 ##############
-bot.message(start_with: ";SAD4") do |event|
+bot.message(start_with: "SAD2") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
-    if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
        totalDmg=0;
        dDie = [0,1,2];
-       (0..2).each do |x|;
+       (0..1).each do |x|;
           dDie[x]=(rand 6)+1;
           totalDmg=totalDmg + dDie[x];
        end;
-       responseValue = @user.to_s + " Sneak Attack (dagger) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] = " + totalDmg.to_s;
-    else;
-       responseValue  = "You cannot use this damage type";
-    end;
+       responseValue = @user.to_s + " Sneak Attack (2 dice) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "] = " + totalDmg.to_s;
   event.respond responseValue;
 end;
 
 
 ########## DAMAGE Sneak Attack Dagger d4 CRITICAL ##############
-bot.message(start_with: ";!SAD4") do |event|
+bot.message(start_with: "!SAD2") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
-    if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
        totalDmg=0;
        dDie = [0,1,2,3,4,5];
-       (0..5).each do |x|;
+       (0..3).each do |x|;
           dDie[x]=(rand 6)+1;
           totalDmg=totalDmg + dDie[x];
        end;
-       responseValue = @user.to_s + " CRITICAL Sneak Attack (dagger) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "][" + dDie[5].to_s +
-                                      "] = " + totalDmg.to_s;
-    else;
-       responseValue  = "You cannot use this damage type";
-    end;
+       responseValue = @user.to_s + " CRITICAL Sneak Attack (2 dice) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "] = " + totalDmg.to_s;
   event.respond responseValue;
 end;
 
 ########## DAMAGE Sneak Attack Short Sword d6 ##############
-bot.message(start_with: ";SAD6") do |event|
+bot.message(start_with: "SAD3") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
-    if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
        totalDmg=0;
        dDie = [0,1,2];
        (0..2).each do |x|;
           dDie[x]=(rand 6)+1;
           totalDmg=totalDmg + dDie[x];
        end;
-       responseValue = @user.to_s + " Sneak Attack (short sword) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] = " + totalDmg.to_s;
-    else;
-       responseValue  = "You cannot use this damage type";
-    end;
+       responseValue = @user.to_s + " Sneak Attack (3 dice ) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] = " + totalDmg.to_s;
   event.respond responseValue;
 end;
 
 ########## DAMAGE Sneak Attack Short Sword d6 CRITICAL ##############
-bot.message(start_with: ";!SAD6") do |event|
+bot.message(start_with: "!SAD3") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
-    if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
        totalDmg=0;
        dDie = [0,1,2,3,4,5];
        (0..5).each do |x|;
           dDie[x]=(rand 6)+1;
           totalDmg=totalDmg + dDie[x];
        end;
-       responseValue = @user.to_s + " CRITICAL Sneak Attack (short sword) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "][" + dDie[5].to_s +
+       responseValue = @user.to_s + " CRITICAL Sneak Attack (3 dice) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "][" + dDie[5].to_s +
                                       "] = " + totalDmg.to_s;
-    else;
-       responseValue  = "You cannot use this damage type";
-    end;
   event.respond responseValue;
 end;
 
-
 ########## DAMAGE Sneak Attack Rapier d8 ##############
-bot.message(start_with: ";SAD8") do |event|
+bot.message(start_with: "SAD4") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
-    if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
        totalDmg=0;
-       dDie = [0,1,2];
-       (0..2).each do |x|;
+       dDie = [0,1,2,3];
+       (0..3).each do |x|;
           dDie[x]=(rand 6)+1;
           totalDmg=totalDmg + dDie[x];
        end;
-       responseValue = @user.to_s + " Sneak Attack (rapier) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] = " + totalDmg.to_s;
-    else;
-       responseValue  = "You cannot use this damage type";
-    end;
+       responseValue = @user.to_s + " Sneak Attack (4 dice) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] + [" + dDie[3].to_s + "] = " + totalDmg.to_s;
   event.respond responseValue;
 end;
 
 ########## DAMAGE Sneak Attack Rapier d8 CRITICAL ##############
-bot.message(start_with: ";!SAD8") do |event|
+bot.message(start_with: "!SAD4") do |event|
     inputValue = event.content;
     check_user_or_nick(event)
-    if (@user.slice(0,2) == "Sq") ||  (@user.slice(0,2) == "Qu") || (@user.slice(0,2) == "Al") then
        totalDmg=0;
-       dDie = [0,1,2,3,4,5];
-       (0..5).each do |x|;
+       dDie = [0,1,2,3,4,5,6,7];
+       (0..7).each do |x|;
           dDie[x]=(rand 6)+1;
           totalDmg=totalDmg + dDie[x];
        end;
+       responseValue = @user.to_s + " CRITICAL Sneak Attack (4 dice) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + 
+                                                                dDie[4].to_s + "][" + dDie[5].to_s + "][" + dDie[6].to_s + "][" + dDie[7].to_s +  "] = " + totalDmg.to_s;
 
-       responseValue = @user.to_s + " CRITICAL Sneak Attack (rapier) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "][" + dDie[5].to_s +
-                                      "] = " + totalDmg.to_s;
-    else;
-       responseValue  = "You cannot cause this damage type.";
-    end;
   event.respond responseValue;
 end;
 
