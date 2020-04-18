@@ -1182,7 +1182,7 @@ bot.message(start_with:"d20d.") do |event|
 end;
 
 ################## d20d. ##########################
-bot.message(contains:"help") do |event|
+bot.message(start_with:"help") do |event|
   lyrics = Array.new
   lyrics[0]="Help me if you can, I'm feeling down";
   lyrics[1]="And I do appreciate you being 'round";
