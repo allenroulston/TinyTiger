@@ -111,13 +111,32 @@ end;
 def health_check(currentHp, originalHp);
   perCent = currentHp/originalHp;
   if perCent < 0.00010 then; @healthStat = "Dead"; end;  # less than 0.0001 is only possible when HP = 0 or less 
-  if perCent > 0.00000 then; @healthStat = "Deformed"; end;
+  if perCent > 0.00000 then; @healthStat = "Battered"; end;
   if perCent > 0.24999 then; @healthStat = "Bloodied"; end;
   if perCent > 0.49999 then; @healthStat = "Injured"; end;
   if perCent > 0.74999 then; @healthStat = "Healthy"; end;
 end;
 
 bot = Discordrb::Bot.new token: token 
+
+bot.message(start_with: "myabs") do |event|;
+    theUser = event.author.username.to_s
+    pIndex = nil;
+    (0..(@player.length-1)).each do |y|
+        if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
+    end;
+    stMod = @player[pIndex][2];
+    dxMod = @player[pIndex][3];
+    coMod = @player[pIndex][4];
+    inMod = @player[pIndex][5];
+    wiMod = @player[pIndex][6];
+    chMod = @player[pIndex][7];
+    prMod = @player[pIndex][8];
+    say = theUser + " has Proficiency bonus of " + prMod.to_s + "  and ability score modifiers of \n";
+    say = say + "ST:" + stMod.to_s + "  DX:" + dxMod.to_s + "  CO:" + coMod.to_s + "  IN:" + inMod.to_s + "  WI:" + wiMod.to_s + "  CH:" + chMod.to_s;
+    event.respond say;
+end;
+
 
 bot.message(start_with: ";deleteme") do |event|;
       say = "The Message ID was: " + event.message.id.to_s;
