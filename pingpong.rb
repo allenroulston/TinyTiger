@@ -280,7 +280,7 @@ bot.message(start_with: ";dinit") do |event|
 end;
 
 ######### easy ATTACK TARGET creature #####################################
-bot.message(start_with: ";rth") do |event|
+bot.message(start_with: "mrth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
     valTheRTH(inputValue); #standard validation process found up top
@@ -342,7 +342,7 @@ bot.message(start_with: ";rth") do |event|
 end;
 
 ######### easy ADVANTAGE ATTACK TARGET creature #####################################
-bot.message(start_with: ";arth") do |event|
+bot.message(start_with: "marth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
     valTheARTH(inputValue); #standard validation process found up top
@@ -401,7 +401,7 @@ end;
 
 
 ######### easy DISADVANTAGE ATTACK TARGET creature #####################################
-bot.message(start_with: ";drth") do |event|
+bot.message(start_with: "mdrth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
     valTheARTH(inputValue); #standard validation process found up top
@@ -460,7 +460,7 @@ end;
 
 
 ######### easy BLESSED ATTACK TARGET creature #####################################
-bot.message(start_with: ";brth") do |event|
+bot.message(start_with: "mbrth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
     valTheBRTH(inputValue); #standard validation process found up top
@@ -505,7 +505,7 @@ bot.message(start_with: ";brth") do |event|
 end;
 
 ######### easy ADVANTAGE BLESSED ATTACK TARGET creature #####################################
-bot.message(start_with: ";abrth") do |event|
+bot.message(start_with: "mabrth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
     valTheABRTH(inputValue); #standard validation process found up top
@@ -551,7 +551,7 @@ bot.message(start_with: ";abrth") do |event|
 end;
 
 ######### easy DIS-ADVANTAGE BLESSED ATTACK TARGET creature #####################################
-bot.message(start_with: ";dbrth") do |event|
+bot.message(start_with: "mdbrth") do |event|
     inputValue = event.content;
     check_user_or_nick(event);
     valTheABRTH(inputValue); #standard validation process found up top
