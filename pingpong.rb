@@ -136,7 +136,7 @@ bot.message(start_with: "myabs") do |event|;
     wiMod = @player[pIndex][6];
     chMod = @player[pIndex][7];
     prMod = @player[pIndex][8];
-    wepDf = @player[pIndex][2];
+    wepDf = @player[pIndex][1];
     say = theUser + " has Proficiency Bonus of " + prMod.to_s + "  and ability score modifiers of \n";
     say = say + "ST: " + stMod.to_s + "  DX: " + dxMod.to_s + "  CO: " + coMod.to_s + "  IN: " + inMod.to_s + "  WI: " + wiMod.to_s + "  CH: " + chMod.to_s + "\n";
     say = say + "Default weapon damage is set to " + @weapon[wepDf];
