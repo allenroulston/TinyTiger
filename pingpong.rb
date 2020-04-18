@@ -121,6 +121,8 @@ bot = Discordrb::Bot.new token: token
 
 bot.message(start_with: "myabs") do |event|;
     theUser = event.author.username.to_s
+    say = theUser;
+=begin
     pIndex = nil;
     (0..(@player.length-1)).each do |y|
         if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
@@ -133,6 +135,7 @@ bot.message(start_with: "myabs") do |event|;
     chMod = @player[pIndex][7];
     prMod = @player[pIndex][8];
     say = theUser + " has Proficiency bonus of " + prMod.to_s + "  and ability score modifiers of \n";
+=end
     say = say + "ST:" + stMod.to_s + "  DX:" + dxMod.to_s + "  CO:" + coMod.to_s + "  IN:" + inMod.to_s + "  WI:" + wiMod.to_s + "  CH:" + chMod.to_s;
     event.respond say;
 end;
