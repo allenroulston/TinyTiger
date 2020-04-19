@@ -143,6 +143,20 @@ bot.message(start_with: "myabs") do |event|;
     event.respond say;
 end;
 
+bot.message(start_with:"timer") do |event|;
+   time = event.content.slice(5,1);
+   if (time == 9) then @timeCode = 9; end;
+   say = "time"
+   (0..@timeCode).each do |x|; 
+     say = say + "*";
+   end;
+   @timeCode = @TimeCode - 1;
+   event.message.delete
+   sleep 2;
+   if @timeCode > 0 then;
+      event.respond say;
+    end;
+end;
 
 bot.message(start_with: ";deleteme") do |event|;
       say = "The Message ID was: " + event.message.id.to_s;
@@ -1546,9 +1560,10 @@ bot.message(start_with:"$Wlist") do |event|
     (0..(@player.length-1)).each do |y|  #find the @player pIndex within the array using 5 char of @user
         if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
     end;
-    say = theUser + ", your current weapon damage die is set to: " + @weapon[(@player[pIndex][1])].to_s + "\n\n";
-    say = say +  "To change weapons, assign a new damage die value using: $Wset \n" +
-                 "with an Integer, as shown below. Such as $Wset3 \n\n";
+    say = theUser + ", your current MELEE weapon damage die is set to: " + @weapon[(@player[pIndex][1])].to_s + "\n";
+    say = say + "Your current RANGED weapon damage die is set to : (Allen you need to code this.) \n\n";
+    say = say +  "To change weapons, assign a new damage die value using: $Mset or $Rset  \n";
+    say = say +  "with an Integer, as shown below. Such as $Mset3 or $Rset4  \n\n";
     (0..5).each do |x|;
           say = say +  @weapon[x] + " <=> " + x.to_s  + "    ";
     end;                 
