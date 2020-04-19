@@ -147,12 +147,12 @@ bot.message(start_with:"timer") do |event|;
    event.message.delete
    theTime = (event.content.slice(5,1)).to_i;
    if (theTime == 9) then @timeCode = 9; end;
-   say = "time"
+   say = "timer"
    (0..@timeCode).each do |x|; 
      say = say + "*";
    end;
    @timeCode = @timeCode - 1;
-   sleep 2;
+   sleep 3;
    if @timeCode > 0 then;
       event.respond say;
     end;
