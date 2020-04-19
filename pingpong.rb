@@ -136,47 +136,43 @@ bot.message(start_with: "myabs") do |event|;
     wiMod = @player[pIndex][6];
     chMod = @player[pIndex][7];
     prMod = @player[pIndex][8];
-    wepDf = @player[pIndex][1];
+    meleeDamage = @player[pIndex][1];
+    rangeDamage = @player[pIndex][12];
     say = theUser + " has Proficiency Bonus of " + prMod.to_s + "  and ability score modifiers of \n";
     say = say + "ST: " + stMod.to_s + "  DX: " + dxMod.to_s + "  CO: " + coMod.to_s + "  IN: " + inMod.to_s + "  WI: " + wiMod.to_s + "  CH: " + chMod.to_s + "\n";
-    say = say + "Default weapon damage is set to " + @weapon[wepDf];
+    say = say + "Default MELEE weapon damage is set to " + @weapon[meleeDamage];
+    say = say + "Default RANGED weapon damage is set to " + @weapon[rangeDamage];
     event.respond say;
 end;
 
-bot.message(start_with:"timer") do |event|;
-   event.message.delete
-   theTime = (event.content.slice(5,1)).to_i;
-   if (theTime == 9) then @timeCode = 9; end;
-   say = "timer"
-   (0..@timeCode).each do |x|; 
-     say = say + "*";
-   end;
-   @timeCode = @timeCode - 1;
-   sleep 3;
-   if @timeCode > 0 then;
-      event.respond say;
-    end;
-end;
+#bot.message(start_with:"timer") do |event|;
+#   event.message.delete
+#   theTime = (event.content.slice(5,1)).to_i;
+#   if (theTime == 9) then @timeCode = 9; end;
+#   say = "timer"
+#   (0..@timeCode).each do |x|; 
+#     say = say + "*";
+#  end;
+#   @timeCode = @timeCode - 1;
+#   sleep 3;
+#   if @timeCode > 0 then;
+#      event.respond say;
+#    end;
+#end;
 
 bot.message(start_with: ";deleteme") do |event|;
       say = "The Message ID was: " + event.message.id.to_s;
       say = say + "\nThe Author ID was: " + event.author.id.to_s;
       say = say + "\nThe Autthor name was: " + event.author.username.to_s
-#      say = say + "\n" + event.author.discriminator.to_s
-#      say = say + "\n" + event.author.server.name.to_s
-#      say = say + "\n" + event.author.server.id.to_s
-#      say = say + "\n" + event.channel.inspect.to_s
-#      say = say + "\n" + event.content.to_s;
-#      say = say + "\n" + event.file.to_s;
-#      say = say + "\n" + event.message.to_s;
-#      say = say + "\n" + event.saved_message.to_s;
-#      say = say + "\n" + event.server.to_s;    
-#      say = say + "\n" + event.timestamp.to_s;
+#      say = say + "\n" + event.author.discriminator.to_s. #      say = say + "\n" + event.author.server.name.to_s
+#      say = say + "\n" + event.author.server.id.to_s.     #      say = say + "\n" + event.channel.inspect.to_s
+#      say = say + "\n" + event.content.to_s;              #      say = say + "\n" + event.file.to_s;
+#      say = say + "\n" + event.message.to_s;              #      say = say + "\n" + event.saved_message.to_s;
+#      say = say + "\n" + event.server.to_s;               #      say = say + "\n" + event.timestamp.to_s;
 #      say = say + "\n\n" + event.author.inspect.to_s;
        say = say + "\nWhom said: " + event.content.to_s;
        say = say  + "\n\nI just deleted it!";
        event.message.delete;
-
       event.respond say;
 end;
 
