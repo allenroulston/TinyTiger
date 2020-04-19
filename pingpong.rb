@@ -603,12 +603,12 @@ bot.message(start_with: "rrth") do |event|
     check_user_or_nick(event);
     valTheRTH(inputValue); #standard validation process found up top
     if (@valTheRTH == true) then;
-      get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];      profB=@player[@playerIndex][8];
-      mod = [mod1,mod2].max;
+      get_the_player(); #creates the value in @playerIndex. BELOW [3] DEX. [11] RANGE SPECIAL BONUS
+      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][11];      profB=@player[@playerIndex][8];
       str_2_number(inputValue.slice(4,1)); target = @numba # @numba <= is the result
-      iRoll=(rand 20)+1; result = iRoll + mod + profB;
-      say = @user.to_s + " rolled an attack against Creature " + target.to_s + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      iRoll=(rand 20)+1; result = iRoll + mod1 + mod2 + profB;
+      say = @user.to_s + " rolled a RANGE attack against Creature " + target.to_s + ":\n[" + iRoll.to_s + "] +" + 
+                           mod1.to_s + "+" + mod2.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The attack Missed! \n";
           else;
