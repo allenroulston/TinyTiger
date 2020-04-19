@@ -145,8 +145,8 @@ end;
 
 bot.message(start_with:"timer") do |event|;
    event.message.delete
-   time = event.content.slice(5,1);
-   if (time == 9) then @timeCode = 9; end;
+   theTime = (event.content.slice(5,1)).to_i;
+   if (theTime == 9) then @timeCode = 9; end;
    say = "time"
    (0..@timeCode).each do |x|; 
      say = say + "*";
