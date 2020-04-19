@@ -812,17 +812,25 @@ bot.message(start_with: "rbrth") do |event|
                    if @weapon[(@player[@playerIndex][1])] != "2d6" then;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
                                   " = " + (mod + @damage1).to_s + " points of damage.";
+                                  health_check(@HP[target][0], @HP[target][1])
+                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
                    else;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "] + " +
                                   mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
+                                  health_check(@HP[target][0], @HP[target][1])
+                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
                    end;
               else
                    if @weapon[(@player[@playerIndex][1])] != "2d6" then;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
                                   " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
+                                  health_check(@HP[target][0], @HP[target][1])
+                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
                    else;
                       say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
                                  "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
+                                 health_check(@HP[target][0], @HP[target][1])
+                                 say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
                    end;              
               end;
           end;
