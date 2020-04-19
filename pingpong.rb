@@ -301,11 +301,11 @@ bot.message(start_with: "mrth") do |event|
       mod = [mod1,mod2].max;
       str_2_number(inputValue.slice(4,1)); target = @numba # @numba <= is the result
       iRoll=(rand 20)+1; result = iRoll + mod + profB;
-      say = @user.to_s + " rolled a Melee attack against Creature " + target.to_s + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " made a MELEE roll to hit Creature " + target.to_s + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The attack Missed! \n";
+              say = say + "     The MELEE roll to hit ... Missed! \n";
           else;
-              say = say + "     The attack HIT!";
+              say = say + "     The MELEE roll to hit ... HIT!";
               #check for iRoll to be 20 for a CRIT
               thePlayerIndex = @playerIndex;
               theWeaponIndex = @player[@playerIndex][1];
@@ -346,7 +346,7 @@ bot.message(start_with: "mrth") do |event|
               end;
           end;
     else;
-       say = "Melee Roll To Hit needs  mrth?   ?= target number (0 to 9)";
+       say = "MELEE Roll To Hit needs  mrth?   ?= target number (0 to 9)";
     end;
     #event.message.delete;
     event.respond say;
@@ -365,11 +365,11 @@ bot.message(start_with: "marth") do |event|
       iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
       iRoll=[iRoll1,iRoll2].max;
       result = iRoll + mod + profB;
-      say = @user.to_s + " rolled a Melee ADVANTAGE attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " made a MELEE Advantage roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The attack Missed!";
+              say = say + "     The MELEE Advantage roll to hit ... Missed!";
           else;
-              say = say + "     The attack HIT!";
+              say = say + "     The MELEE Advantage roll to hit ... HIT!";
               #check for iRoll to be 20 for a CRIT
               roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
               #@damage & @damage1 now have values
@@ -405,7 +405,7 @@ bot.message(start_with: "marth") do |event|
           end;
           
     else;
-       say = "Melee Advanatage Roll To Hit needs  marth?   ?= target number (0 to 9)";
+       say = "MELEE Advanatage Roll To Hit needs  marth?   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -424,11 +424,11 @@ bot.message(start_with: "mdrth") do |event|
       iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
       iRoll=[iRoll1,iRoll2].min;
       result = iRoll + mod + profB;
-      say = @user.to_s + " rolled a Melee DISADVANTAGE attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " made a MELEE Dis-Advanatage roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The attack Missed!";
+              say = say + "     The MELEE Dis-Advanatage roll to hit ... Missed!";
           else;
-              say = say + "     The attack HIT!";
+              say = say + "     The MELEE Dis-Advanatage roll to hit ... HIT!";
               #check for iRoll to be 20 for a CRIT
               roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
               #@damage & @damage1 now have values
@@ -464,7 +464,7 @@ bot.message(start_with: "mdrth") do |event|
           end;
           
     else;
-       say = "Melee Dis-Advanatage Roll To Hit needs  mdrth?   ?= target number (0 to 9)";
+       say = "MELEE Dis-Advanatage Roll To Hit needs  mdrth?   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -482,11 +482,11 @@ bot.message(start_with: "mbrth") do |event|
       str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
       blessDie = (rand 4)+1;
       iRoll=(rand 20)+1; result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled a Melee Blessed attack against Creature " + target.to_s + ":\n[" + iRoll.to_s + "] + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " made a MELEE Blessed roll to hit Creature " + target.to_s + ":\n[" + iRoll.to_s + "] + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The attack Missed!";
+              say = say + "     The MELEE Blessed roll to hit ... Missed!";
           else;
-              say = say + "     The attack HIT!";
+              say = say + "     The MELEE Blessed roll to hit ... HIT!";
               #check for iRoll to be 20 for a CRIT
               roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
               #@damage & @damage1 now have values
@@ -510,7 +510,7 @@ bot.message(start_with: "mbrth") do |event|
           end;
           
     else;
-       say = "Melee Blessed Roll To Hit needs  mbrth?    ?= target number (0 to 9)";
+       say = "MELEE Blessed Roll To Hit needs  mbrth?    ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -528,11 +528,11 @@ bot.message(start_with: "mabrth") do |event|
       blessDie = (rand 4)+1;
       iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
       iRoll=[iRoll1,iRoll2].max;   result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled a Melee Blessed Advantage attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " made a MELEE Advantage Blessed roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The attack Missed!";
+              say = say + "     The MELEE Advantage Blessed roll to hit ... Missed!";
           else;
-              say = say + "     The attack HIT!";
+              say = say + "     The MELEE Advantage Blessed roll to hit ... HIT!";
               #check for iRoll to be 20 for a CRIT
               roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
               #@damage & @damage1 now have values
@@ -556,7 +556,7 @@ bot.message(start_with: "mabrth") do |event|
           end;
           
     else;
-       say = "Melee Advantage Blessed Roll To Hit needs  mabrth?    ?= target number (0 to 9)";
+       say = "MELEE Advantage Blessed Roll To Hit needs  mabrth?    ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -574,11 +574,11 @@ bot.message(start_with: "mdbrth") do |event|
       blessDie = (rand 4)+1;
       iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
       iRoll=[iRoll1,iRoll2].min;   result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled a Melee Blessed Dis-Advantage attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " rolled a MELEE Dis-Advantage Blessed roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The attack Missed!";
+              say = say + "     The MELEE Dis-Advantage Blessed roll to hit ... Missed!";
           else;
-              say = say + "     The attack HIT!";
+              say = say + "     The MELEE Dis-Advantage Blessed roll to hit ... HIT!";
               #check for iRoll to be 20 for a CRIT
               roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
               #@damage & @damage1 now have values
@@ -618,12 +618,12 @@ bot.message(start_with: "rrth") do |event|
       mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][11];      profB=@player[@playerIndex][8];
       str_2_number(inputValue.slice(4,1)); target = @numba # @numba <= is the result
       iRoll=(rand 20)+1; result = iRoll + mod1 + mod2 + profB;
-      say = @user.to_s + " rolled a RANGE attack against Creature " + target.to_s + ":\n[" + iRoll.to_s + "] +" + 
+      say = @user.to_s + " made a RANGED roll to hit Creature " + target.to_s + ":\n[" + iRoll.to_s + "] +" + 
                            mod1.to_s + "+" + mod2.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The attack Missed! \n";
+              say = say + "     The RANGED roll to hit ... Missed! \n";
           else;
-              say = say + "     The attack HIT!";
+              say = say + "     The RANGED roll to hit ... HIT!";
               #check for iRoll to be 20 for a CRIT
               thePlayerIndex = @playerIndex;
               theWeaponIndex = @player[@playerIndex][1];
@@ -682,12 +682,12 @@ bot.message(start_with: "rarth") do |event|
       iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
       iRoll=[iRoll1,iRoll2].max;
       result = iRoll + mod1 + mod2 + profB;
-      say = @user.to_s + " rolled an ADVANTAGE attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s +
+      say = @user.to_s + " made a RANGED Advantage roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s +
                                 "] +" + mod1.to_s + "+" + mod2.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The attack Missed!";
+              say = say + "     The RANGED Advantage roll to hit ... Missed!";
           else;
-              say = say + "     The attack HIT!";
+              say = say + "     The RANGED Advantage roll to hit ... HIT!";
               #check for iRoll to be 20 for a CRIT
               roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
               #@damage & @damage1 now have values
@@ -742,11 +742,11 @@ bot.message(start_with: "rdrth") do |event|
       iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
       iRoll=[iRoll1,iRoll2].min;
       result = iRoll + mod + profB;
-      say = @user.to_s + " rolled an DISADVANTAGE attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " made a RANGED Dis-Adv roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The attack Missed!";
+              say = say + "     The RANGED Dis-Adv roll to hit ... Missed!";
           else;
-              say = say + "     The attack HIT!";
+              say = say + "     The RANGED Dis-Adv roll to hit ... HIT!";
               #check for iRoll to be 20 for a CRIT
               roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
               #@damage & @damage1 now have values
@@ -782,7 +782,7 @@ bot.message(start_with: "rdrth") do |event|
           end;
           
     else;
-       say = "Dis-Advanatage Roll To Hit needs  ;drth?   ?= target number (0 to 9)";
+       say = "RANGED Dis-Adv Roll To Hit needs  rdrth?   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -800,11 +800,11 @@ bot.message(start_with: "rbrth") do |event|
       str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
       blessDie = (rand 4)+1;
       iRoll=(rand 20)+1; result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled a Blessed attack against Creature " + target.to_s + ":\n[" + iRoll.to_s + "] + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " made a RANGED Blessed roll to hit Creature " + target.to_s + ":\n[" + iRoll.to_s + "] + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The attack Missed!";
+              say = say + "     The RANGED Blessed roll to hit ... Missed!";
           else;
-              say = say + "     The attack HIT!";
+              say = say + "     The RANGED Blessed roll to hit ... HIT!";
               #check for iRoll to be 20 for a CRIT
               roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
               #@damage & @damage1 now have values
@@ -828,7 +828,7 @@ bot.message(start_with: "rbrth") do |event|
           end;
           
     else;
-       say = "Blessed Roll To Hit needs  ;brth?    ?= target number (0 to 9)";
+       say = "RANGED Blessed Roll To Hit needs  rbrth?    ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -846,11 +846,11 @@ bot.message(start_with: "rabrth") do |event|
       blessDie = (rand 4)+1;
       iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
       iRoll=[iRoll1,iRoll2].max;   result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled a Blessed Advantage attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " made a RANGED Advantage Blessed roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The attack Missed!";
+              say = say + "     The RANGED Advantage Blessed roll to hit ... Missed!";
           else;
-              say = say + "     The attack HIT!";
+              say = say + "     The RANGED Advantage Blessed roll to hit ... HIT!";
               #check for iRoll to be 20 for a CRIT
               roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
               #@damage & @damage1 now have values
@@ -874,7 +874,7 @@ bot.message(start_with: "rabrth") do |event|
           end;
           
     else;
-       say = "Advantage Blessed Roll To Hit needs  ;abrth?    ?= target number (0 to 9)";
+       say = "RANGED Advantage Blessed roll to hit needs  rabrth?    ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -892,11 +892,11 @@ bot.message(start_with: "rdbrth") do |event|
       blessDie = (rand 4)+1;
       iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
       iRoll=[iRoll1,iRoll2].min;   result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled a Blessed Dis-Advantage attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " made a RANGED Dis-Adv Blessed Roll To Hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The attack Missed!";
+              say = say + "     The RANGED Dis-Adv Blessed roll to hit ... Missed!";
           else;
-              say = say + "     The attack HIT!";
+              say = say + "     The RANGED Dis-Adv Blessed roll to hit ... HIT!";
               #check for iRoll to be 20 for a CRIT
               roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
               #@damage & @damage1 now have values
@@ -920,7 +920,7 @@ bot.message(start_with: "rdbrth") do |event|
           end;
           
     else;
-       say = "Dis-Advantage Blessed Roll To Hit needs  ;dbrth?    ?= target number (0 to 9)";
+       say = "RANGED Dis-Adv Blessed Roll To Hit needs  ;dbrth?    ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -961,9 +961,9 @@ bot.message(start_with: ";srth") do |event|
 end;
 
 ######### easy ADVANTAGE SPELL ATTACK TARGET creature #####################################
-bot.message(start_with: ";asrth") do |event|
+bot.message(start_with: "sarth") do |event|
     inputValue = event.content;
-    target = Integer(inputValue.slice(6,1)) rescue false;
+    target = Integer(inputValue.slice(5,1)) rescue false;
     if ( target!= false ) then;
         if event.user.nick != nil;
            theUser = event.user.nick;
@@ -978,15 +978,15 @@ bot.message(start_with: ";asrth") do |event|
         profB=@player[pIndex][8]; # Assigns Proficiency Bonus
         iRoll1 = (rand 20)+1;  iRoll2 = (rand 20)+1;    iRoll= [iRoll1,iRoll2].max;
         result = iRoll + spellCastMod + profB;
-        if (iRoll == 20) then sayHit = "The Advantage SPELL attack against Creature " + target.to_s + "  is a CRITICAL HIT!" else; sayHit = "The Advantage SPELL attack against Creature " + target.to_s + "  HIT!" end;
-        say = theUser.to_s + " rolled an Advantage SPELL attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "]    [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+        if (iRoll == 20) then sayHit = "The SPELL Advantage attack against Creature " + target.to_s + "  is a CRITICAL HIT!" else; sayHit = "The SPELL Advantage attack against Creature " + target.to_s + "  HIT!" end;
+        say = theUser.to_s + " rolled an SPELL Advantage attack: [" + iRoll1.to_s + "][" + iRoll2.to_s + "]    [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
         if (result < @armour[target]) then;
-            say = say + "The Advantage SPELL attack Missed!";
+            say = say + "The SPELL Advantage attack Missed!";
         else;
             say = say + sayHit; 
         end;
     else;
-      say = "Roll To Hit needs  ;srth?   ?= target number (0 to 9)";
+      say = "SPELL Advantage Roll To Hit needs  sarth?   ?= target number (0 to 9)";
     end;    
         event.respond say;
 end;
