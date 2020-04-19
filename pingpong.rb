@@ -144,6 +144,7 @@ bot.message(start_with: "myabs") do |event|;
 end;
 
 bot.message(start_with:"timer") do |event|;
+   event.message.delete
    time = event.content.slice(5,1);
    if (time == 9) then @timeCode = 9; end;
    say = "time"
@@ -151,7 +152,6 @@ bot.message(start_with:"timer") do |event|;
      say = say + "*";
    end;
    @timeCode = @timeCode - 1;
-   event.message.delete
    sleep 2;
    if @timeCode > 0 then;
       event.respond say;
