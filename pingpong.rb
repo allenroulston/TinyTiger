@@ -290,7 +290,7 @@ bot.message(start_with: "mrth") do |event|
       mod = [mod1,mod2].max;
       str_2_number(inputValue.slice(4,1)); target = @numba # @numba <= is the result
       iRoll=(rand 20)+1; result = iRoll + mod + profB;
-      say = @user.to_s + " rolled an attack against Creature " + target.to_s + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " rolled a Melee attack against Creature " + target.to_s + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The attack Missed! \n";
           else;
@@ -335,7 +335,7 @@ bot.message(start_with: "mrth") do |event|
               end;
           end;
     else;
-       say = "Roll To Hit needs  ;rth?   ?= target number (0 to 9)";
+       say = "Melee Roll To Hit needs  mrth?   ?= target number (0 to 9)";
     end;
     #event.message.delete;
     event.respond say;
@@ -354,7 +354,7 @@ bot.message(start_with: "marth") do |event|
       iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
       iRoll=[iRoll1,iRoll2].max;
       result = iRoll + mod + profB;
-      say = @user.to_s + " rolled an ADVANTAGE attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " rolled a Melee ADVANTAGE attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The attack Missed!";
           else;
@@ -394,7 +394,7 @@ bot.message(start_with: "marth") do |event|
           end;
           
     else;
-       say = "Advanatage Roll To Hit needs  ;arth?   ?= target number (0 to 9)";
+       say = "Melee Advanatage Roll To Hit needs  marth?   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -413,7 +413,7 @@ bot.message(start_with: "mdrth") do |event|
       iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
       iRoll=[iRoll1,iRoll2].min;
       result = iRoll + mod + profB;
-      say = @user.to_s + " rolled an DISADVANTAGE attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " rolled a Melee DISADVANTAGE attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The attack Missed!";
           else;
@@ -453,7 +453,7 @@ bot.message(start_with: "mdrth") do |event|
           end;
           
     else;
-       say = "Dis-Advanatage Roll To Hit needs  ;drth?   ?= target number (0 to 9)";
+       say = "Melee Dis-Advanatage Roll To Hit needs  mdrth?   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -471,7 +471,7 @@ bot.message(start_with: "mbrth") do |event|
       str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
       blessDie = (rand 4)+1;
       iRoll=(rand 20)+1; result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled a Blessed attack against Creature " + target.to_s + ":\n[" + iRoll.to_s + "] + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " rolled a Melee Blessed attack against Creature " + target.to_s + ":\n[" + iRoll.to_s + "] + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The attack Missed!";
           else;
@@ -499,7 +499,7 @@ bot.message(start_with: "mbrth") do |event|
           end;
           
     else;
-       say = "Blessed Roll To Hit needs  ;brth?    ?= target number (0 to 9)";
+       say = "Melee Blessed Roll To Hit needs  mbrth?    ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -517,7 +517,7 @@ bot.message(start_with: "mabrth") do |event|
       blessDie = (rand 4)+1;
       iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
       iRoll=[iRoll1,iRoll2].max;   result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled a Blessed Advantage attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " rolled a Melee Blessed Advantage attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The attack Missed!";
           else;
@@ -545,7 +545,7 @@ bot.message(start_with: "mabrth") do |event|
           end;
           
     else;
-       say = "Advantage Blessed Roll To Hit needs  ;abrth?    ?= target number (0 to 9)";
+       say = "Melee Advantage Blessed Roll To Hit needs  mabrth?    ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -563,7 +563,7 @@ bot.message(start_with: "mdbrth") do |event|
       blessDie = (rand 4)+1;
       iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
       iRoll=[iRoll1,iRoll2].min;   result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled a Blessed Dis-Advantage attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      say = @user.to_s + " rolled a Melee Blessed Dis-Advantage attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The attack Missed!";
           else;
@@ -591,7 +591,7 @@ bot.message(start_with: "mdbrth") do |event|
           end;
           
     else;
-       say = "Dis-Advantage Blessed Roll To Hit needs  ;dbrth?    ?= target number (0 to 9)";
+       say = "Melee Dis-Advantage Blessed Roll To Hit needs  mdbrth?    ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -653,7 +653,7 @@ bot.message(start_with: "rrth") do |event|
               end;
           end;
     else;
-       say = "Roll To Hit needs  ;rth?   ?= target number (0 to 9)";
+       say = "Ranged Roll To Hit needs  rrth?   ?= target number (0 to 9)";
     end;
     #event.message.delete;
     event.respond say;
@@ -712,7 +712,7 @@ bot.message(start_with: "rarth") do |event|
           end;
           
     else;
-       say = "Advanatage Roll To Hit needs  ;arth?   ?= target number (0 to 9)";
+       say = "Ranged Advanatage Roll To Hit needs  rarth?   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
