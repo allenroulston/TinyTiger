@@ -624,7 +624,7 @@ bot.message(start_with: "rrth") do |event|
                      #say = say + "\n P-Index:" + thePlayerIndex.to_s +  "    W-Index:" + theWeaponIndex.to_s + "   theDamage:" + theDamageRoll.to_s + "\n";
                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod1.to_s +
                                   " = " + (mod1 + @damage1).to_s + " points of damage.";
-                     @HP[target][0] = @HP[target][0] - @damage1 - mod;
+                     @HP[target][0] = @HP[target][0] - @damage1 - mod1;
                      health_check(@HP[target][0], @HP[target][1])
                      say = say + "\n Creature " + target.to_s + " looks " + @healthStat + "\n";
                    else;
