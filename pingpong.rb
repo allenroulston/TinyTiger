@@ -1557,7 +1557,7 @@ bot.message(start_with:"$Wlist") do |event|
     (0..(@player.length-1)).each do |y|  #find the @player pIndex within the array using 5 char of @user
         if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
     end;
-    say = theUser;
+    say = "Greetings, " + theUser + "\n";
     say = say + "Your MELEE weapon damage: " + @weapon[(@player[pIndex][1])].to_s + "\n";
     say = say + "Your RANGED weapon damage: " + @weapon[(@player[pIndex][12])].to_s + "\n";
     say = say +  "To change use   $Mset? (melee)   or   $Rset?  (ranged)  \n";
