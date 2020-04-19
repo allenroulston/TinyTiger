@@ -150,7 +150,7 @@ bot.message(start_with:"timer") do |event|;
    (0..@timeCode).each do |x|; 
      say = say + "*";
    end;
-   @timeCode = @TimeCode - 1;
+   @timeCode = @timeCode - 1;
    event.message.delete
    sleep 2;
    if @timeCode > 0 then;
