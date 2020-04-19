@@ -1582,7 +1582,7 @@ bot.message(start_with:"$Mset") do |event|
     weaponInt = Integer(inputStr.slice(5,1)) rescue false; #will detect integer or non integer input
     if (pIndex != nil) && (weaponInt != false) && (weaponInt < 6) then; 
            @player[pIndex][1]=weaponInt;
-           say = @player[pIndex][0].to_s + " weapon damage has be set to " + @weapon[(@player[pIndex][1])].to_s;
+           say = @player[pIndex][0].to_s + " MELEE weapon damage has be set to " + @weapon[(@player[pIndex][1])].to_s;
     else
        say = "Please try: $Mset?  where ? is a single number ( 0 to 5 )"; 
     end;
@@ -1603,7 +1603,7 @@ bot.message(start_with:"$Rset") do |event|
     weaponInt = Integer(inputStr.slice(5,1)) rescue false; #will detect integer or non integer input
     if (pIndex != nil) && (weaponInt != false) && (weaponInt < 6) then; 
            @player[pIndex][12]=weaponInt;
-           say = @player[pIndex][0].to_s + " weapon damage has be set to " + @weapon[(@player[pIndex][12])].to_s;
+           say = @player[pIndex][0].to_s + " RANGED weapon damage has be set to " + @weapon[(@player[pIndex][12])].to_s;
     else
        say = "Please try: $Mset?  where ? is a single number ( 0 to 5 )"; 
     end;
