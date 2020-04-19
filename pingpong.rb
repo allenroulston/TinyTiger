@@ -672,7 +672,7 @@ bot.message(start_with: "rarth") do |event|
       iRoll=[iRoll1,iRoll2].max;
       result = iRoll + mod1 + mod2 + profB;
       say = @user.to_s + " rolled an ADVANTAGE attack against Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s +
-                                "] +" + mod1.to_s + "+" mod2.to_s + "+" + profB.to_s + " = " + result.to_s;
+                                "] +" + mod1.to_s + "+" + mod2.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The attack Missed!";
           else;
