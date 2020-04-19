@@ -1557,17 +1557,18 @@ bot.message(start_with:"$Wlist") do |event|
     (0..(@player.length-1)).each do |y|  #find the @player pIndex within the array using 5 char of @user
         if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
     end;
-    say = theUser + ", your current MELEE weapon damage die is set to: " + @weapon[(@player[pIndex][1])].to_s + "\n";
-    say = say + "Your current RANGED weapon damage die is set to : (Allen you need to code this.) \n\n";
-    say = say +  "To change weapons, assign a new damage die value using: $Mset or $Rset  \n";
-    say = say +  "with an Integer, as shown below. Such as $Mset3 or $Rset4  \n\n";
+    say = theUser;
+    say = say + "Your MELEE weapon damage: " + @weapon[(@player[pIndex][1])].to_s + "\n";
+    say = say + "Your RANGED weapon damage: " + @weapon[(@player[pIndex][12])].to_s + "\n";
+    say = say +  "To change use   $Mset? (melee)   or   $Rset?  (ranged)  \n";
+    say = say +  "where ? is an Integer, as shown below. ($Mset3  or  $Rset3)  \n\n";
     (0..5).each do |x|;
           say = say +  @weapon[x] + " <=> " + x.to_s  + "    ";
     end;                 
     event.respond say;
 end;
 
-bot.message(start_with:"$Wset") do |event|
+bot.message(start_with:"$Mset") do |event|
     inputStr = event.content; # this should contain "$Wset#" where # is a single digit
     if event.user.nick != nil
       theUser = event.user.nick
@@ -1583,7 +1584,28 @@ bot.message(start_with:"$Wset") do |event|
            @player[pIndex][1]=weaponInt;
            say = @player[pIndex][0].to_s + " weapon damage has be set to " + @weapon[(@player[pIndex][1])].to_s;
     else
-       say = "Please try: $Wset?  where ? is a single number ( 0 to 5 )"; 
+       say = "Please try: $Mset?  where ? is a single number ( 0 to 5 )"; 
+    end;
+    event.respond say;
+end;
+
+bot.message(start_with:"$Rset") do |event|
+    inputStr = event.content; # this should contain "$Wset#" where # is a single digit
+    if event.user.nick != nil
+      theUser = event.user.nick
+    else
+      theUser = event.user.name
+    end
+    pIndex = nil;  #fetch the value of @user & set pIndex
+    (0..(@player.length-1)).each do |y|  #find the @player pIndex within the array using 5 char of @user
+        if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
+    end;
+    weaponInt = Integer(inputStr.slice(5,1)) rescue false; #will detect integer or non integer input
+    if (pIndex != nil) && (weaponInt != false) && (weaponInt < 6) then; 
+           @player[pIndex][12]=weaponInt;
+           say = @player[pIndex][0].to_s + " weapon damage has be set to " + @weapon[(@player[pIndex][12])].to_s;
+    else
+       say = "Please try: $Mset?  where ? is a single number ( 0 to 5 )"; 
     end;
     event.respond say;
 end;
