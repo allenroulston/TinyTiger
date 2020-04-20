@@ -148,32 +148,32 @@ end;
 
 bot.message(start_with:"-----") do |event|;
    event.message.delete
-   say = " ----------------------------------"
+   say = ".----------------------------------"
    event.respond say;
 end;
 
-bot.message(start_with:" ----") do |event|;
+bot.message(start_with:".----") do |event|;
    event.message.delete
-   say = "  -------------------------"
+   say = "..-------------------------"
    sleep 5;
    event.respond say;
 end;
 
-bot.message(start_with:"  ---") do |event|;
+bot.message(start_with:"..---") do |event|;
    event.message.delete
-   say = "   -----------------"
+   say = "...-----------------"
    sleep 5
    event.respond say;
 end;
 
-bot.message(start_with:"   --") do |event|;
+bot.message(start_with:"...--") do |event|;
    event.message.delete
-   say = "    ---------";
+   say = "....---------";
    sleep 5;
    event.respond say;
 end;
 
-bot.message(start_with:"    -") do |event|;
+bot.message(start_with:"....-") do |event|;
    event.message.delete
    say = "You hear the sound of an alarm.";
    event.respond say;
