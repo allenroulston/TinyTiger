@@ -146,7 +146,7 @@ bot.message(start_with: "myabs") do |event|;
     event.respond say;
 end;
 
-bot.message(start_with:"*****") do |event|;
+bot.message(start_with:"-----") do |event|;
    event.message.delete
    say = " ****************************************"
    event.respond say;
