@@ -146,39 +146,11 @@ bot.message(start_with: "myabs") do |event|;
     event.respond say;
 end;
 
-bot.message(start_with:"55555") do |event|;
-   event.message.delete
-   say = "44444"
-   event.respond say;
-end;
-
-bot.message(start_with:"44444") do |event|;
-   event.message.delete
-   say = "33333"
-   sleep 5;
-   event.respond say;
-end;
-
-bot.message(start_with:"33333") do |event|;
-   event.message.delete
-   say = "22222"
-   sleep 5
-   event.respond say;
-end;
-
-bot.message(start_with:"22222") do |event|;
-   event.message.delete
-   say = "11111";
-   sleep 5;
-   event.respond say;
-end;
-
-bot.message(start_with:"11111") do |event|;
-   event.message.delete
-   say = "You hear the sound of an alarm.";
-   event.respond say;
-end;
-
+#bot.message(start_with:"55555") do |event|;
+#  event.message.delete
+#   say = "44444"
+#   event.respond say;
+#end;
 
 
 bot.message(start_with: ";deleteme") do |event|;
