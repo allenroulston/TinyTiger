@@ -607,11 +607,12 @@ bot.message(start_with: "rrth") do |event|
     valTheRTH(inputValue); #standard validation process found up top
     if (@valTheRTH == true) then;
       get_the_player(); #creates the value in @playerIndex. BELOW [3] DEX. [11] RANGE SPECIAL BONUS
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][11];      profB=@player[@playerIndex][8];
+      mod1 = @player[@playerIndex][3];      mod2 = @player[@playerIndex][2];    mod3 = @player[@playerIndex][11];      profB=@player[@playerIndex][8];
+           mod = [mod1,mod2].max;
       str_2_number(inputValue.slice(4,1)); target = @numba # @numba <= is the result
-      iRoll=(rand 20)+1; result = iRoll + mod1 + mod2 + profB;
+      iRoll=(rand 20)+1; result = iRoll + mod1 + mod3 + profB;
       say = @user.to_s + " made a RANGED roll to hit Creature " + target.to_s + ":\n[" + iRoll.to_s + "] +" + 
-                           mod1.to_s + "+" + mod2.to_s + "+" + profB.to_s + " = " + result.to_s;
+                           mod1.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The RANGED roll to hit ... Missed! \n";
           else;
@@ -669,13 +670,14 @@ bot.message(start_with: "rarth") do |event|
     valTheARTH(inputValue); #standard validation process found up top
     if (@valTheARTH == true) then;
       get_the_player(); #creates the value in @playerIndex.  BELOW [3] DEX. [11] RANGE SPECIAL BONUS
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][11];      profB=@player[@playerIndex][8];
+      mod1 = @player[@playerIndex][3];      mod2 = @player[@playerIndex][2];    mod3 = @player[@playerIndex][11];      profB=@player[@playerIndex][8];
+                 mod = [mod1,mod2].max;
       str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
       iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
       iRoll=[iRoll1,iRoll2].max;
-      result = iRoll + mod1 + mod2 + profB;
+      result = iRoll + mod1 + mod3 + profB;
       say = @user.to_s + " made a RANGED Advantage roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s +
-                                "] +" + mod1.to_s + "+" + mod2.to_s + "+" + profB.to_s + " = " + result.to_s;
+                                "] +" + mod1.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The RANGED Advantage roll to hit ... Missed!";
           else;
@@ -728,13 +730,13 @@ bot.message(start_with: "rdrth") do |event|
     valTheARTH(inputValue); #standard validation process found up top
     if (@valTheARTH == true) then;
       get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];      profB=@player[@playerIndex][8];
+      mod1 = @player[@playerIndex][3];       mod2 = @player[@playerIndex][2];    mod3 = @player[@playerIndex][11];      profB=@player[@playerIndex][8];
       mod = [mod1,mod2].max;
       str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
       iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
       iRoll=[iRoll1,iRoll2].min;
-      result = iRoll + mod + profB;
-      say = @user.to_s + " made a RANGED Dis-Adv roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      result = iRoll + mod + mod3 + profB;
+      say = @user.to_s + " made a RANGED Dis-Adv roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + " + mod.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The RANGED Dis-Adv roll to hit ... Missed!";
           else;
@@ -787,12 +789,12 @@ bot.message(start_with: "rbrth") do |event|
     valTheBRTH(inputValue); #standard validation process found up top
     if (@valTheBRTH == true) then;
       get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];     profB=@player[@playerIndex][8];
+      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];    mod3 = @player[@playerIndex][11];           profB=@player[@playerIndex][8];
       mod = [mod1,mod2].max;
       str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
       blessDie = (rand 4)+1;
-      iRoll=(rand 20)+1; result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " made a RANGED Blessed roll to hit Creature " + target.to_s + ":\n[" + iRoll.to_s + "] + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      iRoll=(rand 20)+1; result = iRoll + mod + mod3 + profB + blessDie;
+      say = @user.to_s + " made a RANGED Blessed roll to hit Creature " + target.to_s + ":\n[" + iRoll.to_s + "] + [" + blessDie.to_s + "] + " + mod.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The RANGED Blessed roll to hit ... Missed!";
           else;
@@ -844,13 +846,13 @@ bot.message(start_with: "rabrth") do |event|
     valTheABRTH(inputValue); #standard validation process found up top
     if (@valTheABRTH == true) then;
       get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];     profB=@player[@playerIndex][8];
+      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];      mod3 = @player[@playerIndex][11];          profB=@player[@playerIndex][8];
       mod = [mod1,mod2].max;
       str_2_number(inputValue.slice(6,1)); target = @numba # @numba <= is the result
       blessDie = (rand 4)+1;
       iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
-      iRoll=[iRoll1,iRoll2].max;   result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " made a RANGED Advantage Blessed roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      iRoll=[iRoll1,iRoll2].max;   result = iRoll + mod + mod3 + profB + blessDie;
+      say = @user.to_s + " made a RANGED Advantage Blessed roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + [" + blessDie.to_s + "] + " + mod.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The RANGED Advantage Blessed roll to hit ... Missed!";
           else;
@@ -902,13 +904,13 @@ bot.message(start_with: "rdbrth") do |event|
     valTheABRTH(inputValue); #standard validation process found up top
     if (@valTheABRTH == true) then;
       get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];     profB=@player[@playerIndex][8];
+      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];    mod3 = @player[@playerIndex][11];          profB=@player[@playerIndex][8];
       mod = [mod1,mod2].max;
       str_2_number(inputValue.slice(6,1)); target = @numba # @numba <= is the result
       blessDie = (rand 4)+1;
       iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
-      iRoll=[iRoll1,iRoll2].min;   result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " made a RANGED Dis-Adv Blessed Roll To Hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      iRoll=[iRoll1,iRoll2].min;   result = iRoll + mod + mod3 + profB + blessDie;
+      say = @user.to_s + " made a RANGED Dis-Adv Blessed Roll To Hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The RANGED Dis-Adv Blessed roll to hit ... Missed!";
           else;
