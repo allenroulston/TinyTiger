@@ -1912,15 +1912,33 @@ end;
 ################## D500. ##########################
 bot.message(contains:"D500.") do |event|
     event.message.delete;
-    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
-    blank = @tempVar.index(' ');
+    check_user_or_nick(event);  @tempVar = event.content;  comment = "Unknown";  blank = @tempVar.index(' ');
     if blank != nil then;
       comment = @tempVar.slice(blank,99);
       @tempVar = @tempVar.slice(0,blank);
     end;
     locationValue = @tempVar.index('D500.');
-    
-    event.respond "Location: " + locationValue.to_s;
+    chkNum = Integer(locationValue) rescue false;
+    if ( chkNum == false ) then;
+      say = "Busted";
+    else;
+      if chkNum > 0 then;
+         howManyDice = @tempVar.slice(0,(locationValue.to_i));
+         say = @user.to_s + " rolled " + howManyDice.to_s + "D500." + " + " + @whatPlus.to_s + "\n";
+         die=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; total=0;
+         (0..howManyDice).each do |x|;
+            die[x]=(rand 500)+1;
+            say = say + "[" + die[x].to_s + "]";
+            total=total + die[x];
+          end;
+          total = total + @whatPlus;
+          say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
+          say = say + "\nREASON: " + comment;
+      else;
+        say = "Only rolled one."
+      end;      
+    end;
+    event.respond say;
 end;
 
 ################## help ##########################
