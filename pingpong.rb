@@ -1911,7 +1911,7 @@ end;
 ################## D500. ##########################
 ################## D500. ##########################
 bot.message(contains:"D500.") do |event|
-    event.message.delete;
+    event.message.delete;  say = "SHIT";
     check_user_or_nick(event);  @tempVar = event.content;  comment = "Unknown";  blank = @tempVar.index(' ');
     if blank != nil then;
       comment = @tempVar.slice(blank,99);
