@@ -1,6 +1,7 @@
 #
 require 'discordrb'
 require 'yaml'
+require 'date'
 
 
 #####Configuration########
@@ -14,7 +15,15 @@ owner = 690339632529015005 # Your user ID
 @HP = YAML.load(File.read("hitPoints.yml"));
 @weapon = YAML.load(File.read("weaponDamage.yml"));
 @player = YAML.load(File.read("ABSmods.yml"));
-
+@RE = YAML.load(File.read("relentEndure.yml"));
+puts;
+puts "   Enemy Armour Loaded";
+puts "   Enemy Hit Points Loaded";
+puts "   Weapon Damages Loaded";
+puts "   Player Ability Score Modifiers Loaded";
+puts "   Relentless Endurance Loaded";
+puts "   Damage Arrays Created";
+puts;
 
 def check_user_or_nick(event)
   if event.user.nick != nil
@@ -23,7 +32,12 @@ def check_user_or_nick(event)
     @user = event.user.name
   end
 end
- 
+
+@dmg1 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+@dmg2 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+@dmg3 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+@dmg4 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+@gmBonus = 5;
 
 #####End Configuration####
 
@@ -64,6 +78,18 @@ def valTheARTH(inputStr);  # use to validate the input of type ;az1. (attack by 
     @valTheARTH = false;
   end;
 end;
+
+####### RAGE check ######
+def valTheRARTH(inputStr);  # use to validate the input of type ;az1. (attack by Zalos where target # 1)
+  @valTheRARTH = true;
+  length = inputStr.length;
+  numbVal = inputStr.slice(6,1);
+  chkNum = Integer(numbVal) rescue false;
+  if (length != 7) || (chkNum == false) then;
+    @valTheRARTH = false;
+  end;
+end;
+
 
 def valTheBRTH(inputStr);  # use to validate the input of type ;az1. (attack by Zalos where target # 1)
   @valTheBRTH = true;
@@ -106,18 +132,54 @@ def check_char_name(code);
     end;
 end;
 
-################################
-######## HEALTH CHECK ##########
-def health_check(currentHp, originalHp);
-  perCent = currentHp/originalHp;
-  if perCent < 0.00010 then; @healthStat = "Dead"; end;  # less than 0.0001 is only possible when HP = 0 or less 
-  if perCent > 0.00000 then; @healthStat = "Battered"; end;
-  if perCent > 0.24999 then; @healthStat = "Bloodied"; end;
-  if perCent > 0.49999 then; @healthStat = "Injured"; end;
-  if perCent > 0.74999 then; @healthStat = "Healthy"; end;
+bot = Discordrb::Bot.new token: token 
+
+########## Multiple Dice Rolls ########
+bot.message(start_with: "######") do |event|
+    #event.message.delete; 
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;
+    (0..(@player.length-1)).each do |y|
+        if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
+    end;
+    theString = event.content;
+    dotsFound = theString.index(".");
+
+    (1..dotsFound).each do |x|
+       puts "something";      
+    end;
+    
+    event.respond dotsFound.to_s;
+end;
+######################################
+###################
+###################
+###################
+bot.message(start_with: "FILE") do |event|;
+  playAh = Hash.new;
+  line_num=0
+  text=File.open('alittle.txt').read
+  text.gsub!(/\r\n?/, "\n")
+  text.each_line do |line|
+    flag = line.slice(1,1);
+    theName = line.slice(3,10);
+    theDex = (line.slice(14,2)).to_i;
+    theSpell = line.slice(17,10);
+    theRnd = line.slice(28,1).to_i;
+    letter = line.slice(30,1);
+    hp = line.slice(32,3);
+    ac = line.slice(36,4);
+    zero = 1; idVal = "#{line_num}".to_i;
+    playAh[:id=>"#{line_num}"] = {:flag => flag, :name=>theName, :dex=>theDex, :roll=>zero,
+                                  :spell=>theSpell, :round=>theRnd, :letter=>letter, :hp=>hp, :ac=>ac };
+    line_num +=1;
+  end;
+  event.respond ("FILE contains/n" + playAh.to_s).slice(0,99);
 end;
 
-bot = Discordrb::Bot.new token: token 
+
+###################
+###################
+###################
 
 bot.message(start_with: "myabs") do |event|;
   if event.user.nick != nil
@@ -146,11 +208,16 @@ bot.message(start_with: "myabs") do |event|;
     event.respond say;
 end;
 
-#bot.message(start_with:"55555") do |event|;
-#  event.message.delete
-#   say = "44444"
-#   event.respond say;
-#end;
+bot.message(start_with:"55555") do |event|;
+  def tis_this(input);
+    bork = input;
+    say = bork.to_s + " this.";
+    return say; 
+  end;  
+  event.message.delete
+  theSay = tis_this(event.content)
+  event.respond theSay;
+end;
 
 
 bot.message(start_with: ";deleteme") do |event|;
@@ -225,238 +292,454 @@ end;
 
 bot.message(start_with: ";i") do |event|
     inputValue = event.content;
+    event.message.delete;
     if inputValue == ";i"; then;
-       responseValue = "@everyone Please roll initiative with command:   ;init \n"+
-                      "(The bot knows your character ability score modifiers.)";
+       responseValue = "@everyone Please pause whatever you are doing.\n" +
+                       "Roll initiative using the command: ii \n (two lower case 'eyes') \n" +
+                       "(The bot knows your character ability score modifiers.)";
        event.respond responseValue;
     end;
 end;
 
 ########## Unique INITIATIVE ########
-bot.message(start_with: ";init") do |event|
-    if event.user.nick != nil
-        theUser = event.user.nick
-    else
-        theUser = event.user.name
-    end;
-    inputValue = event.content;
-    pIndex = nil;
+bot.message(start_with: "ii") do |event|
+    event.message.delete; 
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;
     (0..(@player.length-1)).each do |y|
         if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
     end;
-    mod = @player[pIndex][3]+@player[pIndex][9];
-    initRoll=(rand 20)+1;
-    result = initRoll + mod;
+    mod = @player[pIndex][3] + @player[pIndex][9];     initRoll=(rand 20)+1;      result = initRoll + mod;
     responseValue = theUser.to_s + " has rolled initiative: [" + initRoll.to_s + "] + " + mod.to_s + " = " + result.to_s;
-    event.message.delete;
     event.respond responseValue;
 end;
 
 ########## Advantage Unique INITIATIVE ########
-bot.message(start_with: ";ainit") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event)
-    get_the_player();
-    mod = @player[@playerIndex][3];
-    initRoll1=(rand 20)+1;    
-    initRoll2=(rand 20)+1;
-    initRoll = [initRoll1,initRoll2].max;
-    result = initRoll + mod;
-    responseValue = @user.to_s + " has rolled initiative with ADVANTAGE: [" + initRoll1.to_s + "][" + initRoll2.to_s + "] + "  + mod.to_s + " = " + result.to_s;
-    event.message.delete;
+bot.message(start_with: "aii") do |event|
+    event.message.delete; 
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;
+    (0..(@player.length-1)).each do |y|
+        if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
+    end;
+    initRoll1=(rand 20)+1;     initRoll2=(rand 20)+1;     initRoll = [initRoll1,initRoll2].max;
+    result = initRoll + mod + @player[pIndex][9];
+    responseValue = theUser.to_s + " has rolled initiative with ADVANTAGE: [" + initRoll1.to_s + "][" + initRoll2.to_s + "] + "  + mod.to_s + " = " + result.to_s;
     event.respond responseValue;
 end;
 
 ########## DisAdvantage Unique INITIATIVE ########
-bot.message(start_with: ";dinit") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event)
-    get_the_player();
-    mod = @player[@playerIndex][3];
-    initRoll1=(rand 20)+1;    
-    initRoll2=(rand 20)+1;
-    initRoll = [initRoll1,initRoll2].min;
-    result = initRoll + mod;
-    responseValue = @user.to_s + " has rolled initiative with DIS-ADVANTAGE: [" + initRoll1.to_s + "][" + initRoll2.to_s + "] + "  + mod.to_s + " = " + result.to_s;
-    event.message.delete;
+bot.message(start_with: "dii") do |event|
+    event.message.delete; 
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;
+    (0..(@player.length-1)).each do |y|
+        if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
+    end;
+    initRoll1=(rand 20)+1;     initRoll2=(rand 20)+1;     initRoll = [initRoll1,initRoll2].min;
+    result = initRoll + mod + @player[pIndex][9];
+    responseValue = theUser.to_s + " has rolled initiative with DIS-ADVANTAGE: [" + initRoll1.to_s + "][" + initRoll2.to_s + "] + "  + mod.to_s + " = " + result.to_s;
     event.respond responseValue;
+end;
+
+################################
+######## HEALTH CHECK ##########
+def health_check(currentHp, originalHp);
+  perCent = currentHp/originalHp;
+  if perCent < 0.00010 then; @healthStat = "Dead"; end;  # less than 0.0001 is only possible when HP = 0 or less 
+  if perCent > 0.00000 then; @healthStat = "Battered"; end;
+  if perCent > 0.24999 then; @healthStat = "Bloodied"; end;
+  if perCent > 0.49999 then; @healthStat = "Injured"; end;
+  if perCent > 0.74999 then; @healthStat = "Healthy"; end;
+end;
+
+####### GET_DAMAGES #########
+def get_damages(pIndex)
+  theWeaponIndex = @weapon[(@player[pIndex][1])];
+  case theWeaponIndex;
+       when "2d6";  @dmg1 = (rand 6)+1;  @dmg2 = (rand 6)+1; @dmg3 = (rand 6)+1;  @dmg4 = (rand 6)+1;
+       when "1d12"; @dmg1 = (rand 12)+1; @dmg2 = -99;        @dmg3 = (rand 12)+1; @dmg4 = -99;
+       when "1d10"; @dmg1 = (rand 10)+1; @dmg2 = -99;        @dmg3 = (rand 10)+1; @dmg4 = -99;
+       when "1d8";  @dmg1 = (rand 8)+1;  @dmg2 = -99;        @dmg3 = (rand 8)+1;  @dmg4 = -99;
+       when "1d6";  @dmg1 = (rand 6)+1;  @dmg2 = -99;        @dmg3 = (rand 6)+1;  @dmg4 = -99;
+       when "1d4";  @dmg1 = (rand 4)+1;  @dmg2 = -99;        @dmg3 = (rand 4)+1;  @dmg4 = -99;
+       when "2d4";  @dmg1 = (rand 4)+1;  @dmg2 = (rand 4)+1; @dmg3 = (rand 4)+1;  @dmg4 = (rand 4)+1;
+       when "2d3";  @dmg1 = (rand 3)+1;  @dmg2 = (rand 3)+1; @dmg3 = (rand 3)+1;  @dmg4 = (rand 3)+1;
+  end;
+end;
+
+####### GET_DAMAGES #########
+def get_Rdamages(pIndex)
+  theWeaponIndex = @weapon[(@player[pIndex][12])];
+  case theWeaponIndex;
+       when "2d6";  @dmg1 = (rand 6)+1;  @dmg2 = (rand 6)+1; @dmg3 = (rand 6)+1;  @dmg4 = (rand 6)+1;
+       when "1d12"; @dmg1 = (rand 12)+1; @dmg2 = -99;        @dmg3 = (rand 12)+1; @dmg4 = -99;
+       when "1d10"; @dmg1 = (rand 10)+1; @dmg2 = -99;        @dmg3 = (rand 10)+1; @dmg4 = -99;
+       when "1d8";  @dmg1 = (rand 8)+1;  @dmg2 = -99;        @dmg3 = (rand 8)+1;  @dmg4 = -99;
+       when "1d6";  @dmg1 = (rand 6)+1;  @dmg2 = -99;        @dmg3 = (rand 6)+1;  @dmg4 = -99;
+       when "1d4";  @dmg1 = (rand 4)+1;  @dmg2 = -99;        @dmg3 = (rand 4)+1;  @dmg4 = -99;
+       when "2d4";  @dmg1 = (rand 4)+1;  @dmg2 = (rand 4)+1; @dmg3 = (rand 4)+1;  @dmg4 = (rand 4)+1;
+       when "2d3";  @dmg1 = (rand 3)+1;  @dmg2 = (rand 3)+1; @dmg3 = (rand 3)+1;  @dmg4 = (rand 3)+1;
+  end;
+end;
+
+def prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+  @sayValue = "";
+  iTarget = "ABCDEFGHIJKLMNOPQRSTU".slice(target,1);
+  get_damages(pIndex); # go to method to get the damages
+  if rage == 2; then ra = "+(2)"; else; ra = ""; end;
+  #puts "----> " + @dmg1[pIndex].to_s + " - " + @dmg2[pIndex].to_s + " - " + @dmg3[pIndex].to_s + " - " + @dmg4[pIndex].to_s;
+  if iRoll != 20 then;
+       if (@weapon[(@player[pIndex][1])] != "2d6") && (@weapon[(@player[pIndex][1])] != "2d4") && (@weapon[(@player[pIndex][1])] != "2d3") then;
+         @sayValue = @sayValue + "\n" + @weapon[(@player[pIndex][1])].to_s + " rolled [" + @dmg1.to_s + "] + " + mod.to_s + ra + " = " + (mod + @dmg1 + rage).to_s + " points of damage.";
+         #puts "HP: " + @HP[target][0].to_s + "   @dmg1: " +  @dmg1.to_s + "  mod: " +  mod.to_s + "  target: " + target.to_s + " @healthStat: " +  @healthStat.inspect; 
+         @HP[target][0] = @HP[target][0] - @dmg1 - mod;     health_check(@HP[target][0], @HP[target][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") looks " + @healthStat + "\n";
+       else;
+         @sayValue = @sayValue + "\n" + @weapon[(@player[pIndex][1])].to_s + " rolled [" + @dmg1.to_s + "][" + @dmg2.to_s + "] + " + mod.to_s + ra + " = " + (mod + @dmg1 + @dmg2 + rage).to_s + " points of damage.";
+         @HP[target][0] = @HP[target][0] - @dmg1 - @dmg2 - mod;     health_check(@HP[target][0], @HP[target][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") looks " + @healthStat + "\n";
+       end;
+  else;   # NATURAL 20
+       if (@weapon[(@player[pIndex][1])] != "2d6") && (@weapon[(@player[pIndex][1])] != "2d4") && (@weapon[(@player[pIndex][1])] != "2d3") then;
+          @sayValue = @sayValue + "\n" + @weapon[(@player[pIndex][1])].to_s + " rolled [" + @dmg1.to_s + "][" + @dmg3.to_s + "] + " + mod.to_s + ra + " = " + (mod + @dmg1 + @dmg3 + rage).to_s + " points of damage. CRITICAL HIT!";
+          @HP[target][0] = @HP[target][0] - @dmg1 - @dmg3 - mod;     health_check(@HP[target][0], @HP[target][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") looks " + @healthStat + "\n";
+       else;
+          @sayValue = @sayValue + "\n" + @weapon[(@player[pIndex][1])].to_s + " rolled [" + @dmg1.to_s + "][" + @dmg2.to_s + "][" + @dmg3.to_s + "][" + @dmg4.to_s + "] + " + mod.to_s + ra + " = " + (mod + @dmg1 + @dmg2 + @dmg3 + @dmg4 + rage).to_s + " points of damage. CRITICAL HIT!";
+          @HP[target][0] = @HP[target][0] - @dmg1 - @dmg2 - @dmg3 - @dmg4 - mod;     health_check(@HP[target][0], @HP[target][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") looks " + @healthStat + "\n";
+       end;              
+  end;
 end;
 
 ######### easy ATTACK TARGET creature #####################################
 bot.message(start_with: "mrth") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event);
-    valTheRTH(inputValue); #standard validation process found up top
-    if (@valTheRTH == true) then;
-      get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];      profB=@player[@playerIndex][8];
-      mod = [mod1,mod2].max;
-      str_2_number(inputValue.slice(4,1)); target = @numba # @numba <= is the result
-      iRoll=(rand 20)+1; result = iRoll + mod + profB;
-      say = @user.to_s + " made a MELEE roll to hit Creature " + target.to_s + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(4,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 5) || (target == nil) then;  validInput = false;  end;     
+    
+    if (validInput == true) then;
+      mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   iRoll=(rand 20)+1; result = iRoll + mod + profB;
+      say = theUser + " made a MELEE roll to hit Creature " + iTarget + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The MELEE roll to hit ... Missed! \n";
+              say = say + "     ... Missed! \n";
           else;
-              say = say + "     The MELEE roll to hit ... HIT!";
-              #check for iRoll to be 20 for a CRIT
-              thePlayerIndex = @playerIndex;
-              theWeaponIndex = @player[@playerIndex][1];
-              theDamageRoll = @weapon[(@player[@playerIndex][1])];
-              roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
-              #@damage & @damage1 now have values
-              if iRoll != 20 then;
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                     #say = say + "\n P-Index:" + thePlayerIndex.to_s +  "    W-Index:" + theWeaponIndex.to_s + "   theDamage:" + theDamageRoll.to_s + "\n";
-                     say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1).to_s + " points of damage.";
-                     @HP[target][0] = @HP[target][0] - @damage1 - mod;
-                     health_check(@HP[target][0], @HP[target][1])
-                     say = say + "\n Creature " + target.to_s + " looks " + @healthStat + "\n";
-                   else;
-                     #say = say + "\n P-Index:" + thePlayerIndex.to_s +  "    W-Index:" + theWeaponIndex.to_s + "   theDamage:" + theDamageRoll.to_s + "\n";
-                     say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] [" + @damage2.to_s + "] + " +
-                                  mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
-                     @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod;
-                     health_check(@HP[target][0], @HP[target][1])
-                     say = say + "\n Creature " + target.to_s + " looks " + @healthStat + "\n";
-                   end;
-              else
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
-                      @HP[target][0] = @HP[target][0] - @damage1 - @damage3 - mod;
-                      health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n Creature " + target.to_s + " looks " + @healthStat + "\n";
-                                  
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
-                                 "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
-                      @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - @damage3 - @damage4 - mod;
-                      health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n Creature " + target.to_s + " looks " + @healthStat + "\n";
-                   end;              
-              end;
+              say = say + "     ... HIT!";
+              rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+              say = say + @sayValue;
           end;
     else;
-       say = "MELEE Roll To Hit needs  mrth?   ?= target number (0 to 9)";
+    say = "MELEE Roll To Hit needs  mrth?   ?= target number (0 to 9)";
     end;
-    #event.message.delete;
     event.respond say;
 end;
 
-######### easy ADVANTAGE ATTACK TARGET creature #####################################
-bot.message(start_with: "marth") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event);
-    valTheARTH(inputValue); #standard validation process found up top
-    if (@valTheARTH == true) then;
-      get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];      profB=@player[@playerIndex][8];
-      mod = [mod1,mod2].max;
-      str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
-      iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
-      iRoll=[iRoll1,iRoll2].max;
-      result = iRoll + mod + profB;
-      say = @user.to_s + " made a MELEE Advantage roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+
+######### HexBlade Agonizing Blast ATTACK TARGET creature #####################################
+######### HexBlade Agonizing Blast ATTACK TARGET creature #####################################
+bot.message(start_with: "agblast") do |event|
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(7,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 8) || (target == nil) then;  validInput = false;  end;     
+    
+    if (validInput == true) then;
+      mod1 = @player[pIndex][7];   mod2 = @player[pIndex][7];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   iRoll=(rand 20)+1; result = iRoll + mod + profB;
+      say = theUser + " Ag Blast roll to hit Creature " + iTarget + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The MELEE Advantage roll to hit ... Missed!";
+              say = say + "     ... Missed! \n";
           else;
-              say = say + "     The MELEE Advantage roll to hit ... HIT!";
-              #check for iRoll to be 20 for a CRIT
-              roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
-              #@damage & @damage1 now have values
-              if iRoll != 20 then;
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1).to_s + " points of damage.";
-                      @HP[target][0] = @HP[target][0] - @damage1 - mod;
-                      health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;                                  
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] [" + @damage2.to_s + "] + " +
-                                  mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
-                      @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod;
-                      health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   end;
-              else
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
-                      @HP[target][0] = @HP[target][0] - @damage1 - @damage3 - mod;
-                      health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
-                                 "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
-                      @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - @damage3 - @damage4 - mod;
-                      health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   end;              
-              end;
+              say = say + "     ... HIT!";
+              rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+              say = say + @sayValue;
           end;
-          
     else;
-       say = "MELEE Advanatage Roll To Hit needs  marth?   ?= target number (0 to 9)";
+    say = "Ag Blast Roll To Hit needs  agblast?   ?= target number (0 to 9)";
+    end;
+    event.respond say;
+end;
+
+
+
+######### WOLF ATTACK TARGET creature #####################################
+bot.message(start_with: "wolf") do |event|
+    if event.user.nick != nil; theUser = "Wolfs"; else; theUser = "Wolfs"; end; pIndex = nil;  # SET THE USER VALUE TO Wolfs
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(4,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 5) || (target == nil) then;  validInput = false;  end;     
+    
+    if (validInput == true) then;
+      mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   iRoll=(rand 20)+1; result = iRoll + mod + profB;
+      say = "Wolf made a BITE roll to hit Creature " + iTarget + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+          if (result < @armour[target]) then;
+              say = say + "     ... Missed! \n";
+          else;
+              say = say + "     ... HIT!";
+              rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+              say = say + @sayValue;
+          end;
+    else;
+    say = "wolf needs  wolf?   ?= target letter A to K";
+    end;
+    event.respond say;
+end;
+
+######### WOLF ADVANTAGE ATTACK TARGET creature #####################################
+bot.message(start_with: "awolf") do |event|
+    if event.user.nick != nil; theUser = "Wolfs"; else; theUser = "Wolfs"; end; pIndex = nil;  # SET THE USER VALUE TO Wolfs
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(5,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 6) || (target == nil) then;  validInput = false;  end;  
+
+    if (validInput == true) then;
+       mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   roll1=(rand 20)+1; roll2=(rand 20)+1; iRoll=[roll1,roll2].max; result = iRoll + mod + profB;
+       say = "Wolf made a BITE Adv roll to hit Creature " + iTarget + ":\n[" + roll1.to_s + "][" + roll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+        if (result < @armour[target]) then;
+            say = say + "     ... Missed! \n";
+        else;
+            say = say + "     ... HIT!";
+            rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+            say = say + @sayValue;
+          end;      
+    else;
+      say = "wolf needs  wolf?   ?= target letter A to K";
     end;    
     event.respond say;
 end;
 
+######### BEAR BITE ATTACK TARGET creature #####################################
+bot.message(start_with: "bite") do |event|
+    if event.user.nick != nil; theUser = "Bear2"; else; theUser = "Bear2"; end; pIndex = nil;  # SET THE USER VALUE TO Wolfs
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(4,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 5) || (target == nil) then;  validInput = false;  end;     
+    
+    if (validInput == true) then;
+      mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   iRoll=(rand 20)+1; result = iRoll + mod + profB;
+      say = "BEAR made a BITE roll to hit Creature " + iTarget + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+          if (result < @armour[target]) then;
+              say = say + "     ... Missed! \n";
+          else;
+              say = say + "     ... HIT!";
+              rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+              say = say + @sayValue;
+          end;
+    else;
+    say = "bite needs  bite?   ?= target letter A to K";
+    end;
+    event.respond say;
+end;
+
+######### BEAR ADVANTAGE BITE ATTACK TARGET creature #####################################
+bot.message(start_with: "abite") do |event|
+    if event.user.nick != nil; theUser = "Bear2"; else; theUser = "Bear2"; end; pIndex = nil;  # SET THE USER VALUE TO Wolfs
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(5,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 6) || (target == nil) then;  validInput = false;  end;     
+    
+    if (validInput == true) then;
+      mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   roll1=(rand 20)+1; roll2=(rand 20)+1; iRoll=[roll1,roll2].max; result = iRoll + mod + profB;
+       say = "BEAR made a BITE Adv roll to hit Creature " + iTarget + ":\n[" + roll1.to_s + "][" + roll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+          if (result < @armour[target]) then;
+              say = say + "     ... Missed! \n";
+          else;
+              say = say + "     ... HIT!";
+              rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+              say = say + @sayValue;
+          end;
+    else;
+    say = "abite needs  abite?   ?= target letter A to K";
+    end;
+    event.respond say;
+end;
+
+######### BEAR CLAW ATTACK TARGET creature #####################################
+bot.message(start_with: "claw") do |event|
+    if event.user.nick != nil; theUser = "Bear1"; else; theUser = "Bear1"; end; pIndex = nil;  # SET THE USER VALUE TO Wolfs
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(4,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 5) || (target == nil) then;  validInput = false;  end;     
+    
+    if (validInput == true) then;
+      mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   iRoll=(rand 20)+1; result = iRoll + mod + profB;
+      say = "BEAR made a CLAW roll to hit Creature " + iTarget + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+          if (result < @armour[target]) then;
+              say = say + "     ... Missed! \n";
+          else;
+              say = say + "     ... HIT!";
+              rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+              say = say + @sayValue;
+          end;
+    else;
+    say = "claw needs  claw?   ?= target letter A to K";
+    end;
+    event.respond say;
+end;
+
+######### BEAR ADVANTAGE CLAW ATTACK TARGET creature #####################################
+bot.message(start_with: "aclaw") do |event|
+    if event.user.nick != nil; theUser = "Bear1"; else; theUser = "Bear1"; end; pIndex = nil;  # SET THE USER VALUE TO Wolfs
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(5,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 6) || (target == nil) then;  validInput = false;  end;     
+    
+    if (validInput == true) then;
+      mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   roll1=(rand 20)+1; roll2=(rand 20)+1; iRoll=[roll1,roll2].max; result = iRoll + mod + profB;
+       say = "BEAR made a CLAW Adv roll to hit Creature " + iTarget + ":\n[" + roll1.to_s + "][" + roll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+          if (result < @armour[target]) then;
+              say = say + "     ... Missed! \n";
+          else;
+              say = say + "     ... HIT!";
+              rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+              say = say + @sayValue;
+          end;
+    else;
+    say = "aclaw needs  aclaw?   ?= target letter A to K";
+    end;
+    event.respond say;
+end;
+
+#####
+#####
+#####
+######### HEX BLADE ELDRITCH BLAST ATTACK TARGET creature #####################################
+bot.message(start_with: "eblast") do |event|
+    if event.user.nick != nil; theUser = "EBLAS"; else; theUser = "EBLAS"; end; pIndex = nil;  # SET THE USER VALUE TO Wolfs
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(6,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 7) || (target == nil) then;  validInput = false;  end;     
+    
+    if (validInput == true) then;
+      mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   iRoll=(rand 20)+1; result = iRoll + mod + profB;
+      say = "Eldritch Blast roll to hit Creature " + iTarget + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+          if (result < @armour[target]) then;
+              say = say + "     ... Missed! \n";
+          else;
+              say = say + "     ... HIT!";
+              rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+              say = say + @sayValue;
+          end;
+    else;
+    say = "eblast needs ablast?  ?= target letter A to K";
+    end;
+    event.respond say;
+end;
+
+######### HEX BLADE ELDRITCH BLAST ADVANTAGE ATTACK TARGET creature #####################################
+bot.message(start_with: "aeblast") do |event|
+    if event.user.nick != nil; theUser = "EBLAS"; else; theUser = "EBLAS"; end; pIndex = nil;  # SET THE USER VALUE TO Wolfs
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(7,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 8) || (target == nil) then;  validInput = false;  end;     
+    
+    if (validInput == true) then;
+      mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   roll1=(rand 20)+1; roll2=(rand 20)+1; iRoll=[roll1,roll2].max; result = iRoll + mod + profB;
+       say = "Eldritch Blast Adv roll to hit Creature " + iTarget + ":\n[" + roll1.to_s + "][" + roll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+          if (result < @armour[target]) then;
+              say = say + "     ... Missed! \n";
+          else;
+              say = say + "     ... HIT!";
+              rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+              say = say + @sayValue;
+          end;
+    else;
+    say = "aeblast needs aeblast?   ?= target letter A to K";
+    end;
+    event.respond say;
+end;
+
+######### HEX BLADE ELDRITCH BLAST DIS-ADVANTAGE ATTACK TARGET creature #####################################
+bot.message(start_with: "deblast") do |event|
+    if event.user.nick != nil; theUser = "EBLAS"; else; theUser = "EBLAS"; end; pIndex = nil;  # SET THE USER VALUE TO Wolfs
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(7,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 8) || (target == nil) then;  validInput = false;  end;     
+    
+    if (validInput == true) then;
+      mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   roll1=(rand 20)+1; roll2=(rand 20)+1; iRoll=[roll1,roll2].min; result = iRoll + mod + profB;
+       say = "Eldritch Blast Dis roll to hit Creature " + iTarget + ":\n[" + roll1.to_s + "][" + roll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+          if (result < @armour[target]) then;
+              say = say + "     ... Missed! \n";
+          else;
+              say = say + "     ... HIT!";
+              rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+              say = say + @sayValue;
+          end;
+    else;
+    say = "dblasta needs dblast?   ?= target letter A to K";
+    end;
+    event.respond say;
+end;
+
+####
+####
+####
+
+######### easy ADVANTAGE ATTACK TARGET creature #####################################
+bot.message(start_with: "marth") do |event|
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(5,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 6) || (target == nil) then;  validInput = false;  end;  
+
+    if (validInput == true) then;
+       mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   roll1=(rand 20)+1; roll2=(rand 20)+1; iRoll=[roll1,roll2].max; result = iRoll + mod + profB;
+       say = theUser + " made a MELEE Adv roll to hit Creature " + iTarget + ":\n[" + roll1.to_s + "][" + roll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+        if (result < @armour[target]) then;
+            say = say + "     ... Missed! \n";
+        else;
+            say = say + "     ... HIT!";
+            rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+            say = say + @sayValue;
+          end;      
+    else;
+    say = "MELEE Advanatage Roll To Hit needs  marth?   ?= target number (0 to 9)";
+    end;    
+    event.respond say;
+end;
+
+######### easy ATTACK TARGET creature #####################################
+bot.message(start_with: "mRrth") do |event|
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(5,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 6) || (target == nil) then;  validInput = false;  end;     
+    if (validInput == true) then;
+      mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   iRoll=(rand 20)+1; result = iRoll + mod + profB;
+      say = theUser + " made a MELEE roll to hit Creature " + target.to_s + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+          if (result < @armour[target]) then;
+              say = say + "     ... Missed! \n";
+          else;
+              say = say + "     ... HIT!";
+              rage=2; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+              say = say + @sayValue;
+          end;
+    else;
+    say = "MELEE RAGE Roll To Hit needs  mrth?   ?= target number (0 to 9)";
+    end;
+    event.respond say;
+end;
+
+#########  RAGE ADVANTAGE ATTACK TARGET creature #####################################
+bot.message(start_with: "mRarth") do |event|
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(6,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 7) || (target == nil) then;  validInput = false;  end;  
+    if (validInput == true) then;
+       mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   roll1=(rand 20)+1; roll2=(rand 20)+1; iRoll=[roll1,roll2].max; result = iRoll + mod + profB;
+       say = theUser + " made a MELEE RAGE Adv roll to hit Creature " + target.to_s + ":\n[" + roll1.to_s + "][" + roll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+        if (result < @armour[target]) then;
+            say = say + "     ... Missed! \n";
+        else;
+            say = say + "     ... HIT!";
+            rage=2; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+            say = say + @sayValue;
+          end; 
+    else;
+       say = "RAGE MELEE Advanatage Roll To Hit needs  Rmarth?   ?= target number (0 to 9)";
+    end;    
+    event.respond say;
+end;
 
 ######### easy DISADVANTAGE ATTACK TARGET creature #####################################
 bot.message(start_with: "mdrth") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event);
-    valTheARTH(inputValue); #standard validation process found up top
-    if (@valTheARTH == true) then;
-      get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];      profB=@player[@playerIndex][8];
-      mod = [mod1,mod2].max;
-      str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
-      iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
-      iRoll=[iRoll1,iRoll2].min;
-      result = iRoll + mod + profB;
-      say = @user.to_s + " made a MELEE Dis-Advanatage roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
-          if (result < @armour[target]) then;
-              say = say + "     The MELEE Dis-Advanatage roll to hit ... Missed!";
-          else;
-              say = say + "     The MELEE Dis-Advanatage roll to hit ... HIT!";
-              #check for iRoll to be 20 for a CRIT
-              roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
-              #@damage & @damage1 now have values
-              if iRoll != 20 then;
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1).to_s + " points of damage.";
-                      @HP[target][0] = @HP[target][0] - @damage1 - mod;
-                      health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;                                  
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] [" + @damage2.to_s + "] + " +
-                                  mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
-                                  @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod;
-                                  health_check(@HP[target][0], @HP[target][1])
-                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   end;
-              else
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
-                                  @HP[target][0] = @HP[target][0] - @damage1 - @damage3 - mod;
-                                  health_check(@HP[target][0], @HP[target][1])
-                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
-                                 "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
-                                 @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - @damage3 - @damage4 - mod;
-                                 health_check(@HP[target][0], @HP[target][1])
-                                 say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   end;              
-              end;
-          end;
-          
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(5,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 6) || (target == nil) then;  validInput = false;  end;  
+    if (validInput == true) then;
+       mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   roll1=(rand 20)+1; roll2=(rand 20)+1; iRoll=[roll1,roll2].min; result = iRoll + mod + profB;
+       say = theUser + " made a MELEE DisA roll to hit Creature " + target.to_s + ":\n[" + roll1.to_s + "][" + roll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+        if (result < @armour[target]) then;
+            say = say + "     ... Missed! \n";
+        else;
+            say = say + "     ... HIT!";
+            rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+            say = say + @sayValue;
+          end; 
     else;
-       say = "MELEE Dis-Advanatage Roll To Hit needs  mdrth?   ?= target number (0 to 9)";
+    say = "MELEE Dis-Advanatage Roll To Hit needs  mdrth?   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -464,89 +747,40 @@ end;
 
 ######### easy BLESSED ATTACK TARGET creature #####################################
 bot.message(start_with: "mbrth") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event);
-    valTheBRTH(inputValue); #standard validation process found up top
-    if (@valTheBRTH == true) then;
-      get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];     profB=@player[@playerIndex][8];
-      mod = [mod1,mod2].max;
-      str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
-      blessDie = (rand 4)+1;
-      iRoll=(rand 20)+1; result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " made a MELEE Blessed roll to hit Creature " + target.to_s + ":\n[" + iRoll.to_s + "] + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
-          if (result < @armour[target]) then;
-              say = say + "     The MELEE Blessed roll to hit ... Missed!";
-          else;
-              say = say + "     The MELEE Blessed roll to hit ... HIT!";
-              #check for iRoll to be 20 for a CRIT
-              roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
-              #@damage & @damage1 now have values
-              if iRoll != 20 then;
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1).to_s + " points of damage.";
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "] + " +
-                                  mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
-                   end;
-              else
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
-                                 "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
-                   end;              
-              end;
-          end;
-          
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(5,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 6) || (target == nil) then;  validInput = false;  end;      
+    if (validInput == true) then;
+      mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;  bless=(rand 4)+1;  iRoll=(rand 20)+1; result = iRoll + mod + profB + bless;
+      say = theUser + " made a MELEE Blessed roll to hit Creature " + target.to_s + ":\n[" + iRoll.to_s + "]+[" + bless.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+        if (result < @armour[target]) then;
+            say = say + "     ... Missed! \n";
+        else;
+            say = say + "     ... HIT!";
+            rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+            say = say + @sayValue;
+          end; 
     else;
-       say = "MELEE Blessed Roll To Hit needs  mbrth?    ?= target number (0 to 9)";
+    say = "MELEE Blessed Roll To Hit needs  mbrth?    ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
 
 ######### easy ADVANTAGE BLESSED ATTACK TARGET creature #####################################
 bot.message(start_with: "mabrth") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event);
-    valTheABRTH(inputValue); #standard validation process found up top
-    if (@valTheABRTH == true) then;
-      get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];     profB=@player[@playerIndex][8];
-      mod = [mod1,mod2].max;
-      str_2_number(inputValue.slice(6,1)); target = @numba # @numba <= is the result
-      blessDie = (rand 4)+1;
-      iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
-      iRoll=[iRoll1,iRoll2].max;   result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " made a MELEE Advantage Blessed roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + [" + blessDie.to_s + "] + " + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
-          if (result < @armour[target]) then;
-              say = say + "     The MELEE Advantage Blessed roll to hit ... Missed!";
-          else;
-              say = say + "     The MELEE Advantage Blessed roll to hit ... HIT!";
-              #check for iRoll to be 20 for a CRIT
-              roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
-              #@damage & @damage1 now have values
-              if iRoll != 20 then;
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1).to_s + " points of damage.";
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "] + " +
-                                  mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
-                   end;
-              else
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
-                                 "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
-                   end;              
-              end;
-          end;
-          
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(6,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 7) || (target == nil) then;  validInput = false;  end;      
+    if (validInput == true) then;
+      mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   bless=(rand 4)+1;  roll1=(rand 20)+1; roll2=(rand 20)+1; iRoll=[roll1,roll2].max; result = iRoll + mod + profB + bless;
+      say = theUser + " made a MELEE Adv Bless roll to hit Creature " + target.to_s + ":\n[" + roll1.to_s + "][ " + roll2.to_s + "] + [" + bless.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+        if (result < @armour[target]) then;
+            say = say + "     ... Missed! \n";
+        else;
+            say = say + "     ... HIT!";
+            rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+            say = say + @sayValue;
+          end; 
     else;
        say = "MELEE Advantage Blessed Roll To Hit needs  mabrth?    ?= target number (0 to 9)";
     end;    
@@ -555,46 +789,119 @@ end;
 
 ######### easy DIS-ADVANTAGE BLESSED ATTACK TARGET creature #####################################
 bot.message(start_with: "mdbrth") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event);
-    valTheABRTH(inputValue); #standard validation process found up top
-    if (@valTheABRTH == true) then;
-      get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];     profB=@player[@playerIndex][8];
-      mod = [mod1,mod2].max;
-      str_2_number(inputValue.slice(6,1)); target = @numba # @numba <= is the result
-      blessDie = (rand 4)+1;
-      iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
-      iRoll=[iRoll1,iRoll2].min;   result = iRoll + mod + profB + blessDie;
-      say = @user.to_s + " rolled a MELEE Dis-Advantage Blessed roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
-          if (result < @armour[target]) then;
-              say = say + "     The MELEE Dis-Advantage Blessed roll to hit ... Missed!";
-          else;
-              say = say + "     The MELEE Dis-Advantage Blessed roll to hit ... HIT!";
-              #check for iRoll to be 20 for a CRIT
-              roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
-              #@damage & @damage1 now have values
-              if iRoll != 20 then;
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1).to_s + " points of damage.";
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "] + " +
-                                  mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
-                   end;
-              else
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
-                                 "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
-                   end;              
-              end;
-          end;
-          
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(6,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 7) || (target == nil) then;  validInput = false;  end;  
+    if (validInput == true) then;
+      mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   bless=(rand 4)+1;  roll1=(rand 20)+1; roll2=(rand 20)+1; iRoll=[roll1,roll2].min; result = iRoll + mod + profB + bless;
+      say = theUser + " made a MELEE DisA Bless roll to hit Creature " + target.to_s + ":\n[" + roll1.to_s + "][ " + roll2.to_s + "] + [" + bless.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+        if (result < @armour[target]) then;
+            say = say + "     ... Missed! \n";
+        else;
+            say = say + "     ... HIT!";
+            rage=0; prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+            say = say + @sayValue;
+          end; 
     else;
        say = "Melee Dis-Advantage Blessed Roll To Hit needs  mdbrth?    ?= target number (0 to 9)";
+    end;    
+    event.respond say;
+end;
+############
+############
+############
+############ RANGE ATTACK DAMAGE REPORT
+def prepare_range_damage_report(iRoll, pIndex, mod, profB, target, sharp);
+  @sayValue = "";
+  iTarget = "ABCDEFGHIJKLMNOPQRSTU".slice(target,1);
+  get_damages(pIndex); # go to method to get the damages
+  if sharp == 10; then shsh = "+(10)"; else; shsh = ""; end;
+  #puts "----> " + @dmg1[pIndex].to_s + " - " + @dmg2[pIndex].to_s + " - " + @dmg3[pIndex].to_s + " - " + @dmg4[pIndex].to_s;
+  if iRoll != 20 then;
+       if (@weapon[(@player[pIndex][12])] != "2d6") && (@weapon[(@player[pIndex][12])] != "2d4") && (@weapon[(@player[pIndex][12])] != "2d3") then;
+         @sayValue = @sayValue + "\n" + @weapon[(@player[pIndex][12])].to_s + " rolled [" + @dmg1.to_s + "] + " + mod.to_s + shsh + " = " + (mod + @dmg1 + sharp).to_s + " points of damage.";
+         #puts "HP: " + @HP[target][0].to_s + "   @dmg1: " +  @dmg1.to_s + "  mod: " +  mod.to_s + "  target: " + target.to_s + " @healthStat: " +  @healthStat.inspect; 
+         @HP[target][0] = @HP[target][0] - @dmg1 - mod;     health_check(@HP[target][0], @HP[target][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") looks " + @healthStat + "\n";
+       else;
+         @sayValue = @sayValue + "\n" + @weapon[(@player[pIndex][12])].to_s + " rolled [" + @dmg1.to_s + "][" + @dmg2.to_s + "] + " + mod.to_s + shsh + " = " + (mod + @dmg1 + @dmg2 + sharp).to_s + " points of damage.";
+         @HP[target][0] = @HP[target][0] - @dmg1 - @dmg2 - mod;     health_check(@HP[iTarget][0], @HP[iTarget][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") looks " + @healthStat + "\n";
+       end;
+  else;   # NATURAL 20
+       if (@weapon[(@player[pIndex][12])] != "2d6") && (@weapon[(@player[pIndex][12])] != "2d4") && (@weapon[(@player[pIndex][12])] != "2d3") then;
+          @sayValue = @sayValue + "\n" + @weapon[(@player[pIndex][12])].to_s + " rolled [" + @dmg1.to_s + "][" + @dmg3.to_s + "] + " + mod.to_s + shsh + " = " + (mod + @dmg1 + @dmg3 + sharp).to_s + " points of damage. CRITICAL HIT!";
+          @HP[target][0] = @HP[target][0] - @dmg1 - @dmg3 - mod;     health_check(@HP[target][0], @HP[target][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") looks " + @healthStat + "\n";
+       else;
+          @sayValue = @sayValue + "\n" + @weapon[(@player[pIndex][12])].to_s + " rolled [" + @dmg1.to_s + "][" + @dmg2.to_s + "][" + @dmg3.to_s + "][" + @dmg4.to_s + "] + " + mod.to_s + shsh + " = " + (mod + @dmg1 + @dmg2 + @dmg3 + @dmg4 + sharp).to_s + " points of damage. CRITICAL HIT!";
+          @HP[target][0] = @HP[target][0] - @dmg1 - @dmg2 - @dmg3 - @dmg4 - mod;     health_check(@HP[target][0], @HP[target][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") looks " + @healthStat + "\n";
+       end;              
+  end;
+end;
+
+
+######### Sharp Shooter +10 RANGE ATTACK TARGET creature #####################################
+bot.message(start_with: "Srrth") do |event|
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(5,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget); puts "iTarget is: " + iTarget.inspect; puts "target is: " + target.inspect; validInput = true; if (length != 6) || (target == nil) then;  validInput = false;  end; 
+    if (validInput == true) then;
+      mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   iRoll=(rand 20)+1; result = iRoll + mod + profB -5;
+      say = theUser + " made a Sharp Shooter RANGE roll to hit Creature " + target.to_s + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + "-5 = " + result.to_s;
+          if (result < @armour[target]) then;
+              say = say + "     ... Missed! \n"; puts "That was a miss.";
+          else;
+              say = say + "     ... HIT!"; puts "That was a hit.";
+              get_Rdamages(pIndex); # go to method to get the damages
+              sharp= 10; prepare_range_damage_report(iRoll, pIndex, mod, profB, target, sharp);
+              say = say + @sayValue;
+          end;
+    else;
+      say = "Sharp Shooter RANGE Roll To Hit needs  Srrth?   ?= target number (0 to 9)";
+    end;
+    event.respond say;
+end;
+
+######### Sharp Shooter +10 damage RANGE ADVANTAGE ATTACK TARGET creature #####################################
+bot.message(start_with: "Srarth") do |event|
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+ #   inputStr = event.content;     length = inputStr.length;     target = inputStr.slice(6,1);     target = Integer(target) rescue false;    validInput = true;     if (length != 7) || (target == false) then;  validInput = false;  end;
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(5,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget); puts "iTarget is: " + iTarget.inspect; puts "target is: " + target.inspect; validInput = true; if (length != 6) || (target == nil) then;  validInput = false;  end; 
+    if (validInput == true) then;
+       mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   roll1=(rand 20)+1; roll2=(rand 20)+1; iRoll=[roll1,roll2].max; result = iRoll + mod + profB - 5;
+       say = theUser + " Sharp Shooter RANGE Adv roll to hit Creature " + target.to_s + ":\n[" + roll1.to_s + "][" + roll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + "-5 = " + result.to_s;
+        if (result < @armour[target]) then;
+            say = say + "     ... Missed! \n";
+        else;
+            say = say + "     ... HIT!";
+            get_Rdamages(pIndex); # go to method to get the damages
+            sharp= 10; prepare_range_damage_report(iRoll, pIndex, mod, profB, target, sharp);
+            say = say + @sayValue;
+        end;
+    else;
+    say = "Sharp Shooter RANGE Adv Roll To Hit needs  Srarth?   ?= target number (0 to 9)";
+    end;    
+    event.respond say;
+end;
+
+######### Sharp Shooter +10 damage RANGE DIS-ADVANTAGE ATTACK TARGET creature #####################################
+bot.message(start_with: "Srdrth") do |event|
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+  #  inputStr = event.content;     length = inputStr.length;     target = inputStr.slice(6,1);     target = Integer(target) rescue false;    validInput = true;     if (length != 7) || (target == false) then;  validInput = false;  end;
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(5,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget); puts "iTarget is: " + iTarget.inspect; puts "target is: " + target.inspect; validInput = true; if (length != 6) || (target == nil) then;  validInput = false;  end; 
+    if (validInput == true) then;
+       mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   roll1=(rand 20)+1; roll2=(rand 20)+1; iRoll=[roll1,roll2].min; result = iRoll + mod + profB - 5;
+       say = theUser + " Sharp Shooter RANGE DisAdv roll to hit Creature " + target.to_s + ":\n[" + roll1.to_s + "][" + roll2.to_s + "] +" + mod.to_s + "+" + profB.to_s + "-5 = " + result.to_s;
+        if (result < @armour[target]) then;
+            say = say + "     ... Missed! \n";
+        else;
+            say = say + "     ... HIT!";
+            get_Rdamages(pIndex); # go to method to get the damages
+            sharp= 10; prepare_range_damage_report(iRoll, pIndex, mod, profB, target, sharp);
+            say = say + @sayValue;
+        end;     
+    else;
+    say = "Sharp Shooter RANGE DisAdv Roll To Hit needs  Srarth?   ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
@@ -602,59 +909,20 @@ end;
 ######### easy RANGED ROLL TO HIT  TARGET creature #####################################
 ######### easy RANGED ROLL TO HIT  TARGET creature #####################################
 bot.message(start_with: "rrth") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event);
-    valTheRTH(inputValue); #standard validation process found up top
-    if (@valTheRTH == true) then;
-      get_the_player(); #creates the value in @playerIndex. BELOW [3] DEX. [11] RANGE SPECIAL BONUS
-      mod1 = @player[@playerIndex][3];      mod2 = @player[@playerIndex][2];    mod3 = @player[@playerIndex][11];      profB=@player[@playerIndex][8];
-           mod = [mod1,mod2].max;
-      str_2_number(inputValue.slice(4,1)); target = @numba # @numba <= is the result
-      iRoll=(rand 20)+1; result = iRoll + mod1 + mod3 + profB;
-      say = @user.to_s + " made a RANGED roll to hit Creature " + target.to_s + ":\n[" + iRoll.to_s + "] +" + 
-                           mod1.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+ #   inputStr = event.content;     length = inputStr.length;     target = inputStr.slice(4,1);     target = Integer(target) rescue false;    validInput = true;     if (length != 5) || (target == false) then;  validInput = false;  end;
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(4,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget); puts "iTarget is: " + iTarget.inspect; puts "target is: " + target.inspect; validInput = true; if (length != 5) || (target == nil) then;  validInput = false;  end; 
+    if (validInput == true) then;
+       mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   iRoll=(rand 20)+1; result = iRoll + mod + profB;
+       say = theUser + " made a RANGED roll to hit Creature " + iTarget.to_s + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The RANGED roll to hit ... Missed! \n";
+              say = say + "      ... Missed! \n";
           else;
-              say = say + "     The RANGED roll to hit ... HIT!";
-              #check for iRoll to be 20 for a CRIT
-              thePlayerIndex = @playerIndex;
-              theWeaponIndex = @player[@playerIndex][1];
-              theDamageRoll = @weapon[(@player[@playerIndex][1])];
-              roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
-              #@damage & @damage1 now have values
-              if iRoll != 20 then;
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                     #say = say + "\n P-Index:" + thePlayerIndex.to_s +  "    W-Index:" + theWeaponIndex.to_s + "   theDamage:" + theDamageRoll.to_s + "\n";
-                     say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod1.to_s +
-                                  " = " + (mod1 + @damage1).to_s + " points of damage.";
-                     @HP[target][0] = @HP[target][0] - @damage1 - mod1;
-                     health_check(@HP[target][0], @HP[target][1])
-                     say = say + "\n Creature " + target.to_s + " looks " + @healthStat + "\n";
-                   else;
-                     #say = say + "\n P-Index:" + thePlayerIndex.to_s +  "    W-Index:" + theWeaponIndex.to_s + "   theDamage:" + theDamageRoll.to_s + "\n";
-                     say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] [" + @damage2.to_s + "] + " +
-                                  mod1.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
-                     @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod1;
-                     health_check(@HP[target][0], @HP[target][1])
-                     say = say + "\n Creature " + target.to_s + " looks " + @healthStat + "\n";
-                   end;
-              else
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod1.to_s +
-                                  " = " + (mod1 + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
-                      @HP[target][0] = @HP[target][0] - @damage1 - @damage3 - mod1;
-                      health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n Creature " + target.to_s + " looks " + @healthStat + "\n";
-                                  
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
-                                 "][" + @damage4.to_s + "] + " + mod1.to_s + " = " + (mod1 + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
-                      @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - @damage3 - @damage4 - mod1;
-                      health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n Creature " + target.to_s + " looks " + @healthStat + "\n";
-                   end;              
-              end;
+              say = say + "      ... HIT!";
+              get_Rdamages(pIndex); # go to method to get the damages
+              sharp= 0; prepare_range_damage_report(iRoll, pIndex, mod, profB, target, sharp);
+              say = say + @sayValue;
           end;
     else;
        say = "Ranged Roll To Hit needs  rrth?   ?= target number (0 to 9)";
@@ -665,57 +933,20 @@ end;
 
 ######### easy ADVANTAGE ATTACK TARGET creature #####################################
 bot.message(start_with: "rarth") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event);
-    valTheARTH(inputValue); #standard validation process found up top
-    if (@valTheARTH == true) then;
-      get_the_player(); #creates the value in @playerIndex.  BELOW [3] DEX. [11] RANGE SPECIAL BONUS
-      mod1 = @player[@playerIndex][3];      mod2 = @player[@playerIndex][2];    mod3 = @player[@playerIndex][11];      profB=@player[@playerIndex][8];
-                 mod = [mod1,mod2].max;
-      str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
-      iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
-      iRoll=[iRoll1,iRoll2].max;
-      result = iRoll + mod1 + mod3 + profB;
-      say = @user.to_s + " made a RANGED Advantage roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s +
-                                "] +" + mod1.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
+   if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+   (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+   inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(5,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 6) || (target == nil) then;  validInput = false;  end; 
+   if (validInput == true) then;
+      mod1 = @player[pIndex][3];  mod2 = @player[pIndex][2];  mod3 = @player[pIndex][11];  profB=@player[pIndex][8]; mod = [mod1,mod2].max; iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;  iRoll=[iRoll1,iRoll2].max;  result = iRoll + mod1 + mod3 + profB;
+      say = @user.to_s + " made a RANGED Advantage roll to hit Creature " + iTarget.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod1.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
               say = say + "     The RANGED Advantage roll to hit ... Missed!";
           else;
               say = say + "     The RANGED Advantage roll to hit ... HIT!";
-              #check for iRoll to be 20 for a CRIT
-              roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
-              #@damage & @damage1 now have values
-              if iRoll != 20 then;
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod1.to_s +
-                                  " = " + (mod1 + @damage1).to_s + " points of damage.";
-                      @HP[target][0] = @HP[target][0] - @damage1 - mod1;
-                      health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;                                  
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] [" + @damage2.to_s + "] + " +
-                                  mod1.to_s + " = " + (mod1 + @damage1 + @damage2).to_s + " points of damage.";
-                      @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod1;
-                      health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   end;
-              else
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod1.to_s +
-                                  " = " + (mod1 + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
-                      @HP[target][0] = @HP[target][0] - @damage1 - @damage3 - mod1;
-                      health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
-                                 "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod1 + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
-                      @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - @damage3 - @damage4 - mod1;
-                      health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   end;              
-              end;
+              get_Rdamages(pIndex); # go to method to get the damages
+              sharp= 0; prepare_range_damage_report(iRoll, pIndex, mod, profB, target, sharp);
+              say = say + @sayValue;
           end;
-          
     else;
        say = "Ranged Advanatage Roll To Hit needs  rarth?   ?= target number (0 to 9)";
     end;    
@@ -725,57 +956,21 @@ end;
 
 ######### easy DISADVANTAGE ATTACK TARGET creature #####################################
 bot.message(start_with: "rdrth") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event);
-    valTheARTH(inputValue); #standard validation process found up top
-    if (@valTheARTH == true) then;
-      get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];       mod2 = @player[@playerIndex][2];    mod3 = @player[@playerIndex][11];      profB=@player[@playerIndex][8];
-      mod = [mod1,mod2].max;
-      str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
-      iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;
-      iRoll=[iRoll1,iRoll2].min;
-      result = iRoll + mod + mod3 + profB;
-      say = @user.to_s + " made a RANGED Dis-Adv roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + " + mod.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
-          if (result < @armour[target]) then;
-              say = say + "     The RANGED Dis-Adv roll to hit ... Missed!";
-          else;
-              say = say + "     The RANGED Dis-Adv roll to hit ... HIT!";
-              #check for iRoll to be 20 for a CRIT
-              roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
-              #@damage & @damage1 now have values
-              if iRoll != 20 then;
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1).to_s + " points of damage.";
-                      @HP[target][0] = @HP[target][0] - @damage1 - mod;
-                      health_check(@HP[target][0], @HP[target][1])
-                      say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;                                  
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] [" + @damage2.to_s + "] + " +
-                                  mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
-                                  @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod;
-                                  health_check(@HP[target][0], @HP[target][1])
-                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   end;
-              else
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
-                                  @HP[target][0] = @HP[target][0] - @damage1 - @damage3 - mod;
-                                  health_check(@HP[target][0], @HP[target][1])
-                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
-                                 "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
-                                 @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - @damage3 - @damage4 - mod;
-                                 health_check(@HP[target][0], @HP[target][1])
-                                 say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   end;              
-              end;
-          end;
-          
-    else;
+   if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+   (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+   inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(5,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 6) || (target == nil) then;  validInput = false;  end; 
+   if (validInput == true) then;
+      mod1 = @player[pIndex][3];  mod2 = @player[pIndex][2];  mod3 = @player[pIndex][11];  profB=@player[pIndex][8]; mod = [mod1,mod2].max; iRoll1=(rand 20)+1;  iRoll2=(rand 20)+1;  iRoll=[iRoll1,iRoll2].min;  result = iRoll + mod1 + mod3 + profB;
+      say = @user.to_s + " made a RANGED Dis-Adv roll to hit Creature " + iTarget.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +" + mod1.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
+         if (result < @armour[target]) then;
+             say = say + "     ... Missed!";
+         else;
+             say = say + "     ... HIT!";
+             get_Rdamages(pIndex); # go to method to get the damages
+             sharp= 0; prepare_range_damage_report(iRoll, pIndex, mod, profB, target, sharp);
+             say = say + @sayValue;
+         end;
+   else;
        say = "RANGED Dis-Adv Roll To Hit needs  rdrth?   ?= target number (0 to 9)";
     end;    
     event.respond say;
@@ -784,55 +979,20 @@ end;
 
 ######### easy BLESSED ATTACK TARGET creature #####################################
 bot.message(start_with: "rbrth") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event);
-    valTheBRTH(inputValue); #standard validation process found up top
-    if (@valTheBRTH == true) then;
-      get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];    mod3 = @player[@playerIndex][11];           profB=@player[@playerIndex][8];
-      mod = [mod1,mod2].max;
-      str_2_number(inputValue.slice(5,1)); target = @numba # @numba <= is the result
-      blessDie = (rand 4)+1;
-      iRoll=(rand 20)+1; result = iRoll + mod + mod3 + profB + blessDie;
-      say = @user.to_s + " made a RANGED Blessed roll to hit Creature " + target.to_s + ":\n[" + iRoll.to_s + "] + [" + blessDie.to_s + "] + " + mod.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(5,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 6) || (target == nil) then;  validInput = false;  end; 
+    if (validInput == true) then;
+       mod1 = @player[pIndex][3];  mod2 = @player[pIndex][2];  mod3 = @player[pIndex][11];  profB=@player[pIndex][8]; mod = [mod1,mod2].max; iRoll=(rand 20)+1; bless = (rand 4)+1; result = iRoll + mod1 + mod3 + bless + profB;
+       say = @user.to_s + " made a RANGED Blessed roll to hit Creature " + iTarget.to_s + ":\n[" + iRoll.to_s + "]+[" + bless.to_s + "] +" + mod1.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The RANGED Blessed roll to hit ... Missed!";
+              say = say + "     ... Missed!";
           else;
-              say = say + "     The RANGED Blessed roll to hit ... HIT!";
-              #check for iRoll to be 20 for a CRIT
-              roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
-              #@damage & @damage1 now have values
-              if iRoll != 20 then;
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1).to_s + " points of damage.";
-                                  @HP[target][0] = @HP[target][0] - @damage1 - mod;
-                                  health_check(@HP[target][0], @HP[target][1])
-                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;  
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "] + " +
-                                  mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
-                                  @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod;
-                                  health_check(@HP[target][0], @HP[target][1])
-                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   end;
-              else
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
-                                  @HP[target][0] = @HP[target][0] - @damage1 - @damage3 - mod;
-                                  health_check(@HP[target][0], @HP[target][1])
-                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
-                                 "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
-                                 @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - @damage3 - @damage4 - mod;
-                                 health_check(@HP[target][0], @HP[target][1])
-                                 say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   end;              
-              end;
+              say = say + "     ... HIT!";
+              get_Rdamages(pIndex); # go to method to get the damages
+              sharp= 0; prepare_range_damage_report(iRoll, pIndex, mod, profB, target, sharp);
+              say = say + @sayValue;
           end;
-          
     else;
        say = "RANGED Blessed Roll To Hit needs  rbrth?    ?= target number (0 to 9)";
     end;    
@@ -841,152 +1001,113 @@ end;
 
 ######### easy ADVANTAGE BLESSED ATTACK TARGET creature #####################################
 bot.message(start_with: "rabrth") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event);
-    valTheABRTH(inputValue); #standard validation process found up top
-    if (@valTheABRTH == true) then;
-      get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];      mod3 = @player[@playerIndex][11];          profB=@player[@playerIndex][8];
-      mod = [mod1,mod2].max;
-      str_2_number(inputValue.slice(6,1)); target = @numba # @numba <= is the result
-      blessDie = (rand 4)+1;
-      iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
-      iRoll=[iRoll1,iRoll2].max;   result = iRoll + mod + mod3 + profB + blessDie;
-      say = @user.to_s + " made a RANGED Advantage Blessed roll to hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "]  + [" + blessDie.to_s + "] + " + mod.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(6,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 7) || (target == nil) then;  validInput = false;  end; 
+    if (validInput == true) then;
+       mod1 = @player[pIndex][3];  mod2 = @player[pIndex][2];  mod3 = @player[pIndex][11];  profB=@player[pIndex][8]; mod = [mod1,mod2].max; iRoll1=(rand 20)+1; iRoll2=(rand 20)+1;  iRoll=[iRoll1,iRoll2].max;  bless = (rand 4)+1; result = iRoll + mod1 + mod3 + bless + profB;
+       say = @user.to_s + " made a RANGED Adv Blessed roll to hit Creature " + iTarget.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +[" + bless.to_s + "] +" + mod1.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The RANGED Advantage Blessed roll to hit ... Missed!";
+              say = say + "     ... Missed!";
           else;
-              say = say + "     The RANGED Advantage Blessed roll to hit ... HIT!";
-              #check for iRoll to be 20 for a CRIT
-              roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
-              #@damage & @damage1 now have values
-              if iRoll != 20 then;
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1).to_s + " points of damage.";
-                                  @HP[target][0] = @HP[target][0] - @damage1 - mod;
-                                  health_check(@HP[target][0], @HP[target][1])
-                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "] + " +
-                                  mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
-                                  @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod;
-                                  health_check(@HP[target][0], @HP[target][1])
-                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   end;
-              else
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
-                                  @HP[target][0] = @HP[target][0] - @damage1 - @damage3 - mod;
-                                  health_check(@HP[target][0], @HP[target][1])
-                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
-                                 "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
-                                 @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - @damage3 - @damage4 - mod;
-                                 health_check(@HP[target][0], @HP[target][1])
-                                 say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   end;              
-              end;
+              say = say + "     ... HIT!";
+              get_Rdamages(pIndex); # go to method to get the damages
+              sharp= 0; prepare_range_damage_report(iRoll, pIndex, mod, profB, target, sharp);
+              say = say + @sayValue;
           end;
-          
     else;
-       say = "RANGED Advantage Blessed roll to hit needs  rabrth?    ?= target number (0 to 9)";
+       say = "RANGED Adv Blessed Roll To Hit needs  rbrth?    ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
+
 
 ######### easy DIS-ADVANTAGE BLESSED ATTACK TARGET creature #####################################
 bot.message(start_with: "rdbrth") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event);
-    valTheABRTH(inputValue); #standard validation process found up top
-    if (@valTheABRTH == true) then;
-      get_the_player(); #creates the value in @playerIndex
-      mod1 = @player[@playerIndex][3];        mod2 = @player[@playerIndex][2];    mod3 = @player[@playerIndex][11];          profB=@player[@playerIndex][8];
-      mod = [mod1,mod2].max;
-      str_2_number(inputValue.slice(6,1)); target = @numba # @numba <= is the result
-      blessDie = (rand 4)+1;
-      iRoll1=(rand 20)+1;        iRoll2=(rand 20)+1; 
-      iRoll=[iRoll1,iRoll2].min;   result = iRoll + mod + mod3 + profB + blessDie;
-      say = @user.to_s + " made a RANGED Dis-Adv Blessed Roll To Hit Creature " + target.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +   [" + blessDie.to_s + "]  +" + mod.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(6,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 7) || (target == nil) then;  validInput = false;  end; 
+    if (validInput == true) then;
+       mod1 = @player[pIndex][3];  mod2 = @player[pIndex][2];  mod3 = @player[pIndex][11];  profB=@player[pIndex][8]; mod = [mod1,mod2].max; iRoll1=(rand 20)+1; iRoll2=(rand 20)+1;  iRoll=[iRoll1,iRoll2].min;  bless = (rand 4)+1; result = iRoll + mod1 + mod3 + bless + profB;
+       say = @user.to_s + " made a RANGED Dis-Adv Blessed roll to hit Creature " + iTarget.to_s + ":\n[" + iRoll1.to_s + "][" + iRoll2.to_s + "] +[" + bless.to_s + "] +" + mod1.to_s + "+" + mod3.to_s + "+" + profB.to_s + " = " + result.to_s;
           if (result < @armour[target]) then;
-              say = say + "     The RANGED Dis-Adv Blessed roll to hit ... Missed!";
+              say = say + "     ... Missed!";
           else;
-              say = say + "     The RANGED Dis-Adv Blessed roll to hit ... HIT!";
-              #check for iRoll to be 20 for a CRIT
-              roll_damage(@weapon[(@player[@playerIndex][1])]); #damage die type in @player
-              #@damage & @damage1 now have values
-              if iRoll != 20 then;
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1).to_s + " points of damage.";
-                                  @HP[target][0] = @HP[target][0] - @damage1 - mod;
-                                  health_check(@HP[target][0], @HP[target][1])
-                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "] + " +
-                                  mod.to_s + " = " + (mod + @damage1 + @damage2).to_s + " points of damage.";
-                                  @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - mod;
-                                  health_check(@HP[target][0], @HP[target][1])
-                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   end;
-              else
-                   if @weapon[(@player[@playerIndex][1])] != "2d6" then;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage3.to_s + "] + " + mod.to_s +
-                                  " = " + (mod + @damage1 + @damage3).to_s + " points of damage. CRITICAL HIT!";
-                                  @HP[target][0] = @HP[target][0] - @damage1 - @damage3 - mod;
-                                  health_check(@HP[target][0], @HP[target][1])
-                                  say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   else;
-                      say = say + "\n" + @weapon[(@player[@playerIndex][1])].to_s + " rolled [" + @damage1.to_s + "][" + @damage2.to_s + "][" + @damage3.to_s +
-                                 "][" + @damage4.to_s + "] + " + mod.to_s + " = " + (mod + @damage1 + @damage2 + @damage3 + @damage4).to_s + " points of damage. CRITICAL HIT!";
-                                 @HP[target][0] = @HP[target][0] - @damage1 - @damage2 - @damage3 - @damage4 - mod;
-                                 health_check(@HP[target][0], @HP[target][1])
-                                 say = say + "\n Creature Number " + target.to_s + " looks " + @healthStat;
-                   end;              
-              end;
+              say = say + "     ... HIT!";
+              get_Rdamages(pIndex); # go to method to get the damages
+              sharp= 0; prepare_range_damage_report(iRoll, pIndex, mod, profB, target, sharp);
+              say = say + @sayValue;
           end;
-          
     else;
-       say = "RANGED Dis-Adv Blessed Roll To Hit needs  ;dbrth?    ?= target number (0 to 9)";
+       say = "RANGED Dis-Adv Blessed Roll To Hit needs  rbrth?    ?= target number (0 to 9)";
     end;    
     event.respond say;
 end;
 
+######### easy ARTIFICER ATTACK TARGET creature #####################################
 ######### easy SPELL ATTACK TARGET creature #####################################
-######### easy SPELL ATTACK TARGET creature #####################################
-######### easy SPELL ATTACK TARGET creature #####################################
-######### easy SPELL ATTACK TARGET creature #####################################
-bot.message(start_with: ";srth") do |event|
-    inputValue = event.content;
-    target = Integer(inputValue.slice(5,1)) rescue false;
-    if ( target!= false ) then;
-        if event.user.nick != nil;
-           theUser = event.user.nick;
+bot.message(start_with: "arth") do |event|
+  if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+  (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+  inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(4,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 5) || (target == nil) then;  validInput = false;  end; 
+  if (validInput == true) then;
+     spellCastMod = @player[pIndex][(@player[pIndex][10])] +1; #assigns the spell ABS mod
+     abs_num_to_name(@player[pIndex][10]);           iRoll=(rand 20)+1;         profB=@player[pIndex][8]; # Assigns Proficiency Bonus 
+     result = iRoll + spellCastMod + profB;  
+     if (iRoll == 20) then sayHit = "The Artificer Spell attack against Creature " + iTarget.to_s + "  is a CRITICAL HIT!" else; sayHit = "The Artificer Spell attack against Creature " + iTarget.to_s + "  HIT!" end;
+        say = theUser.to_s + " rolled a (" + @ABSname + ") SPELL attack: [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+        if (result < @armour[target]) then;
+            say = say + "The Artificer Spell attack Missed!";
         else;
-           theUser = event.user.name;
+            say = say + sayHit; 
         end;
-        pIndex = nil;
-        (0..(@player.length-1)).each do |y|
-            if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
+     else;
+       say = "Roll To Hit needs  arth?   ?= target (A,B,C ...)";
+     end;    
+        event.respond say;
+end;
+######### Artificer Companion ATTACK TARGET creature #####################################
+######### Artificer Companion ATTACK TARGET creature #####################################
+bot.message(start_with: "comp") do |event|
+  theUser = "COMP!"; pIndex = nil;  # get value for theUser set pIndex for next line of code
+  (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+  inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(4,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 5) || (target == nil) then;  validInput = false;  end; 
+  if (validInput == true) then;
+     iRoll=(rand 20)+1;      mod1 = @player[pIndex][2];     profB=@player[pIndex][8]; # Assigns Proficiency Bonus 
+     result = iRoll + profB + mod1;  
+     if (iRoll == 20) then sayHit = "The Artificer Companion melee against Creature " + iTarget.to_s + "  is a CRITICAL HIT!" else; sayHit = "The Artificer Companion attack against Creature " + iTarget.to_s + "  HIT!" end;
+        say = theUser.to_s + " rolled a melee attack: [" + iRoll.to_s + "] +" + mod1.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
+        if (result < @armour[target]) then;
+            say = say + "The Artificer Companion attack Missed!";
+        else;
+            say = say + sayHit; 
         end;
-        spellCastMod = @player[pIndex][(@player[pIndex][10])]; #assigns the spell ABS mod
-        abs_num_to_name(@player[pIndex][10]);
-        profB=@player[pIndex][8]; # Assigns Proficiency Bonus
-        iRoll=(rand 20)+1;
-        result = iRoll + spellCastMod + profB;
-        if (iRoll == 20) then sayHit = "The SPELL attack against Creature " + target.to_s + "  is a CRITICAL HIT!" else; sayHit = "The SPELL attack against Creature " + target.to_s + "  HIT!" end;
+     else;
+       say = "Roll To Hit needs  comp?   ?= target (A,B,C ...)";
+     end;    
+        event.respond say;
+end;
+
+######### easy SPELL ATTACK TARGET creature #####################################
+######### easy SPELL ATTACK TARGET creature #####################################
+bot.message(start_with: "srth") do |event|
+  if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+  (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+  inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(4,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 5) || (target == nil) then;  validInput = false;  end; 
+  if (validInput == true) then;
+     spellCastMod = @player[pIndex][(@player[pIndex][10])]; #assigns the spell ABS mod
+     abs_num_to_name(@player[pIndex][10]);           iRoll=(rand 20)+1;         profB=@player[pIndex][8]; # Assigns Proficiency Bonus 
+     result = iRoll + spellCastMod + profB;  
+     if (iRoll == 20) then sayHit = "The SPELL attack against Creature " + target.to_s + "  is a CRITICAL HIT!" else; sayHit = "The SPELL attack against Creature " + target.to_s + "  HIT!" end;
         say = theUser.to_s + " rolled a (" + @ABSname + ") SPELL attack: [" + iRoll.to_s + "] +" + spellCastMod.to_s + "+" + profB.to_s + " = " + result.to_s + "\n";
         if (result < @armour[target]) then;
             say = say + "The SPELL attack Missed!";
         else;
             say = say + sayHit; 
         end;
-    else;
-      say = "Roll To Hit needs  ;srth?   ?= target number (0 to 9)";
-    end;    
+     else;
+       say = "Roll To Hit needs  srth?   ?= target number (0 to 9)";
+     end;    
         event.respond say;
 end;
 
@@ -1022,9 +1143,9 @@ bot.message(start_with: "sarth") do |event|
 end;
 
 ######### easy DISADVANTAGE SPELL ATTACK TARGET creature #####################################
-bot.message(start_with: ";dsrth") do |event|
+bot.message(start_with: "sdrth") do |event|
     inputValue = event.content;
-    target = Integer(inputValue.slice(6,1)) rescue false;
+    target = Integer(inputValue.slice(5,1)) rescue false;
     if ( target!= false ) then;
         if event.user.nick != nil;
            theUser = event.user.nick;
@@ -1047,7 +1168,7 @@ bot.message(start_with: ";dsrth") do |event|
             say = say + sayHit; 
         end;
     else;
-      say = "Roll To Hit needs  ;srth?   ?= target number (0 to 9)";
+      say = "SPELL Advantage Roll To Hit  sdrth?   ?= target number (0 to 9)";
     end;    
         event.respond say;
 end;
@@ -1140,6 +1261,25 @@ bot.message(start_with: "!SAD4") do |event|
 
   event.respond responseValue;
 end;
+
+########## SHILLELAGH ##############
+bot.message(start_with: "shill") do |event|;
+  if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+  (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+  inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(5,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 7) || (target == nil) then;  validInput = false;  end; 
+  if validInput == true then;
+    case inputStr.slice(6,1); when "I"; abs=5; when "W"; abs=6; when "C"; abs=7; end;
+    roll2hit = (rand 20) +1; profB = @player[pIndex][8]; absMod = @player[pIndex][abs]; final2hit = roll2hit + profB + absMod;  
+    targetAC= @armour[target];
+       responseValue = @user.to_s + " Shillelagh roll to hit: " + roll2hit.to_s + " (" + profB.to_s + "+" + absMod.to_s + ") = " + final2hit.to_s;
+    else;
+      responseValue = "Sorry, shill needs shill?$, where ? = target (ABC..) and $ = stat (Int, Wis, Char)";
+    end;
+    event.respond responseValue;
+end;
+
+
+
 
 ########## DAMAGE Grave Bolt ##############
 bot.message(start_with: ";GB") do |event|
@@ -1262,8 +1402,7 @@ bot.message(start_with: ";MM") do |event|
               totalDmg=totalDmg + dDie[x] + 4;
          end;
          lesserDmg = totalDmg - dDie[3] -1;
-         responseValue = @user.to_s + " Magic Missile damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] +3 = " + lesserDmg.to_s +
-                                       "\nUp Cast damage would add [" + dDie[3].to_s + "] +1 = " + totalDmg.to_s;
+         responseValue = @user.to_s + " Magic Missile damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] +3 = " + lesserDmg.to_s + "\nUp Cast damage would add [" + dDie[3].to_s + "] +1 = " + totalDmg.to_s;
     else;
       responseValue = "Sorry, you cannot cause this damage type."
     end;
@@ -1280,8 +1419,7 @@ bot.message(start_with: ";AS") do |event|
               dDie[x]=(rand 8)+1;
               totalDmg=totalDmg + dDie[x];;
          end;
-         responseValue = @user.to_s + " Aganazzar's Scorcher damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] = " + totalDmg.to_s +
-                                       "\nTarget makes a DEX save to take half damage";
+         responseValue = @user.to_s + " Aganazzar's Scorcher damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "] = " + totalDmg.to_s + "\nTarget makes a DEX save to take half damage";
     else;
       responseValue = "Sorry, you cannot cause this damage type."
     end;
@@ -1361,25 +1499,71 @@ bot.message(start_with: ";!AFIRE") do |event|
     event.respond responseValue;
 end;
 
-########## DAMAGE Healing Word ##############
-bot.message(start_with: ";HWORD") do |event|
-    inputValue = event.content;
-    check_user_or_nick(event)
-    if (@user.slice(0,5) == "Daish") || (@user.slice(0,5) == "Allen") then
-         dDie = [0]; totalDmg=0;
-         dDie[0]=(rand 4)+1;
-         totalDmg=totalDmg + dDie[0] + 2;
-         responseValue = @user.to_s + " has used Healing Word to heal someone for: [" + dDie[0].to_s +  "] + 2 = " + totalDmg.to_s; + " HP";
-    else;
-            responseValue = "Sorry, you cannot cast the spell. " ;
-    end;
-    event.respond responseValue;
+##########  Heat Metal 2 ##############
+bot.message(start_with: "heatmetal2") do |event|
+  if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+  (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+  theRoll1 = (rand 8)+1; theRoll2 = (rand 8)+1; totalDmg = theRoll1 + theRoll2;
+  say = theUser.to_s + " has used\nHEAT METAL to cause (2d8) damage. CONSTITUTION saving throw...";
+  say = say + "\nOn a save a hot object may be held and used at DisAdvantage. (full damage regardless).";
+  say = say +  "\n[" + theRoll1.to_s +  "] + [" + theRoll2.to_s + "] = " + totalDmg.to_s + "  of damage.";
+  event.respond say;
+end;
+
+##########  Heat Metal 3 ##############
+bot.message(start_with: "heatmetal3") do |event|
+  if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+  (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+  theRoll1 = (rand 8)+1; theRoll2 = (rand 8)+1; theRoll3 = (rand 8)+1; totalDmg = theRoll1 + theRoll2 + theRoll3;
+  say = theUser.to_s + " has used\nHEAT METAL to cause (3d8) damage. CONSTITUTION saving throw...";
+  say = say + "\nOn a save a hot object may be held and used at DisAdvantage. (full damage regardless).";
+  say = say +  "\n[" + theRoll1.to_s +  "] + [" + theRoll2.to_s + "] + [" + theRoll3.to_s + "] = " + totalDmg.to_s + "  of damage.";
+  event.respond say;
+end;
+
+##########  Thunder Wave ##############
+bot.message(start_with: "thunderwave2") do |event|
+  if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+  (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+  theRoll1 = (rand 8)+1; theRoll2 = (rand 8)+1; totalDmg = theRoll1 + theRoll2;
+  say = theUser.to_s + " has used\nTHUNDERWAVE to cause (2d8) damage. CONSTITUTION saving throw.";
+  say = say + "\nOn a failed save they will be pushed 10 ft away from caster.";
+  say = say +  "\n[" + theRoll1.to_s +  "] + [" + theRoll2.to_s + "] = " + totalDmg.to_s + "  of damage.";
+  event.respond say;
+end;
+
+##########  Thunder Wave 3##############
+bot.message(start_with: "thunderwave3") do |event|
+  if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+  (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+  theRoll1 = (rand 8)+1; theRoll2 = (rand 8)+1; theRoll3 = (rand 8)+1; totalDmg = theRoll1 + theRoll2 + theRoll3;
+  say = theUser.to_s + " has used\nTHUNDERWAVE to cause (3d8) damage. CONSTITUTION saving throw.";
+  say = say + "\nOn a failed save they will be pushed 10 ft away from caster.";
+  say = say +  "\n[" + theRoll1.to_s +  "] + [" + theRoll2.to_s + "] + [" + theRoll3.to_s + "] = " + totalDmg.to_s + "  of damage.";
+  event.respond say;
+end;
+##########  Healing Word ##############
+bot.message(start_with: "healingword") do |event|
+  if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+  (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+  inputValue = event.content;
+  absMod = @player[pIndex][6];
+  theRoll = (rand 4)+1; totalHeal = theRoll + absMod;
+  responseValue = theUser.to_s + " has used\nHealing Word (1d4) to heal someone for: [" + theRoll.to_s +  "] + " + absMod.to_s + " = " + totalHeal.to_s + " HP";
+  event.respond responseValue;
 end;
 
 
 ##################  d4. ##########################
 bot.message(contains:"d4.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d4.");  # uses @tempVar to set value of @howManyDice
+    event.message.delete;
+    check_user_or_nick(event);      @tempVar = event.content;  comment = "Unknown"
+    blank = @tempVar.index(' ');
+    if blank != nil then;
+      comment = @tempVar.slice(blank,99);
+      @tempVar = @tempVar.slice(0,blank);
+    end;    
+    parse_the_d("d4.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " d4. requires  ?d4.? where ? are integers (1 to 9)."
@@ -1394,13 +1578,21 @@ bot.message(contains:"d4.") do |event|
        end;
        total = total + @whatPlus;
        say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
+       say = say + "\nREASON: " + comment;
     end;
     event.respond say;
 end;
 
 ################## d6. ##########################
 bot.message(contains:"d6.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d6.");  # uses @tempVar to set value of @howManyDice
+    event.message.delete;
+    check_user_or_nick(event);      @tempVar = event.content;  comment = "Unknown"
+    blank = @tempVar.index(' ');
+    if blank != nil then;
+      comment = @tempVar.slice(blank,99);
+      @tempVar = @tempVar.slice(0,blank);
+    end;     
+    parse_the_d("d6.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " d6. requires  ?d6.? where ? are integers (1 to 9)."
@@ -1415,13 +1607,21 @@ bot.message(contains:"d6.") do |event|
        end;
        total = total + @whatPlus;
        say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
+       say = say + "\nREASON: " + comment;
     end;
     event.respond say;
 end;
 
 ################## d8. ##########################
 bot.message(contains:"d8.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d8.");  # uses @tempVar to set value of @howManyDice
+    event.message.delete;
+    check_user_or_nick(event);      @tempVar = event.content;  comment = "Unknown"
+    blank = @tempVar.index(' ');
+    if blank != nil then;
+      comment = @tempVar.slice(blank,99);
+      @tempVar = @tempVar.slice(0,blank);
+    end;     
+    parse_the_d("d8.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " d8. requires  ?d8.? where ? are integers (1 to 9)."
@@ -1436,13 +1636,21 @@ bot.message(contains:"d8.") do |event|
        end;
        total = total + @whatPlus;
        say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
+       say = say + "\nREASON: " + comment;
     end;
     event.respond say;
 end;
 
 ################## d10. ##########################
 bot.message(contains:"d10.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d10.");  # uses @tempVar to set value of @howManyDice
+    event.message.delete;
+    check_user_or_nick(event);      @tempVar = event.content;  comment = "Unknown"
+    blank = @tempVar.index(' ');
+    if blank != nil then;
+      comment = @tempVar.slice(blank,99);
+      @tempVar = @tempVar.slice(0,blank);
+    end;     
+    parse_the_d("d10.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " d10. requires  ?d10.? where ? are integers (1 to 9)."
@@ -1457,13 +1665,21 @@ bot.message(contains:"d10.") do |event|
        end;
        total = total + @whatPlus;
        say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
+       say = say + "\nREASON: " + comment;
     end;
     event.respond say;
 end;
 
 ################## d12. ##########################
 bot.message(contains:"d12.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d12.");  # uses @tempVar to set value of @howManyDice
+    event.message.delete;
+    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
+    blank = @tempVar.index(' ');
+    if blank != nil then;
+      comment = @tempVar.slice(blank,99);
+      @tempVar = @tempVar.slice(0,blank);
+    end;   
+    parse_the_d("d12.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " d12. requires  ?d12.? where ? are integers (1 to 9)."
@@ -1478,13 +1694,20 @@ bot.message(contains:"d12.") do |event|
        end;
        total = total + @whatPlus;
        say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
+       say = say + "\nREASON: " + comment;
     end;
     event.respond say;
 end;
 
 ################## d20. ##########################
 bot.message(contains:"d20.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d20.");  # uses @tempVar to set value of @howManyDice
+    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
+    blank = @tempVar.index(' ');
+    if blank != nil then;
+      comment = @tempVar.slice(blank,99);
+      @tempVar = @tempVar.slice(0,blank);
+    end;   
+    parse_the_d("d20.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " d20. requires  d20.  OR   ?d20.? where ? are integers (1 to 9)."
@@ -1499,13 +1722,23 @@ bot.message(contains:"d20.") do |event|
        end;
        total = total + @whatPlus;
        say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
+       say = say + "  REASON: " + comment;
+       say = say + "\n===============";
+       event.message.delete;  
     end;
     event.respond say;
 end;
 
 ################## d20a. ##########################
 bot.message(start_with:"d20a.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d20a.");  # uses @tempVar to set value of @howManyDice
+    event.message.delete;
+    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
+    blank = @tempVar.index(' ');
+    if blank != nil then;
+      comment = @tempVar.slice(blank,99);
+      @tempVar = @tempVar.slice(0,blank);
+    end;   
+    parse_the_d("d20a.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " d20a. requires  d20a. OR  ?d20a.? where ? are integers (1 to 9)."
@@ -1519,13 +1752,22 @@ bot.message(start_with:"d20a.") do |event|
        bigDie = [die[0],die[1]].max;
        total = bigDie + @whatPlus;
        say = say + "       [" + bigDie.to_s + "] + " + @whatPlus.to_s + " = " + total.to_s;
+       say = say + "  REASON: " + comment;
+       say = say + "\n---------------";
     end;
     event.respond say;
 end;
 
 ################## d20d. ##########################
 bot.message(start_with:"d20d.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;     parse_the_d("d20d.");  # uses @tempVar to set value of @howManyDice
+    event.message.delete;
+    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
+    blank = @tempVar.index(' ');
+    if blank != nil then;
+      comment = @tempVar.slice(blank,99);
+      @tempVar = @tempVar.slice(0,blank);
+    end;
+    parse_the_d("d20d.");  # uses @tempVar to set value of @howManyDice
     chkNum = Integer(@howManyDice) rescue false;
     if ( chkNum == false ) then;
        say = " d20d. requires  d20d. OR  ?d20d.? where ? are integers (1 to 9)."
@@ -1539,33 +1781,180 @@ bot.message(start_with:"d20d.") do |event|
        bigDie = [die[0],die[1]].min;
        total = bigDie + @whatPlus;
        say = say + "       [" + bigDie.to_s + "] + " + @whatPlus.to_s + " = " + total.to_s;
+       say = say + "  REASON: " + comment;
+       say = say + "\n---------------";
     end;
     event.respond say;
 end;
 
-################## d20d. ##########################
+
+################## g20. gm roll d20  ##########################
+bot.message(contains:"g20.") do |event|
+    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
+    blank = @tempVar.index(' ');
+    if blank != nil then;
+      comment = @tempVar.slice(blank,99);
+      @tempVar = @tempVar.slice(0,blank);
+    end;   
+    parse_the_d("g20.");  # uses @tempVar to set value of @howManyDice
+    chkNum = Integer(@howManyDice) rescue false;
+    if ( chkNum == false ) then;
+       say = " g20. requires  g20.  OR   ?g20.? where ? are integers (1 to 9)."
+    else
+       str_2_number(@howManyDice); #sets the value of @numba
+       say = @user.to_s + " rolled " + @numba.to_s + "d20 " + " + ?\n";
+       die=[0,0,0,0,0,0,0,0,0]; total=0;
+       (0..(@numba-1)).each do |x|;
+           die[x]=(rand 20)+1+@gmBonus;
+           say = say + "[" + die[x].to_s + "]";
+           total=total + die[x];
+       end;
+       say = say + "   REASON: " + comment;
+       say = say + "\n= = = = = = = = = = = = = = =";
+       event.message.delete;  
+    end;
+    event.respond say;
+end;
+
+
+################## d24. ##########################
+bot.message(contains:"d24.") do |event|
+    event.message.delete;
+    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
+    blank = @tempVar.index(' ');
+    if blank != nil then;
+      comment = @tempVar.slice(blank,99);
+      @tempVar = @tempVar.slice(0,blank);
+    end;   
+    parse_the_d("d24.");  # uses @tempVar to set value of @howManyDice
+    chkNum = Integer(@howManyDice) rescue false;
+    if ( chkNum == false ) then;
+       say = " d24. requires  ?d24.? where ? are integers (1 to 9)."
+    else
+       str_2_number(@howManyDice); #sets the value of @numba
+       say = @user.to_s + " rolled " + @numba.to_s + "d24 " ++ " + " + @whatPlus.to_s + "\n";
+       die=[0,0,0,0,0,0,0,0,0]; total=0;
+       (0..(@numba-1)).each do |x|;
+           die[x]=(rand 24)+1;
+           say = say + "[" + die[x].to_s + "]";
+           total=total + die[x];
+       end;
+       total = total + @whatPlus;
+       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
+       say = say + "\nREASON: " + comment;
+    end;
+    event.respond say;
+end;
+
+################## d100. ##########################
+bot.message(contains:"d100.") do |event|
+    event.message.delete;
+    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
+    blank = @tempVar.index(' ');
+    if blank != nil then;
+      comment = @tempVar.slice(blank,99);
+      @tempVar = @tempVar.slice(0,blank);
+    end;
+    parse_the_d("d100.");  # uses @tempVar to set value of @howManyDice
+    chkNum = Integer(@howManyDice) rescue false;
+    if ( chkNum == false ) then;
+       say = " d100. requires  d100.  OR   ?d100.? where ? are integers (1 to 9)."
+    else
+       str_2_number(@howManyDice); #sets the value of @numba
+       say = @user.to_s + " rolled " + @numba.to_s + "d100" + " + " + @whatPlus.to_s + "\n";
+       die=[0,0,0,0,0,0,0,0,0]; total=0;
+       (0..(@numba-1)).each do |x|;
+           die[x]=(rand 100)+1;
+           say = say + "[" + die[x].to_s + "]";
+           total=total + die[x];
+       end;
+       total = total + @whatPlus;
+       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
+       say = say + "  REASON: " + comment;
+       say = say + "\n- - - - - - - - - - - - - -";
+    end;
+    event.respond say;
+end;
+
+################## d500. ##########################
+bot.message(contains:"d500.") do |event|
+    event.message.delete;
+    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
+    blank = @tempVar.index(' ');
+    if blank != nil then;
+      comment = @tempVar.slice(blank,99);
+      @tempVar = @tempVar.slice(0,blank);
+    end;
+    parse_the_d("d500.");  # uses @tempVar to set value of @howManyDice
+    chkNum = Integer(@howManyDice) rescue false;
+    if ( chkNum == false ) then;
+       say = " d500. requires  d500.  OR   ?d500.? where ? are integers (1 to 9)."
+    else
+       str_2_number(@howManyDice); #sets the value of @numba
+       say = @user.to_s + " rolled " + @numba.to_s + "d500" + " + " + @whatPlus.to_s + "\n";
+       die=[0,0,0,0,0,0,0,0,0]; total=0;
+       (0..(@numba-1)).each do |x|;
+           die[x]=(rand 500)+1;
+           say = say + "[" + die[x].to_s + "]";
+           total=total + die[x];
+       end;
+       total = total + @whatPlus;
+       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
+       say = say + "\nREASON: " + comment;
+    end;
+    event.respond say;
+end;
+
+
+################## D500. ##########################
+bot.message(contains:"D500.") do |event|
+    event.message.delete;
+    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
+    blank = @tempVar.index(' ');
+    if blank != nil then;
+      comment = @tempVar.slice(blank,99);
+      @tempVar = @tempVar.slice(0,blank);
+    end;
+    event.respond "D500 is not yet ready for use."
+end;
+
+################## help ##########################
 bot.message(start_with:"help") do |event|
   lyrics = Array.new
   lyrics[0]="Help me if you can, I'm feeling down";
   lyrics[1]="And I do appreciate you being 'round";
   lyrics[2]="Help me get my feet back on the ground";
   lyrics[3]="Won't you please, please help me?";
-  say = lyrics[(rand 4)].to_s + " \n\n";
-  say = say + "HELP for   d4.   d6.   d8.   d10.   d12.   d20.  \n";
-  say = say + "d4.3  rolls 1d4 + 3         d6.-2   rolls 1d6 -2 \n";
-  say = say + "2d8.  rolls 2d8 + 0        3d8.-1   rolls 3d8 -1 \n";
-  say = say + " \n"
-  say = say + "d20a.4 rolls Advantage d20 + 4     d20d.-5  rolls Dis-Advantage d20 -5"
-    event.respond say;
+  say = "HELP HELP HELP  for the manual dice rolling commands  \n"; #+ lyrics[(rand 4)].to_s +
+  say = say + "NOTE WELL: the command MUST begin at the START of input.\n"
+  say = say + "REASON: after the command, leave a SPACE, then type a REASON.\n\n"
+  say = say + "COMMAND:   d4.   d6.   d8.   d10.   d12.   d20.  or d100.  \n";
+  say = say + "d20.  rolls 1d20 + 0           d20.6   rolls 1d20 + 6 \n";
+  say = say + "d20a.4       rolls Advantage         1d20 + 4   \n";
+  say = say + "d20d.-5     rolls Dis-Advantage  1d20 - 5  \n";
+  say = say + "d4.3  rolls 1d4 + 3           d6.-2     rolls 1d6 -2 \n";
+  say = say + "2d8.  rolls 2d8 + 0           3d8.-1   rolls 3d8 -1 \n";
+  event.respond say;
 end;
 
+####### parse_the_d accepts and incoming value of something like d20. to help location the core of the command
 def parse_the_d(incoming);
-  theIndex1 = @tempVar.index(incoming);
-  @howManyDice = @tempVar.slice(0,(theIndex1));
-  if ( @howManyDice == "0" || @howManyDice == "" ) then @howManyDice =1; end;
-  theIndex2 = @tempVar.index('.');
-  tempVarLen = @tempVar.length;
-  @whatPlus = @tempVar.slice((theIndex2+1),(tempVarLen-theIndex2))
+  #puts "the value of @tempVar is: " + @tempVar.inspect;
+  theIndex1 = Integer.(@tempVar.index(incoming)) rescue false;
+  if theIndex1 == false then; theIndex1 = 1; end;
+  #puts " the value of theIndex1 is: " + theIndex1.inspect;
+  @howManyDice = Integer(@tempVar.slice(0,(theIndex1))) rescue false;
+  if @howManyDice == false then; @howManyDice = 1; end;
+  #puts "the value of @howManyDice is: " + @howManyDice.inspect;
+#  if ( @howManyDice == "0" || @howManyDice == "" ) then @howManyDice = 1; end;
+  #puts "the value of @tempVar is: " + @tempVar.inspect;
+  theIndex2 = @tempVar.index('.');  #puts "the value of theIndex2 is: " + theIndex2.inspect;
+  tempVarLen = @tempVar.length;  #puts "the value of tempVarLen  is: " + tempVarLen.inspect;
+  if @tempVar.slice((theIndex2+1),1) != nil then;
+     @whatPlus = @tempVar.slice((theIndex2+1),(tempVarLen-theIndex2));
+  else 
+    @whatPlus = 0;
+  end;
   validate_integer(@whatPlus);
   if @intVal == false then; 
      @whatPlus = 0;
@@ -1578,12 +1967,7 @@ end;
 ###########  WEAPONS  ##############
 #########################################
 bot.message(start_with:"$Wlist") do |event|
-    if event.user.nick != nil
-       theUser = event.user.nick
-    else
-       theUser = event.user.name
-    end;
-    pIndex = nil;
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end;  pIndex = nil;
     (0..(@player.length-1)).each do |y|  #find the @player pIndex within the array using 5 char of @user
         if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
     end;
@@ -1592,8 +1976,8 @@ bot.message(start_with:"$Wlist") do |event|
     say = say + "Your RANGED weapon damage: " + @weapon[(@player[pIndex][12])].to_s + "\n";
     say = say +  "To change use   $Mset? (melee)   or   $Rset?  (ranged)  \n";
     say = say +  "where ? is an Integer, as shown below. ($Mset3  or  $Rset3)  \n\n";
-    (0..5).each do |x|;
-          say = say +  @weapon[x] + " <=> " + x.to_s  + "    ";
+    (0..7).each do |x|;
+          say = say + "[" + @weapon[x] + " = " + x.to_s  + "]   ";
     end;                 
     event.respond say;
 end;
@@ -1610,7 +1994,7 @@ bot.message(start_with:"$Mset") do |event|
         if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
     end;
     weaponInt = Integer(inputStr.slice(5,1)) rescue false; #will detect integer or non integer input
-    if (pIndex != nil) && (weaponInt != false) && (weaponInt < 6) then; 
+    if (pIndex != nil) && (weaponInt != false) && (weaponInt < 8) then; 
            @player[pIndex][1]=weaponInt;
            say = theUser.to_s + " MELEE weapon damage has been set to " + @weapon[(@player[pIndex][1])].to_s;
     else
@@ -1631,7 +2015,7 @@ bot.message(start_with:"$Rset") do |event|
         if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
     end;
     weaponInt = Integer(inputStr.slice(5,1)) rescue false; #will detect integer or non integer input
-    if (pIndex != nil) && (weaponInt != false) && (weaponInt < 6) then; 
+    if (pIndex != nil) && (weaponInt != false) && (weaponInt < 8) then; 
            @player[pIndex][12]=weaponInt;
            say = theUser.to_s + " RANGED weapon damage has been set to " + @weapon[(@player[pIndex][12])].to_s;
     else
@@ -1657,10 +2041,11 @@ end;
 #########################################
 bot.message(start_with:"$AClist") do |event|
     check_user_or_nick(event); say = "";
-    if @user == "Allen" then; # as long as the user is Allen, perform the following
-            (0..9).each do |x|;
+    if @user.slice(0,5) == "Allen" then; # as long as the user is Allen, perform the following
+            (0..19).each do |x|;
                 acVal = @armour[x].to_s;
-                say = say + "Creature " + x.to_s + " has Armour Class " + acVal + "\n";
+                alphaVal = "ABCDEFGHIJKLMNOPQRSTU"[x];
+                say = say + "Creature " + alphaVal + "  (" + x.to_s + ")  currently has " + acVal + " Armour Class. \n";
             end;           
     end;
     event.respond say;
@@ -1680,7 +2065,7 @@ bot.message(start_with:"$ACset") do |event|
     end;
     cNum = Integer(creatNum) rescue false; #creature Number
     acVal = Integer(creatAC) rescue false;  #Value of AC
-    if (  (cNum != false) && (acVal != false) && (@user == "Allen") ) then;
+    if (  (cNum != false) && (acVal != false) && (@user.slice(0,5) == "Allen") ) then;
           @armour[cNum]=acVal;
           say = "Armour Class for Creature " + cNum.to_s + " was set to AC: " + acVal.to_s;
     else;
@@ -1690,12 +2075,12 @@ bot.message(start_with:"$ACset") do |event|
     event.respond say;
 end;
 
-bot.message(start_with:"$ALL") do |event|
+bot.message(start_with:"$ACall") do |event|
     check_user_or_nick(event);
     theString = event.content;
-    acVal = Integer(theString.slice(4,2)) rescue false
-    if ( (@user == "Allen") && (acVal != false) ) then;
-             (0..9).each do |x|;
+    acVal = Integer(theString.slice(6,2)) rescue false
+    if ( (@user.slice(0,5) == "Allen") && (acVal != false) ) then;
+             (0..19).each do |x|;
                   @armour[x]=acVal.to_i;
              end;
              say = "ALL creatures now have an AC of: " + acVal.to_s;
@@ -1708,10 +2093,11 @@ end;
 
 bot.message(start_with:"$HPlist") do |event|
     check_user_or_nick(event); say = "";
-    if @user == "Allen" then; # as long as the user is Allen, perform the following
-            (0..9).each do |x|;
+    if @user.slice(0,5) == "Allen" then; # as long as the user is Allen, perform the following
+            (0..19).each do |x|;
                 hpVal = @HP[x][0].to_s;
-                say = say + "Creature " + x.to_s + " currently has " + hpVal + " hit points. \n";
+                alphaVal = "ABCDEFGHIJKLMNOPQRSTU"[x];
+                say = say + "Creature " + alphaVal + "  (" + x.to_s + ")  currently has " + hpVal + " hit points. \n";
             end;           
     end;
     event.respond say;
@@ -1723,7 +2109,7 @@ bot.message(start_with:"$HPset") do |event|
     creatNum = inputStr.slice(0,1); creatHP = inputStr.slice(1,3); 
     cNum = Integer(creatNum) rescue false; #creature Number
     hpVal = Integer(creatHP) rescue false;  #Value of HP
-    if ( (inputStr.length > 1) && (cNum != false) && (hpVal != false) && (@user == "Allen") ) then;
+    if ( (inputStr.length > 1) && (cNum != false) && (hpVal != false) && (@user.slice(0,5) == "Allen") ) then;
           @HP[cNum][0]=hpVal;  @HP[cNum][1]= hpVal + 0.0;
           say = "Hit Points for Creature " + cNum.to_s + " was set to: " + hpVal.to_s + "  " + (hpVal + 0.0).to_s;
     else;
@@ -1732,35 +2118,80 @@ bot.message(start_with:"$HPset") do |event|
     event.respond say;
 end;
 
-bot.message(start_with:"$HPless") do |event|
-    check_user_or_nick(event);
-    inputStr = event.content.slice(7,4);   # creature Number and AC should be in the string
-    creatNum = inputStr.slice(0,1); creatHP = inputStr.slice(1,3); 
-    cNum = Integer(creatNum) rescue false; #creature Number
-    hpVal = Integer(creatHP) rescue false;  #Value of HP
-    if ( (inputStr.length > 1) && (cNum != false) && (hpVal != false) && (@user == "Allen") ) then;
-          @HP[cNum][0]=@HP[cNum][0]-hpVal;
-          say = "Hit Points for Creature " + cNum.to_s + " was reduced by " + hpVal.to_s + " Now has " + @HP[cNum][0].to_s + " hit points.";
-    else;
-      say = @user.to_s + "$HPset?? where first ? is Target Integer and second ? is the HP integers."
+bot.message(start_with:"$HPall") do |event|
+    check_user_or_nick(event);  theString = event.content;
+    hpVal = Integer(theString.slice(6,3)) rescue false
+    if ( (@user.slice(0,5) == "Allen") && (hpVal != false) ) then;
+             (0..19).each do |x|;
+                  @HP[x][0]=hpVal.to_i;
+                  @HP[x][1]=(hpVal.to_i)+0.1;
+             end;
+             say = "ALL creatures now have HP of: " + hpVal.to_s;
+    else;     
+     say = @user.to_s + ", Something isn't right:" + hpVal.to_s;
     end;
-    event.respond say;
+    event.respond  say;
 end;
 
-bot.message(start_with:";damage") do |event|
-    check_user_or_nick(event);
-       inputStr = event.content.slice(7,4);   # creature Number and AC should be in the string
-       creatNum = inputStr.slice(0,1); creatHP = inputStr.slice(1,3); 
-       cNum = Integer(creatNum) rescue false; #creature Number
+
+################## manual damage ###############################
+bot.message(start_with:"dam") do |event|
+    check_user_or_nick(event); inputStr = event.content.slice(3,4);   # creature Number and DAMAGE should be in the string
+       alphaVal = inputStr.slice(0,1); creatHP = inputStr.slice(1,3);
+       target = "ABCDEFGHIJKLMNOPQRSTU".index(alphaVal);
+       validTarget = false; if (target > -1) && (target < 20) then; validTarget = true; end; #creature Number
        hpVal = Integer(creatHP) rescue false;  #Value of HP
-       if ( (inputStr.length > 1) && (cNum != false) && (hpVal != false) && (@user == "Allen") ) then;
-            @HP[cNum][0]=@HP[cNum][0]-hpVal;
-            say = "Hit Points for Creature " + cNum.to_s + " , reduced by " + hpVal.to_s + " hit points.";
-            health_check(@HP[cNum][0], @HP[cNum][1])
-            say = say + "\n\n Creature Number " + cNum.to_s + " looks " + @healthStat;
+       if ( (inputStr.length > 1) && (validTarget != false) && (hpVal != false) && (@user.slice(0,5) == "Allen") ) then;
+            @HP[target][0]=@HP[target][0]-hpVal;
+            if (@RE[target]==1) && (@HP[target][0] < 1) then;
+              @RE[target] = 0; @HP[target][0] = 1;
+            end;   
+            say = "Hit Points for Creature " + alphaVal + "  (" + target.to_s + ") , reduced by " + hpVal.to_s + " hit points.";
+            health_check(@HP[target][0], @HP[target][1])
+            say = say + "\n\n Creature Number " + alphaVal + "  (" + target.to_s + ")  looks " + @healthStat;
        else;
         say = ";damage?? where first ? is Target Integer and second ? is the HP integer."
        end;
+    event.respond say;
+end;
+
+################## manual damage ###############################
+bot.message(start_with:"RELE") do |event|
+    check_user_or_nick(event);
+       inputStr = event.content.slice(4,1);   # creature Number and DAMAGE should be in the string
+       creatNum = Integer(inputStr.slice(0,1));
+       @RE[creatNum] = 1;
+       say = "creature " + creatNum.to_s + " Relentless Endurance reset to 1.";
+    event.respond say;
+end;
+
+
+########## CHAOS 
+bot.message(start_with:"boon") do |event|
+  say = ""
+    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end;
+    timeText = (DateTime.now).to_s;
+    hour = timeText.slice(11,2);
+    min = timeText.slice(14,2);    
+    if ( hour == "12") && (min.to_i < 56) then;
+       result = rand 11;
+       case result;
+           when 0; say = say + "You have two (2) additional recovery Hit Dice until you long rest.";
+           when 1; say = say + "You have +2 on all saving throws until you long rest.";
+           when 2; say = say + "You do +2 damage on all hits until you roll a Natural 20."
+           when 3; say = say + "You get +2 on all heal dice until you long rest."
+           when 4; say = say + "You may re-roll 1 on a SAVE or SKILL check until you long rest."
+           when 5; say = say + "You add +2 to all SKILL checks until you long rest."
+           when 6; say = say + "You roll with advantage on SKILL checks until you long rest."
+           when 7; say = say + "You may re-roll all the one (1) values on MELEE damage rolls until you long rest."
+           when 8; say = say + "You have INSPIRATION X 5.";
+           when 9; say = say + "You have three (3) automatic hits for this game." 
+           when 10; say = say + "Your character is able to cast SCORCHING RAY (+7 to hit) three (3) times this game." 
+       end;
+       say = "This boon replaces any and all previous boons.\n" + theUser + ", your Boon is " + say;
+     else
+       say = "The time is " + hour + ":" + min + " the Boon opportunity ended at 12:55 am"
+     end;
     event.respond say;
 end;
 
@@ -1797,6 +2228,7 @@ def roll_damage(damType);
      when "1d8"; @damage1 = (rand 8)+1; @damage2 = -99; @damage3 = (rand 8)+1; @damage4 = -99;
      when "1d6"; @damage1 = (rand 6)+1; @damage2 = -99; @damage3 = (rand 6)+1; @damage4 = -99;
      when "1d4"; @damage1 = (rand 4)+1; @damage2 = -99; @damage3 = (rand 4)+1; @damage4 = -99;
+     when "2d4"; @damage1 = (rand 4)+1; @damage2 = (rand 4)+1; @damage3 = (rand 4)+1; @damage4 = (rand 4)+1;
   end;
 end;
 
