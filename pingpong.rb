@@ -1924,6 +1924,7 @@ bot.message(contains:"D500.") do |event|
     else;
          if chkNum > 0 then;
             howManyDice = @tempVar.slice(0,(locationValue.to_i)-1);
+            puts howManyDice.to_s + "     <----";
             say = @user.to_s + " rolled " + howManyDice.to_s + "D500." + " + " + @whatPlus.to_s + "\n";
             die=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; total=0;
             (0..(howManyDice.to_i)).each do |x|;
