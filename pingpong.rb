@@ -173,7 +173,7 @@ bot.message(start_with: "FILE") do |event|;
                                   :spell=>theSpell, :round=>theRnd, :letter=>letter, :hp=>hp, :ac=>ac };
     line_num +=1;
   end;
-  event.respond ("FILE contains/n" + playAh.to_s).slice(0,99);
+  event.respond ("FILE contains\n " + playAh.to_s).slice(0,99);
 end;
 
 
