@@ -1905,7 +1905,10 @@ bot.message(contains:"d500.") do |event|
     event.respond say;
 end;
 
-
+################## D500. ##########################
+################## D500. ##########################
+################## D500. ##########################
+################## D500. ##########################
 ################## D500. ##########################
 bot.message(contains:"D500.") do |event|
     event.message.delete;
@@ -1915,9 +1918,13 @@ bot.message(contains:"D500.") do |event|
       comment = @tempVar.slice(blank,99);
       @tempVar = @tempVar.slice(0,blank);
     end;
-    event.respond "D500 is not yet ready for use."
+    locationValue = @tempVar.index('D500.');
+    
+    event.respond "Location: " + locationValue.to_s;
 end;
 
+################## help ##########################
+################## help ##########################
 ################## help ##########################
 bot.message(start_with:"help") do |event|
   lyrics = Array.new
