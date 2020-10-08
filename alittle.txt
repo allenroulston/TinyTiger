@@ -1,0 +1,27 @@
+. .0-A.      . 0. no spell .0.m. 90.AC16.
+. .1-B       . 0. no spell .0.q. 33.AC18.
+. .2-C.      . 0. no spell .0.p. 33.AC18.
+. .3-D.      . 0. no spell .0.a. 33.AC18.
+.*.4-E.      . 1. no spell .0.j. 33.AC18.
+.*.5-F.      . 2. no spell .0.g. 11.AC10.
+.*.6-G.      . 2. no spell .0.w. 11.AC10.
+.*.7-H.      . 2. no spell .0.b. 11.AC10.
+.*.8-I.      . 2. no spell .0.v. 11.AC10.
+.*.9-J.      . 2. no spell .4.f. 17.AC20.
+.*.10-K      . 2. no spell .0.n. 90.AC16.
+.*.11-L.     . 2. no spell .0.t. 33.AC18.
+.*.12-M      . 2. no spell .0.e. 33.AC18.
+.*.13-N.     . 2. no spell .0.d. 33.AC18.
+.*.14-O.     . 2. no spell .0.$. 33.AC18.
+.*.15-P.     . 2. no spell .0.x. 11.AC10.
+.*.16-Q.     . 2. no spell .0.z. 11.AC10.
+.*.17-R.     . 2. no spell .0.l. 11.AC10.
+.*.18-S      . 2. no spell .0.s. 11.AC10.
+.*.19-T.     . 2. no spell .4.r. 17.AC20.
+.*.other2    . 2. no spell .3.c. 17.AC20.
+.R.JHANI     . 3. No spell .6.h. 17.AC20.
+.R.FARREN    . 1. no spell .0.y. 27.AC20.
+.R.JARI      . 1. no spell .0.u. 55.AC10.
+.R.STEEL     . 1. no spell .0.i. 29.AC16.
+.R.XER       . 2. no spell .0.o. 42.AC10.
+.*.other3    . 4. no spell .0.k. 90.AC10.
