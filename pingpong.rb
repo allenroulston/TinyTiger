@@ -385,8 +385,8 @@ bot.message(contains:"d4.") do |event|
   begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+3),99).strip;
   spacePos = afterDieStr.index(" "); comment = "#d4.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
   if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
-     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
-     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); end;
+     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = 0; end;
+     if numbB == 0; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); end;
   else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
      begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
      if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
