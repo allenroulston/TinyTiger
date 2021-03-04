@@ -378,8 +378,181 @@ bot.message(start_with: "RTH") do |event|;      event.message.delete;
 end;
 
 ##################################################################################################################
+####################################################################################################################################  d4. ##########################
 ##################################################################################################################
-##################################################################################################################
+bot.message(contains:"d4.") do |event|
+  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d4.");
+  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+3),99).strip;
+  spacePos = afterDieStr.index(" "); comment = "#d4.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
+  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
+     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
+     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
+     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
+  end;
+  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
+  say = @user.to_s + " rolled " + numbA.to_s + "d4" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
+  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..4);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
+  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
+  event.respond say;
+end;
+
+################## d6. ##########################
+bot.message(contains:"d6.") do |event|
+  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d6.");
+  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+3),99).strip;
+  spacePos = afterDieStr.index(" "); comment = "#d6.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
+  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
+     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
+     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
+     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
+  end;
+  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
+  say = @user.to_s + " rolled " + numbA.to_s + "d6" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
+  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..6);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
+  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
+  event.respond say;
+end;
+
+################## d8. ##########################
+bot.message(contains:"d8.") do |event|
+  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d8.");
+  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+3),99).strip;
+  spacePos = afterDieStr.index(" "); comment = "#d8.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
+  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
+     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
+     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
+     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
+  end;
+  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
+  say = @user.to_s + " rolled " + numbA.to_s + "d8" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
+  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..8);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
+  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
+  event.respond say;
+end;
+
+################## d10. ##########################
+bot.message(contains:"d10.") do |event|
+  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d10.");
+  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+4),99).strip;
+  spacePos = afterDieStr.index(" "); comment = "#d10.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
+  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
+     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
+     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
+     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
+  end;
+  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
+  say = @user.to_s + " rolled " + numbA.to_s + "d10" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
+  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..10);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
+  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
+  event.respond say;
+end;
+
+################## d12. ##########################
+bot.message(contains:"d12.") do |event|
+  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d12.");
+  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+4),99).strip;
+  spacePos = afterDieStr.index(" "); comment = "#d12.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
+  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
+     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
+     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
+     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
+  end;
+  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
+  say = @user.to_s + " rolled " + numbA.to_s + "d12" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
+  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..12);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
+  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
+  event.respond say;
+end;
+
+################## d20. ##########################
+bot.message(contains:"d20.") do |event|
+  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d20.");
+  
+  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+4),99).strip;
+  
+  spacePos = afterDieStr.index(" "); comment = "#d20.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
+  
+  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
+     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); end;
+  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
+     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
+     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
+  end;
+  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
+  say = @user.to_s + " rolled " + numbA.to_s + "d20" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
+  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..20);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
+  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
+  event.respond say;
+end;
+
+################## d20a. ##########################
+bot.message(start_with:"d20a.") do |event|
+    event.message.delete;
+    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
+    blank = @tempVar.index(' ');
+    if blank != nil then;
+      comment = @tempVar.slice(blank,99);
+      @tempVar = @tempVar.slice(0,blank);
+    end;   
+    parse_the_d("d20a.");  # uses @tempVar to set value of @howManyDice
+    chkNum = Integer(@howManyDice) rescue false;
+    if ( chkNum == false ) then;
+       say = " d20a. requires  d20a. OR  ?d20a.? where ? are integers (1 to 9)."
+    else
+       say = @user.to_s + " rolled 2d20" + " + " + @whatPlus.to_s + " with Advantage \n";
+       die=[0,0,0,0,0,0,0,0,0]; total=0;
+       (0..1).each do |x|;
+           die[x]=(rand 20)+1;
+           say = say + "[" + die[x].to_s + "]";
+       end;
+       bigDie = [die[0],die[1]].max;
+       total = bigDie + @whatPlus;
+       say = say + "       [" + bigDie.to_s + "] + " + @whatPlus.to_s + " = " + total.to_s;
+       say = say + "  REASON: " + comment;
+       say = say + "\n~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~";
+    end;
+    event.respond say;
+end;
+
+################## d20d. ##########################
+bot.message(start_with:"d20d.") do |event|
+    event.message.delete;
+    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
+    blank = @tempVar.index(' ');
+    if blank != nil then;
+      comment = @tempVar.slice(blank,99);
+      @tempVar = @tempVar.slice(0,blank);
+    end;
+    parse_the_d("d20d.");  # uses @tempVar to set value of @howManyDice
+    chkNum = Integer(@howManyDice) rescue false;
+    if ( chkNum == false ) then;
+       say = " d20d. requires  d20d. OR  ?d20d.? where ? are integers (1 to 9)."
+    else
+       say = @user.to_s + " rolled 2d20" + " + " + @whatPlus.to_s + " with Dis-Advantage \n";
+       die=[0,0,0,0,0,0,0,0,0]; total=0;
+       (0..1).each do |x|;
+           die[x]=(rand 20)+1;
+           say = say + "[" + die[x].to_s + "]";
+       end;
+       bigDie = [die[0],die[1]].min;
+       total = bigDie + @whatPlus;
+       say = say + "       [" + bigDie.to_s + "] + " + @whatPlus.to_s + " = " + total.to_s;
+       say = say + "  REASON: " + comment;
+       say = say + "\n---------------";
+    end;
+    event.respond say;
+end;
 ##################################################################################################################
 ##################################################################################################################
 ##################################################################################################################
@@ -1912,180 +2085,6 @@ bot.message(start_with: "healingword") do |event|
   responseValue = theUser.to_s + " has used\nHealing Word (1d4) to heal someone for: [" + theRoll.to_s +  "] + " + absMod.to_s + " = " + totalHeal.to_s + " HP";
   event.respond responseValue;
 end;
-
-
-##################  d4. ##########################
-bot.message(contains:"d4.") do |event|
-  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d4.");
-  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+3),99).strip;
-  spacePos = afterDieStr.index(" "); comment = "#d4.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
-  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
-     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
-     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
-  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
-     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
-     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
-  end;
-  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
-  say = @user.to_s + " rolled " + numbA.to_s + "d4" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
-  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..4);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
-  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
-  event.respond say;
-end;
-
-################## d6. ##########################
-bot.message(contains:"d6.") do |event|
-  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d6.");
-  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+3),99).strip;
-  spacePos = afterDieStr.index(" "); comment = "#d6.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
-  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
-     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
-     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
-  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
-     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
-     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
-  end;
-  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
-  say = @user.to_s + " rolled " + numbA.to_s + "d6" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
-  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..6);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
-  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
-  event.respond say;
-end;
-
-################## d8. ##########################
-bot.message(contains:"d8.") do |event|
-  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d8.");
-  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+3),99).strip;
-  spacePos = afterDieStr.index(" "); comment = "#d8.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
-  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
-     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
-     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
-  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
-     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
-     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
-  end;
-  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
-  say = @user.to_s + " rolled " + numbA.to_s + "d8" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
-  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..8);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
-  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
-  event.respond say;
-end;
-
-################## d10. ##########################
-bot.message(contains:"d10.") do |event|
-  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d10.");
-  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+4),99).strip;
-  spacePos = afterDieStr.index(" "); comment = "#d10.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
-  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
-     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
-     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
-  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
-     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
-     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
-  end;
-  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
-  say = @user.to_s + " rolled " + numbA.to_s + "d10" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
-  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..10);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
-  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
-  event.respond say;
-end;
-
-################## d12. ##########################
-bot.message(contains:"d12.") do |event|
-  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d12.");
-  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+4),99).strip;
-  spacePos = afterDieStr.index(" "); comment = "#d12.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
-  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
-     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
-     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
-  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
-     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
-     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
-  end;
-  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
-  say = @user.to_s + " rolled " + numbA.to_s + "d12" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
-  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..12);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
-  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
-  event.respond say;
-end;
-
-################## d20. ##########################
-bot.message(contains:"d20.") do |event|
-  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d20.");
-  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+4),99).strip;
-  spacePos = afterDieStr.index(" "); comment = "#d20.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
-  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
-     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
-     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
-  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
-     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
-     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
-  end;
-  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
-  say = @user.to_s + " rolled " + numbA.to_s + "d20" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
-  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..20);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
-  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
-  event.respond say;
-end;
-
-################## d20a. ##########################
-bot.message(start_with:"d20a.") do |event|
-    event.message.delete;
-    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
-    blank = @tempVar.index(' ');
-    if blank != nil then;
-      comment = @tempVar.slice(blank,99);
-      @tempVar = @tempVar.slice(0,blank);
-    end;   
-    parse_the_d("d20a.");  # uses @tempVar to set value of @howManyDice
-    chkNum = Integer(@howManyDice) rescue false;
-    if ( chkNum == false ) then;
-       say = " d20a. requires  d20a. OR  ?d20a.? where ? are integers (1 to 9)."
-    else
-       say = @user.to_s + " rolled 2d20" + " + " + @whatPlus.to_s + " with Advantage \n";
-       die=[0,0,0,0,0,0,0,0,0]; total=0;
-       (0..1).each do |x|;
-           die[x]=(rand 20)+1;
-           say = say + "[" + die[x].to_s + "]";
-       end;
-       bigDie = [die[0],die[1]].max;
-       total = bigDie + @whatPlus;
-       say = say + "       [" + bigDie.to_s + "] + " + @whatPlus.to_s + " = " + total.to_s;
-       say = say + "  REASON: " + comment;
-       say = say + "\n~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~";
-    end;
-    event.respond say;
-end;
-
-################## d20d. ##########################
-bot.message(start_with:"d20d.") do |event|
-    event.message.delete;
-    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
-    blank = @tempVar.index(' ');
-    if blank != nil then;
-      comment = @tempVar.slice(blank,99);
-      @tempVar = @tempVar.slice(0,blank);
-    end;
-    parse_the_d("d20d.");  # uses @tempVar to set value of @howManyDice
-    chkNum = Integer(@howManyDice) rescue false;
-    if ( chkNum == false ) then;
-       say = " d20d. requires  d20d. OR  ?d20d.? where ? are integers (1 to 9)."
-    else
-       say = @user.to_s + " rolled 2d20" + " + " + @whatPlus.to_s + " with Dis-Advantage \n";
-       die=[0,0,0,0,0,0,0,0,0]; total=0;
-       (0..1).each do |x|;
-           die[x]=(rand 20)+1;
-           say = say + "[" + die[x].to_s + "]";
-       end;
-       bigDie = [die[0],die[1]].min;
-       total = bigDie + @whatPlus;
-       say = say + "       [" + bigDie.to_s + "] + " + @whatPlus.to_s + " = " + total.to_s;
-       say = say + "  REASON: " + comment;
-       say = say + "\n---------------";
-    end;
-    event.respond say;
-end;
-
 
 ################## g20. gm roll d20  ##########################
 bot.message(contains:"g20.") do |event|
