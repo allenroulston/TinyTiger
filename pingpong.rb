@@ -164,7 +164,7 @@ bot.message(start_with: "$abclist") do |event|;
    monsterHP = YAML.load(File.read("testHPAC.yml"));   alphabet = "ABCDEFGHIJKLMNOPQRST";   say = "Hit Points & AC\n";
    (0..(monsterHP.length-1)).each do |x|;
        target = alphabet.slice(x,1);
-       say = say + target + "  " + monsterHP[x][0].to_s + " of " + monsterHP[x][1].to_s + "    AC of " + monsterHP[x][2].to_s + "\n";
+       say = say + "**" + target + "**  " + monsterHP[x][0].to_s + " of " + monsterHP[x][1].to_s + "    AC " + monsterHP[x][2].to_s + "\n";
    end;              
       event.respond say;
  end;
