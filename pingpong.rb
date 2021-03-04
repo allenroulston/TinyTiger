@@ -386,7 +386,7 @@ bot.message(contains:"d4.") do |event|
   spacePos = afterDieStr.index(" "); comment = "#d4.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
   if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
      begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
-     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); end;
   else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
      begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
      if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
@@ -405,7 +405,7 @@ bot.message(contains:"d6.") do |event|
   spacePos = afterDieStr.index(" "); comment = "#d6.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
   if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
      begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
-     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); end;
   else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
      begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
      if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
@@ -424,7 +424,7 @@ bot.message(contains:"d8.") do |event|
   spacePos = afterDieStr.index(" "); comment = "#d8.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
   if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
      begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
-     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); end;
   else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
      begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
      if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
@@ -443,7 +443,7 @@ bot.message(contains:"d10.") do |event|
   spacePos = afterDieStr.index(" "); comment = "#d10.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
   if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
      begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
-     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); end;
   else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
      begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
      if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
@@ -462,7 +462,7 @@ bot.message(contains:"d12.") do |event|
   spacePos = afterDieStr.index(" "); comment = "#d12.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
   if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
      begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
-     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); end;
   else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
      begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
      if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
