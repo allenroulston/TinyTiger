@@ -1,29 +1,39 @@
 #
-require 'discordrb'
-require 'yaml'
-require 'date'
+require 'discordrb';
+require 'yaml';
+require 'date';
+require 'securerandom';
+include Math;
 
 
-#####Configuration########
+##########  Configuration  ########
 junk = YAML.load(File.read("data.yml"));
 token = junk[0]+junk[1]+junk[2];
 
 prefix = "!" # Your bot's prefix
 owner = 690339632529015005 # Your user ID
 
-@armour = YAML.load(File.read("armourClass.yml"));
-@HP = YAML.load(File.read("hitPoints.yml"));
-@weapon = YAML.load(File.read("weaponDamage.yml"));
-@player = YAML.load(File.read("ABSmods.yml"));
-@RE = YAML.load(File.read("relentEndure.yml"));
 puts;
+@armour = YAML.load(File.read("armourClass.yml"));
 puts "   Enemy Armour Loaded";
+@HP = YAML.load(File.read("hitPoints.yml"));
 puts "   Enemy Hit Points Loaded";
+@weapon = YAML.load(File.read("weaponDamage.yml"));
 puts "   Weapon Damages Loaded";
+@player = YAML.load(File.read("ABSmods.yml"));
 puts "   Player Ability Score Modifiers Loaded";
+@RE = YAML.load(File.read("relentEndure.yml"));
 puts "   Relentless Endurance Loaded";
+@dmg1 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+@dmg2 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+@dmg3 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+@dmg4 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 puts "   Damage Arrays Created";
 puts;
+
+@gmBonus = 5;
+###### End of Configuration ####
+
 
 def check_user_or_nick(event)
   if event.user.nick != nil
@@ -32,14 +42,7 @@ def check_user_or_nick(event)
     @user = event.user.name
   end
 end
-
-@dmg1 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-@dmg2 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-@dmg3 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-@dmg4 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-@gmBonus = 5;
-
-#####End Configuration####
+#####################################
 
 def valTheInny(inputStr);  # use to validate the input of type ;az1. (attack by Zalos where target # 1)
   @valTheInny = true;
@@ -132,55 +135,259 @@ def check_char_name(code);
     end;
 end;
 
-bot = Discordrb::Bot.new token: token 
+bot = Discordrb::Bot.new token: token
 
-########## Multiple Dice Rolls ########
-bot.message(start_with: "######") do |event|
-    #event.message.delete; 
-    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;
-    (0..(@player.length-1)).each do |y|
-        if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
-    end;
-    theString = event.content;
-    dotsFound = theString.index(".");
-
-    (1..dotsFound).each do |x|
-       puts "something";      
-    end;
-    
-    event.respond dotsFound.to_s;
+################## 2help ############################################ 2help ##########################
+################## 2help ############################################ 2help ##########################
+bot.message(start_with:"help") do |event|
+  say = "help: COMMAND [space] COMMENT\n";
+  say = say + "   d4.   d6.   d8.   d10.   d12.   d20.  or d100.  \n";
+  say = say + "d20.  rolls 1d20 + 0           d20.6   rolls 1d20 + 6 \n";
+  say = say + "d20a.4   rolls Advantage     =>  1d20 + 4   \n";
+  say = say + "d20d.-5  rolls Dis-Advantage =>  1d20 - 5   \n";
+  say = say + "d4.3  rolls 1d4 + 3       d6.-2    rolls 1d6 -2 \n";
+  say = say + "2d8.  rolls 2d8 + 0       3d8.-1   rolls 3d8 -1 \n";
+  event.respond say;
 end;
-######################################
-###################
-###################
-###################
-bot.message(start_with: "FILE") do |event|;
-  playAh = Hash.new;
-  line_num=0
-  text=File.open('alittle.txt').read
-  text.gsub!(/\r\n?/, "\n")
-  text.each_line do |line|
-    flag = line.slice(1,1);
-    theName = line.slice(3,10);
-    theDex = (line.slice(14,2)).to_i;
-    theSpell = line.slice(17,10);
-    theRnd = line.slice(28,1).to_i;
-    letter = line.slice(30,1);
-    hp = line.slice(32,3);
-    ac = line.slice(36,4);
-    zero = 1; idVal = "#{line_num}".to_i;
-    playAh[:id=>"#{line_num}"] = {:flag => flag, :name=>theName, :dex=>theDex, :roll=>zero,
-                                  :spell=>theSpell, :round=>theRnd, :letter=>letter, :hp=>hp, :ac=>ac };
-    line_num +=1;
+################## 2help ############################################ 2help ##########################
+################## 2help ############################################ 2help ##########################
+bot.message(start_with:"2help") do |event|
+  say = "2help [command] HELP for the manual dice rolling commands  \n"; 
+  say = say + "$EDITst#  $EDITdx#  $EDITco#  $EDITin#  $EDITwi#  $EDITch#\n";
+  say = say + "$sethp@#  $setac@# ";
+  event.respond say;
+end;
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+bot.message(start_with: "$sethp") do |event|;  
+   monsterHP = YAML.load(File.read("testHPAC.yml"));
+   alphabet = "ABCDEFGHIJKLMNOPQRST";   critter = event.content.slice(6,1);   position = alphabet.index(critter); 
+   hitPoints = event.content.slice(7,3).to_i;
+   if (position != nil) && (hitPoints != 0) then;  
+       monsterHP[position][0] = hitPoints;
+       monsterHP[position][1] = hitPoints * 1.0;
+       data = "---\n"
+#  Go through the list of critters and append the data to the preceeding data
+       (0..(monsterHP.length-1)).each do |x|;    data = data + "- " + monsterHP[x].to_s + "\n";   end;               
+              File.open("testHPAC.yml", 'w+') {|f| f.write(data) };
+      say = "Set HP process complete.";
+   else
+      say = "Nothing happened.";
+   end;
+      event.respond say;
+ end;
+ ##################################################################################################################
+ ##################################################################################################################
+ ##################################################################################################################
+ bot.message(start_with: "$setac") do |event|;  
+    monsterAC = YAML.load(File.read("testHPAC.yml"));
+    alphabet = "ABCDEFGHIJKLMNOPQRST";   critter = event.content.slice(6,1);   position = alphabet.index(critter); 
+    theAC = event.content.slice(7,3).to_i;
+    if (position != nil) && (theAC != 0) then;  
+        monsterAC[position][2] = theAC;
+        data = "---\n"
+ #  Go through the list of critters and append the data to the preceeding data
+        (0..(monsterAC.length-1)).each do |x|;    data = data + "- " + monsterAC[x].to_s + "\n";   end;               
+               File.open("testHPAC.yml", 'w+') {|f| f.write(data) };
+       say = "Set AC process complete.";
+    else
+       say = "Nothing happened.";
+    end;
+       event.respond say;
   end;
-  event.respond ("FILE contains\n " + playAh.to_s).slice(0,99);
+###############################################################################################
+###############################################################################################
+#             Proof of concept. Reading and writing data to a text file. 
+###############################################################################################
+###############################################################################################
+bot.message(start_with: "$EDIT") do |event|;  
+   player = YAML.load(File.read("testABSmods.yml"));
+   if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end;   flag= false;
+   pIndex = nil;
+   (0..(player.length-1)).each do |y|
+       if (player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
+   end;
+   case  event.content.slice(0,7);
+      when "$EDITst"; flag = true; stat=2;
+      when "$EDITdx"; flag = true; stat=3;
+      when "$EDITco"; flag = true; stat=4;
+      when "$EDITin"; flag = true; stat=5;
+      when "$EDITwi"; flag = true; stat=6;
+      when "$EDITch"; flag = true; stat=7;
+   end;
+   if flag == true then;
+     say = "st:" + player[pIndex][2].to_s + "  dx:" + player[pIndex][3].to_s + "  co:" + player[pIndex][4].to_s +
+          "  in:" + player[pIndex][5].to_s + "  wi:" + player[pIndex][6].to_s + "  ch:" + player[pIndex][7].to_s;
+
+     player[pIndex][stat]=event.content.slice(7,1).to_i; #assignment of new stat modifier
+
+     say = say + "\n The player stat mod for [" + event.content.slice(5,2) + "] is now: " + player[pIndex][stat].to_s;
+     say = say + "\n st:" + player[pIndex][2].to_s + "  dx:" + player[pIndex][3].to_s + "  co:" + player[pIndex][4].to_s +
+               "  in:" + player[pIndex][5].to_s + "  wi:" + player[pIndex][6].to_s + "  ch:" + player[pIndex][7].to_s;
+               
+data = "#######....MW.St.Dx.Co.In.Wi.Ch.Pr.AF.SS.RS.RW
+#######....eE.St.Dx.Co.In.Wi.Ch.of.lE.PP.AP.AE
+#######....lA.St.Dx.Co.In.Wi.Ch.ic.eA.EE.NE.NA
+#######....eP.St.Dx.Co.In.Wi.Ch.ie.rT.LL.GC.GP
+#######....eO.St.Dx.Co.In.Wi.Ch.nc.t .LL.EI.EO
+#######.....N. 2. 3. 4. 5. 6. 7.y8. 9.DC..A.DN
+#######.....1. 2. 3. 4. 5. 6. 7. 8. 9.10..L.RW
+#######.....1. 2. 3. 4. 5. 6. 7. 8. 9.10.11.12
+---\n"
+#     we go through the list of characters and append the data to the preceeding data
+       (0..(player.length-1)).each do |x|; 
+           a1 = "- " + player[x].to_s + "\n";
+           data = data + a1;
+       end;               
+       File.open("testABSmods.yml", 'w+') {|f| f.write(data) };
+   end;
+   event.respond say;
+end;
+###############################################################################################
+###############################################################################################
+#             Proof of concept. Reading and writing data to CREATURE Hit Points file. 
+###############################################################################################
+###############################################################################################
+bot.message(start_with: "$damage") do |event|;  
+   monsterHP = YAML.load(File.read("testHPAC.yml"));
+   if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end;   flag= false;
+   pIndex = nil; say = "We read the monsterHP"; alphabet = "ABCDEFGHIJKLMNOPQRST";
+   critter = event.content.slice(7,1);   position = alphabet.index(critter);   damage = event.content.slice(8,5).to_i;
+   if (position != nil) && (damage != 0) then;  
+       monsterHP[position][0] = monsterHP[position][0] - damage;
+       data = "---\n"
+#  Go through the list of critters and append the data to the preceeding data
+       (0..(monsterHP.length-1)).each do |x|;    data = data + "- " + monsterHP[x].to_s + "\n";   end;               
+              File.open("testHitPoints.yml", 'w+') {|f| f.write(data) };
+       say = "Deducted " + damage.to_s + " hp from Creature " + critter;
+       perCent = monsterHP[position][0]/monsterHP[position][1];
+       if perCent < 0.00010 then; health = "Down"; end;  # less than 0.0001 is only possible when HP = 0 or less 
+       if perCent > 0.00000 then; health = "Battered"; end;
+       if perCent > 0.24999 then; health = "Bloodied"; end;
+       if perCent > 0.49999 then; health = "Bruised"; end;
+       if perCent > 0.74999 then; health = "Healthy"; end;
+       say = say + "\nCreature " + critter + " is " + health;       
+   else
+     say = "Something is wrong with this: " + event.content;
+   end;
+   event.respond say;
+end;
+###############################################################################################
+###############################################################################################
+#             Proof of concept. ONE Roll To Hit method with multiple SWITCHES
+###############################################################################################
+###############################################################################################
+bot.message(start_with: "RTH") do |event|;      event.message.delete;
+   theChars = YAML.load(File.read("testABSmods.yml"));  roll = rand(1..20);  r2 = rand(1..20);  r3 = rand(1..20);  r4 = rand(1..20);
+   if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end;   alphabet = "ABCDEFGHIJKLMNOPQRST";
+   switches = event.content.slice(4,99);   pIndex = nil;   target = event.content.slice(3,1);   position = alphabet.index(target);
+            (0..(theChars.length-1)).each do |y|
+                if (theChars[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value
+            end;         #puts "Target: " + target.inspect + "      Position: " + position.inspect; 
+   if (position == nil) || (target == "") then;
+      say = "Target missing: " + event.content;
+   else;
+       #---------------------------------------------------------------------------------------------------------------------#
+       adv = switches.index("a");   dis = switches.index("d");   range = switches.index("m"); # nil value means NOT found   
+       bless = switches.index("b");
+       rage = switches.index("r");  huntM = switches.index("h");  smite = switches.index("s");
+       #---------------------------------------------------------------------------------------------------------------------#
+       say = event.content + " **" + theChars[pIndex][0] + "** vs " + target + ":";
+       statMod = [theChars[pIndex][2],theChars[pIndex][3]].max; # max of ST or DX mod
+       if (range != nil) then statMod = theChars[pIndex][3]; end; # ranged attack uses DEX abs mod
+       if (adv == nil) && (dis == nil) then;
+          total = roll + theChars[pIndex][8] + statMod;
+          say = say + " [" + roll.to_s + "]+" + theChars[pIndex][8].to_s + "p+" + statMod.to_s + "a";
+       else;
+          if (adv != nil) then
+            roll = [r2,r3].max; total = roll + theChars[pIndex][8] + statMod;
+            say = say + " [" + r2.to_s + "][" + r3.to_s + "]+" + theChars[pIndex][8].to_s + "p+" + statMod.to_s + "a";
+          else;
+            roll = [r3,r4].min; total = roll + theChars[pIndex][8] + statMod;
+            say = say + " [" + r3.to_s + "][" + r4.to_s + "]+" + theChars[pIndex][8].to_s + "p+" + statMod.to_s + "a";           
+          end;
+       end;
+       if (bless != nil) then; b = rand(1..4); total = total + b; say = say + "+" + b.to_s + "b"; end;
+       say = say + "= " + total.to_s;
+       weaponData = YAML.load(File.read("weaponDamage.yml"));  # melee 1 & 12 range 
+       if range == nil then; weaponDmg = theChars[pIndex][1]; else; weaponDmg = theChars[pIndex][12]; end;
+       mHPAC = YAML.load(File.read("testHPAC.yml"));   mAC = mHPAC[position][2];
+     if (roll > 1) then;
+       if total >= mAC then;  
+         if (roll != 20) then;
+         case weaponDmg;
+            when 0; d1=rand(1..6);d2=rand(1..6);dmgT=d1+d2+statMod; dDice ="[" + d1.to_s + "][" + d2.to_s + "]+" + statMod.to_s + "a";# 2d6
+            when 1; d1=rand(1..12);dmgT=d1+statMod; dDice ="[" + d1.to_s + "]+" + statMod.to_s + "a";# 1d12
+            when 2; d1=rand(1..10);dmgT=d1+statMod; dDice ="[" + d1.to_s + "]+" + statMod.to_s + "a";# 1d10
+            when 3; d1=rand(1..8);dmgT=d1+statMod; dDice ="[" + d1.to_s + "]+" + statMod.to_s + "a";# 1d8
+            when 4; d1=rand(1..6);dmgT=d1+statMod; dDice ="[" + d1.to_s + "]+" + statMod.to_s + "a";# 1d6
+            when 5; d1=rand(1..4);dmgT=d1+statMod; dDice ="[" + d1.to_s + "]+" + statMod.to_s + "a";# 1d4
+            when 6; d1=rand(1..3);d2=rand(1..3);dmgT=d1+d2+statMod; dDice ="[" + d1.to_s + "][" + d2.to_s + "]+" + statMod.to_s + "a";# 2d3
+            when 7; d1=rand(1..4);d2=rand(1..4);dmgT=d1+d2+statMod; dDice ="[" + d1.to_s + "][" + d2.to_s + "]+" + statMod.to_s + "a";# 2d4
+            when 8; d1=rand(1..5);d2=rand(1..5);dmgT=d1+d2+statMod; dDice ="[" + d1.to_s + "][" + d2.to_s + "]+" + statMod.to_s + "a";# 2d5
+         end;
+         say = say + "    HIT!";
+         else;
+         case weaponDmg;
+            when 0; d1=rand(1..6);d2=rand(1..6);d3=rand(1..6);d4=rand(1..6);dmgT=d1+d2+d3+d4+statMod; dDice ="[" + d1.to_s + "][" + d2.to_s + "]+" + statMod.to_s + "a";# 2d6
+            when 1; d1=rand(1..12);d2=rand(1..12);dmgT=d1+d2+statMod; dDice ="[" + d1.to_s + "][" + d2.to_s + "]+" + statMod.to_s + "a";# 1d12
+            when 2; d1=rand(1..10);d2=rand(1..10);dmgT=d1+d2+statMod; dDice ="[" + d1.to_s + "][" + d2.to_s + "]+" + statMod.to_s + "a";# 1d10
+            when 3; d1=rand(1..8);d2=rand(1..8);dmgT=d1+d2+statMod; dDice ="[" + d1.to_s + "][" + d2.to_s + "]+" + statMod.to_s + "a";# 1d8
+            when 4; d1=rand(1..6);d2=rand(1..6);dmgT=d1+d2+statMod; dDice ="[" + d1.to_s + "][" + d2.to_s + "]+" + statMod.to_s + "a";# 1d6
+            when 5; d1=rand(1..4);d2=rand(1..4);dmgT=d1+d2+statMod; dDice ="[" + d1.to_s + "][" + d2.to_s + "]+" + statMod.to_s + "a";# 1d4
+            when 6; d1=rand(1..3);d2=rand(1..3);d3=rand(1..3);d4=rand(1..3);dmgT=d1+d2+d3+d4+statMod; dDice ="[" + d1.to_s + "][" + d2.to_s + "][" + d3.to_s + "][" + d4.to_s + "]+" + statMod.to_s + "a";# 2d3
+            when 7; d1=rand(1..4);d2=rand(1..4);d3=rand(1..4);d4=rand(1..4);dmgT=d1+d2+d3+d4+statMod; dDice ="[" + d1.to_s + "][" + d2.to_s + "][" + d3.to_s + "][" + d4.to_s + "]+" + statMod.to_s + "a";# 2d4
+            when 8; d1=rand(1..5);d2=rand(1..5);d3=rand(1..5);d4=rand(1..5);dmgT=d1+d2+d3+d4+statMod; dDice ="[" + d1.to_s + "][" + d2.to_s + "][" + d3.to_s + "][" + d4.to_s + "]+" + statMod.to_s + "a";# 2d5
+         end;
+         say = say + "    CRITICAL HIT!";
+       end;
+       say = say + "\n\u2937 " + dDice ;
+
+        mHPAC[position][0] = mHPAC[position][0] - dmgT;
+        data = "---\n"    #  Go through the list of critters and append the data to the preceeding data
+        (0..(mHPAC.length-1)).each do |x|;    data = data + "- " + mHPAC[x].to_s + "\n";   end;               
+        File.open("testHPAC.yml", 'w+') {|f| f.write(data) };     
+        say = say + "= " + dmgT.to_s + " hp deducted, Creature " + target;     
+        perCent = mHPAC[position][0]/mHPAC[position][1];
+        if perCent < 0.00010 then; health = "Down"; end;  # less than 0.0001 is only possible when HP = 0 or less 
+        if perCent > 0.00000 then; health = "Battered"; end;
+        if perCent > 0.24999 then; health = "Bloodied"; end;
+        if perCent > 0.49999 then; health = "Bruised"; end;
+        if perCent > 0.74999 then; health = "Healthy"; end;
+        say = say + " is " + health;
+      else;
+       say = say + "    **Missed**";
+      end;
+     else;
+       say = say + "    **Natural One**";
+     end;
+     event.respond say;
+   end;
 end;
 
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
 
-###################
-###################
-###################
-
+##################################################################################################################
+##################################################################################################################
 bot.message(start_with: "myabs") do |event|;
   if event.user.nick != nil
       theUser = event.user.nick
@@ -216,6 +423,16 @@ bot.message(start_with:"55555") do |event|;
   end;  
   event.message.delete
   theSay = tis_this(event.content)
+  event.respond theSay;
+end;
+
+
+bot.message(contains:"fly") do |event|;
+  event.message.delete;  theString = event.content; flyStartsHere = theString.index("fly")
+  numbA = theString.slice(0,flyStartsHere); numbB = theString.slice((flyStartsHere+3),99);
+  numbA = numbA.to_i; numbB = numbB.to_i;
+  numbC = Math.sqrt((numbA * numbA) + (numbB * numbB))
+  theSay = numbA.to_s + " fly " + numbB.to_s + " = " + numbC.round(1).to_s;
   event.respond theSay;
 end;
 
@@ -339,14 +556,38 @@ bot.message(start_with: "dii") do |event|
     event.respond responseValue;
 end;
 
-################################
-######## HEALTH CHECK ##########
+#################################################################################
+################## manual CREATURE/MONSTER damage ###############################
+bot.message(start_with:"dmg") do |event|
+    event.message.delete;   check_user_or_nick(event);    letterDamage = event.content.slice(3,99); # creature LETTER and DAMAGE should be in the string
+    sym = "\u2193"+"\u2193"+"\u2193";   blank = letterDamage.index(' ');     comment = "There was no comment provided."
+    if blank != nil then; # in the case where there is a BLANK, there is a comment to extract
+      comment = letterDamage.slice(blank,99);  #extracting the comment (anything after the blank)
+    end; 
+       alphaVal = letterDamage.slice(0,1);  # FIRST character should be a CAPITAL LETTER
+       begin; target = "ABCDEFGHIJKLMNOPQRSTU".index(alphaVal); rescue; target = false; end; # translate the LETTER to a number
+       begin; hpDamage = ((letterDamage.slice(1,3)).chomp).to_i; rescue; hpDamage = 0; end;  # up to 3 characters of DAMAGE converted to an integer
+
+       if (target != false) && (hpDamage != 0) && (@user.slice(0,5) == "Allen") then;  # ensure VALID damage value & VALID creature Number
+            @HP[target][0] = @HP[target][0] - hpDamage;  # deduct the HP from the creature
+            if (@RE[target]==1) && (@HP[target][0] < 1) then;    @RE[target] = 0; @HP[target][0] = 1;   end;
+            say = sym + "  " + comment + "  " + sym + "\n";  
+            say = say + "Creature " + alphaVal + "  (" + target.to_s + ") reduced by " + hpDamage.to_s + " hit points.";
+            health_check(@HP[target][0], @HP[target][1]);
+            say = say + "\nCreature " + alphaVal + "  (" + target.to_s + ")  is " + @healthStat;
+       else;
+            say = "(" + event.content + ") dmgAB where A is Target Letter and B is the HP (integer)"
+       end;
+    event.respond say;
+end;
+
+######## HEALTH CHECK ########## ######## HEALTH CHECK ##########
 def health_check(currentHp, originalHp);
   perCent = currentHp/originalHp;
-  if perCent < 0.00010 then; @healthStat = "Dead"; end;  # less than 0.0001 is only possible when HP = 0 or less 
+  if perCent < 0.00010 then; @healthStat = "Down"; end;  # less than 0.0001 is only possible when HP = 0 or less 
   if perCent > 0.00000 then; @healthStat = "Battered"; end;
   if perCent > 0.24999 then; @healthStat = "Bloodied"; end;
-  if perCent > 0.49999 then; @healthStat = "Injured"; end;
+  if perCent > 0.49999 then; @healthStat = "Bruised"; end;
   if perCent > 0.74999 then; @healthStat = "Healthy"; end;
 end;
 
@@ -384,24 +625,28 @@ def prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
   @sayValue = "";
   iTarget = "ABCDEFGHIJKLMNOPQRSTU".slice(target,1);
   get_damages(pIndex); # go to method to get the damages
-  if rage == 2; then ra = "+(2)"; else; ra = ""; end;
+  if rage == 0; then ra = ""; end;  
+  if rage == 2; then ra = "+(2)"; end;
+  if rage == 3; then ra = "+(3)"; end;
+  if rage == 4; then ra = "+(4)"; end;
+  if rage == 5; then ra = "+(5)"; end;
   #puts "----> " + @dmg1[pIndex].to_s + " - " + @dmg2[pIndex].to_s + " - " + @dmg3[pIndex].to_s + " - " + @dmg4[pIndex].to_s;
   if iRoll != 20 then;
        if (@weapon[(@player[pIndex][1])] != "2d6") && (@weapon[(@player[pIndex][1])] != "2d4") && (@weapon[(@player[pIndex][1])] != "2d3") then;
          @sayValue = @sayValue + "\n" + @weapon[(@player[pIndex][1])].to_s + " rolled [" + @dmg1.to_s + "] + " + mod.to_s + ra + " = " + (mod + @dmg1 + rage).to_s + " points of damage.";
          #puts "HP: " + @HP[target][0].to_s + "   @dmg1: " +  @dmg1.to_s + "  mod: " +  mod.to_s + "  target: " + target.to_s + " @healthStat: " +  @healthStat.inspect; 
-         @HP[target][0] = @HP[target][0] - @dmg1 - mod;     health_check(@HP[target][0], @HP[target][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") looks " + @healthStat + "\n";
+         @HP[target][0] = @HP[target][0] - @dmg1 - mod;     health_check(@HP[target][0], @HP[target][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") is " + @healthStat + "\n";
        else;
          @sayValue = @sayValue + "\n" + @weapon[(@player[pIndex][1])].to_s + " rolled [" + @dmg1.to_s + "][" + @dmg2.to_s + "] + " + mod.to_s + ra + " = " + (mod + @dmg1 + @dmg2 + rage).to_s + " points of damage.";
-         @HP[target][0] = @HP[target][0] - @dmg1 - @dmg2 - mod;     health_check(@HP[target][0], @HP[target][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") looks " + @healthStat + "\n";
+         @HP[target][0] = @HP[target][0] - @dmg1 - @dmg2 - mod;     health_check(@HP[target][0], @HP[target][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") is " + @healthStat + "\n";
        end;
   else;   # NATURAL 20
        if (@weapon[(@player[pIndex][1])] != "2d6") && (@weapon[(@player[pIndex][1])] != "2d4") && (@weapon[(@player[pIndex][1])] != "2d3") then;
           @sayValue = @sayValue + "\n" + @weapon[(@player[pIndex][1])].to_s + " rolled [" + @dmg1.to_s + "][" + @dmg3.to_s + "] + " + mod.to_s + ra + " = " + (mod + @dmg1 + @dmg3 + rage).to_s + " points of damage. CRITICAL HIT!";
-          @HP[target][0] = @HP[target][0] - @dmg1 - @dmg3 - mod;     health_check(@HP[target][0], @HP[target][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") looks " + @healthStat + "\n";
+          @HP[target][0] = @HP[target][0] - @dmg1 - @dmg3 - mod;     health_check(@HP[target][0], @HP[target][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") is " + @healthStat + "\n";
        else;
           @sayValue = @sayValue + "\n" + @weapon[(@player[pIndex][1])].to_s + " rolled [" + @dmg1.to_s + "][" + @dmg2.to_s + "][" + @dmg3.to_s + "][" + @dmg4.to_s + "] + " + mod.to_s + ra + " = " + (mod + @dmg1 + @dmg2 + @dmg3 + @dmg4 + rage).to_s + " points of damage. CRITICAL HIT!";
-          @HP[target][0] = @HP[target][0] - @dmg1 - @dmg2 - @dmg3 - @dmg4 - mod;     health_check(@HP[target][0], @HP[target][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") looks " + @healthStat + "\n";
+          @HP[target][0] = @HP[target][0] - @dmg1 - @dmg2 - @dmg3 - @dmg4 - mod;     health_check(@HP[target][0], @HP[target][1]);     @sayValue = @sayValue + "\n Creature " + iTarget + " (" + target.to_s + ") is " + @healthStat + "\n";
        end;              
   end;
 end;
@@ -606,7 +851,34 @@ bot.message(start_with: "eblast") do |event|
               say = say + @sayValue;
           end;
     else;
-    say = "eblast needs ablast?  ?= target letter A to K";
+    say = "eblast needs eblast?  ?= target letter A to K";
+    end;
+    event.respond say;
+end;
+
+###################################################################################################
+
+###################################################################################################
+
+######### HEX BLADE ELDRITCH BLAST HEX ATTACK TARGET creature #####################################
+bot.message(start_with: "hceb") do |event|
+    if event.user.nick != nil; theUser = "EBLAS"; else; theUser = "EBLAS"; end; pIndex = nil;  # SET THE USER VALUE TO EBLAS
+    (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
+    inputStr = event.content;  length = inputStr.length;  iTarget = inputStr.slice(4,1);  target = "ABCDEFGHIJKLMNOPQRSTU".index(iTarget);  validInput = true; if (length != 5) || (target == nil) then;  validInput = false;  end;     
+    
+    if (validInput == true) then;
+      mod1 = @player[pIndex][3];   mod2 = @player[pIndex][2];   profB=@player[pIndex][8];   mod = [mod1,mod2].max;   iRoll=(rand 20)+1; result = iRoll + mod + profB;
+      say = "Hexblade Curse Eldritch Blast roll to hit Creature " + iTarget + ":\n[" + iRoll.to_s + "] +" + mod.to_s + "+" + profB.to_s + " = " + result.to_s;
+      if iRoll == 19 then iRoll = 20; end;    
+          if (result < @armour[target]) then;
+              say = say + "     ... Missed! \n";
+          else;
+              say = say + "     ... HIT!";               rage = profB; # using rage to carry the Hex Blade added damage (prof bonus)
+              prepare_damage_report(iRoll, pIndex, mod, profB, target, rage);
+              say = say + @sayValue;
+          end;
+    else;
+    say = "hceb needs hceb?  ?= target letter A to K";
     end;
     event.respond say;
 end;
@@ -681,7 +953,7 @@ bot.message(start_with: "marth") do |event|
     event.respond say;
 end;
 
-######### easy ATTACK TARGET creature #####################################
+######### easy RAGE ATTACK TARGET creature #####################################
 bot.message(start_with: "mRrth") do |event|
     if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
     (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
@@ -787,7 +1059,7 @@ bot.message(start_with: "mabrth") do |event|
     event.respond say;
 end;
 
-######### easy DIS-ADVANTAGE BLESSED ATTACK TARGET creature #####################################
+######### easy Melee DIS-ADVANTAGE BLESSED ATTACK TARGET creature #####################################
 bot.message(start_with: "mdbrth") do |event|
     if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
     (0..(@player.length-1)).each do |y|; if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end;  end; #finds player Index Value (integer or nil)
@@ -1083,7 +1355,7 @@ bot.message(start_with: "comp") do |event|
             say = say + sayHit; 
         end;
      else;
-       say = "Roll To Hit needs  comp?   ?= target (A,B,C ...)";
+       say = "Artificer COMPanion needs  comp?   ?= target (A,B,C ...)";
      end;    
         event.respond say;
 end;
@@ -1106,7 +1378,7 @@ bot.message(start_with: "srth") do |event|
             say = say + sayHit; 
         end;
      else;
-       say = "Roll To Hit needs  srth?   ?= target number (0 to 9)";
+       say = "Spell Roll To Hit needs  srth?   ?= target number (0 to 9)";
      end;    
         event.respond say;
 end;
@@ -1173,7 +1445,8 @@ bot.message(start_with: "sdrth") do |event|
         event.respond say;
 end;
 
-
+#######################################################
+#######################################################
 ########## DAMAGE Sneak Attack Dagger d4 ##############
 bot.message(start_with: "SAD2") do |event|
     inputValue = event.content;
@@ -1261,6 +1534,82 @@ bot.message(start_with: "!SAD4") do |event|
 
   event.respond responseValue;
 end;
+
+########## DAMAGE Sneak Attack Rapier d8 ##############
+bot.message(start_with: "SAD5") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+       totalDmg=0;
+       dDie = [0,1,2,3,4];
+       (0..4).each do |x|;
+          dDie[x]=(rand 6)+1;
+          totalDmg=totalDmg + dDie[x];
+       end;
+       responseValue = @user.to_s + " Sneak Attack (5 dice) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "] = " + totalDmg.to_s;
+  event.respond responseValue;
+end;
+
+########## DAMAGE Sneak Attack Rapier d8 CRITICAL ##############
+bot.message(start_with: "!SAD5") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+       totalDmg=0;
+       dDie = [0,1,2,3,4,5,6,7,8,9];
+       (0..9).each do |x|;
+          dDie[x]=(rand 6)+1;
+          totalDmg=totalDmg + dDie[x];
+       end;
+       responseValue = @user.to_s + " CRITICAL Sneak Attack (5 dice) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + 
+                                    dDie[4].to_s + "][" + dDie[5].to_s + "][" + dDie[6].to_s + "][" + dDie[7].to_s +  "][" + dDie[8].to_s +  "][" + dDie[8].to_s +  "] = " + totalDmg.to_s;
+
+  event.respond responseValue;
+end;
+
+########## DAMAGE Sneak Attack Rapier d8 ##############
+bot.message(start_with: "SAD6") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+       totalDmg=0;
+       dDie = [0,1,2,3,4,5];
+       (0..5).each do |x|;
+          dDie[x]=(rand 6)+1;
+          totalDmg=totalDmg + dDie[x];
+       end;
+       responseValue = @user.to_s + " Sneak Attack (6 dice) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "][" + dDie[5].to_s + "] = " + totalDmg.to_s;
+  event.respond responseValue;
+end;
+
+########## DAMAGE Sneak Attack Rapier d8 CRITICAL ##############
+bot.message(start_with: "!SAD6") do |event|
+    inputValue = event.content;
+    check_user_or_nick(event)
+       totalDmg=0;
+       dDie = [0,1,2,3,4,5,6,7,8,9,10,11];
+       (0..11).each do |x|;
+          dDie[x]=(rand 6)+1;
+          totalDmg=totalDmg + dDie[x];
+       end;
+       responseValue = @user.to_s + " CRITICAL Sneak Attack (6 dice) damage: [" + dDie[0].to_s + "][" + dDie[1].to_s + "][" + dDie[2].to_s + "][" + dDie[3].to_s + "][" + dDie[4].to_s + "][" +
+                                      dDie[5].to_s + "][" + dDie[6].to_s + "][" + dDie[7].to_s +  "][" + dDie[8].to_s +  "][" + dDie[9].to_s + "][" + dDie[10].to_s + "][" + dDie[10].to_s + "] = " + totalDmg.to_s;
+
+  event.respond responseValue;
+end;
+
+######### Ability Score Damage ######
+bot.message(start_with: "absdmg") do |event|;
+  if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end; pIndex = nil;  # get value for theUser set pIndex for next line of code
+  dmgRoll = (rand 10)+1;
+  case dmgRoll;
+    when 1..4; damage =1;
+    when 5..7; damage =2;
+    when 8..9; damage =3;
+    when 10; damage =4;
+  end;
+    responseValue = @user.to_s + " Constitution Score Damage value is: " + damage.to_s;
+    event.respond responseValue;
+end;
+
+
 
 ########## SHILLELAGH ##############
 bot.message(start_with: "shill") do |event|;
@@ -1556,177 +1905,116 @@ end;
 
 ##################  d4. ##########################
 bot.message(contains:"d4.") do |event|
-    event.message.delete;
-    check_user_or_nick(event);      @tempVar = event.content;  comment = "Unknown"
-    blank = @tempVar.index(' ');
-    if blank != nil then;
-      comment = @tempVar.slice(blank,99);
-      @tempVar = @tempVar.slice(0,blank);
-    end;    
-    parse_the_d("d4.");  # uses @tempVar to set value of @howManyDice
-    chkNum = Integer(@howManyDice) rescue false;
-    if ( chkNum == false ) then;
-       say = " d4. requires  ?d4.? where ? are integers (1 to 9)."
-    else
-       str_2_number(@howManyDice); #sets the value of @numba
-       say = @user.to_s + " rolled " + @numba.to_s + "d4 " + " + " + @whatPlus.to_s + "\n";
-       die=[0,0,0,0,0,0,0,0,0]; total=0;
-       (0..(@numba-1)).each do |x|;
-           die[x]=(rand 4)+1;
-           say = say + "[" + die[x].to_s + "]";
-           total=total + die[x];
-       end;
-       total = total + @whatPlus;
-       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
-       say = say + "\nREASON: " + comment;
-    end;
-    event.respond say;
+  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d4.");
+  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+3),99).strip;
+  spacePos = afterDieStr.index(" "); comment = "#d4.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
+  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
+     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
+     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
+     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
+  end;
+  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
+  say = @user.to_s + " rolled " + numbA.to_s + "d4" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
+  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..4);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
+  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
+  event.respond say;
 end;
 
 ################## d6. ##########################
 bot.message(contains:"d6.") do |event|
-    event.message.delete;
-    check_user_or_nick(event);      @tempVar = event.content;  comment = "Unknown"
-    blank = @tempVar.index(' ');
-    if blank != nil then;
-      comment = @tempVar.slice(blank,99);
-      @tempVar = @tempVar.slice(0,blank);
-    end;     
-    parse_the_d("d6.");  # uses @tempVar to set value of @howManyDice
-    chkNum = Integer(@howManyDice) rescue false;
-    if ( chkNum == false ) then;
-       say = " d6. requires  ?d6.? where ? are integers (1 to 9)."
-    else
-       str_2_number(@howManyDice); #sets the value of @numba
-       say = @user.to_s + " rolled " + @numba.to_s + "d6 " + " + " + @whatPlus.to_s + "\n";
-       die=[0,0,0,0,0,0,0,0,0]; total=0;
-       (0..(@numba-1)).each do |x|;
-           die[x]=(rand 6)+1;
-           say = say + "[" + die[x].to_s + "]";
-           total=total + die[x];
-       end;
-       total = total + @whatPlus;
-       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
-       say = say + "\nREASON: " + comment;
-    end;
-    event.respond say;
+  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d6.");
+  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+3),99).strip;
+  spacePos = afterDieStr.index(" "); comment = "#d6.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
+  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
+     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
+     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
+     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
+  end;
+  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
+  say = @user.to_s + " rolled " + numbA.to_s + "d6" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
+  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..6);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
+  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
+  event.respond say;
 end;
 
 ################## d8. ##########################
 bot.message(contains:"d8.") do |event|
-    event.message.delete;
-    check_user_or_nick(event);      @tempVar = event.content;  comment = "Unknown"
-    blank = @tempVar.index(' ');
-    if blank != nil then;
-      comment = @tempVar.slice(blank,99);
-      @tempVar = @tempVar.slice(0,blank);
-    end;     
-    parse_the_d("d8.");  # uses @tempVar to set value of @howManyDice
-    chkNum = Integer(@howManyDice) rescue false;
-    if ( chkNum == false ) then;
-       say = " d8. requires  ?d8.? where ? are integers (1 to 9)."
-    else
-       str_2_number(@howManyDice); #sets the value of @numba
-       say = @user.to_s + " rolled " + @numba.to_s + "d8 " + " + " + @whatPlus.to_s + "\n";
-       die=[0,0,0,0,0,0,0,0,0]; total=0;
-       (0..(@numba-1)).each do |x|;
-           die[x]=(rand 8)+1;
-           say = say + "[" + die[x].to_s + "]";
-           total=total + die[x];
-       end;
-       total = total + @whatPlus;
-       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
-       say = say + "\nREASON: " + comment;
-    end;
-    event.respond say;
+  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d8.");
+  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+3),99).strip;
+  spacePos = afterDieStr.index(" "); comment = "#d8.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
+  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
+     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
+     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
+     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
+  end;
+  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
+  say = @user.to_s + " rolled " + numbA.to_s + "d8" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
+  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..8);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
+  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
+  event.respond say;
 end;
 
 ################## d10. ##########################
 bot.message(contains:"d10.") do |event|
-    event.message.delete;
-    check_user_or_nick(event);      @tempVar = event.content;  comment = "Unknown"
-    blank = @tempVar.index(' ');
-    if blank != nil then;
-      comment = @tempVar.slice(blank,99);
-      @tempVar = @tempVar.slice(0,blank);
-    end;     
-    parse_the_d("d10.");  # uses @tempVar to set value of @howManyDice
-    chkNum = Integer(@howManyDice) rescue false;
-    if ( chkNum == false ) then;
-       say = " d10. requires  ?d10.? where ? are integers (1 to 9)."
-    else
-       str_2_number(@howManyDice); #sets the value of @numba
-       say = @user.to_s + " rolled " + @numba.to_s + "d10 " + " + " + @whatPlus.to_s + "\n";
-       die=[0,0,0,0,0,0,0,0,0]; total=0;
-       (0..(@numba-1)).each do |x|;
-           die[x]=(rand 10)+1;
-           say = say + "[" + die[x].to_s + "]";
-           total=total + die[x];
-       end;
-       total = total + @whatPlus;
-       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
-       say = say + "\nREASON: " + comment;
-    end;
-    event.respond say;
+  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d10.");
+  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+4),99).strip;
+  spacePos = afterDieStr.index(" "); comment = "#d10.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
+  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
+     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
+     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
+     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
+  end;
+  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
+  say = @user.to_s + " rolled " + numbA.to_s + "d10" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
+  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..10);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
+  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
+  event.respond say;
 end;
 
 ################## d12. ##########################
 bot.message(contains:"d12.") do |event|
-    event.message.delete;
-    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
-    blank = @tempVar.index(' ');
-    if blank != nil then;
-      comment = @tempVar.slice(blank,99);
-      @tempVar = @tempVar.slice(0,blank);
-    end;   
-    parse_the_d("d12.");  # uses @tempVar to set value of @howManyDice
-    chkNum = Integer(@howManyDice) rescue false;
-    if ( chkNum == false ) then;
-       say = " d12. requires  ?d12.? where ? are integers (1 to 9)."
-    else
-       str_2_number(@howManyDice); #sets the value of @numba
-       say = @user.to_s + " rolled " + @numba.to_s + "d12 " ++ " + " + @whatPlus.to_s + "\n";
-       die=[0,0,0,0,0,0,0,0,0]; total=0;
-       (0..(@numba-1)).each do |x|;
-           die[x]=(rand 12)+1;
-           say = say + "[" + die[x].to_s + "]";
-           total=total + die[x];
-       end;
-       total = total + @whatPlus;
-       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
-       say = say + "\nREASON: " + comment;
-    end;
-    event.respond say;
+  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d12.");
+  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+4),99).strip;
+  spacePos = afterDieStr.index(" "); comment = "#d12.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
+  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
+     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
+     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
+     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
+  end;
+  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
+  say = @user.to_s + " rolled " + numbA.to_s + "d12" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
+  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..12);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
+  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
+  event.respond say;
 end;
 
 ################## d20. ##########################
 bot.message(contains:"d20.") do |event|
-    check_user_or_nick(event);      @tempVar = event.content;   comment = "Unknown"
-    blank = @tempVar.index(' ');
-    if blank != nil then;
-      comment = @tempVar.slice(blank,99);
-      @tempVar = @tempVar.slice(0,blank);
-    end;   
-    parse_the_d("d20.");  # uses @tempVar to set value of @howManyDice
-    chkNum = Integer(@howManyDice) rescue false;
-    if ( chkNum == false ) then;
-       say = " d20. requires  d20.  OR   ?d20.? where ? are integers (1 to 9)."
-    else
-       str_2_number(@howManyDice); #sets the value of @numba
-       say = @user.to_s + " rolled " + @numba.to_s + "d20 " + " + " + @whatPlus.to_s + "\n";
-       die=[0,0,0,0,0,0,0,0,0]; total=0;
-       (0..(@numba-1)).each do |x|;
-           die[x]=(rand 20)+1;
-           say = say + "[" + die[x].to_s + "]";
-           total=total + die[x];
-       end;
-       total = total + @whatPlus;
-       say = say + " + " + @whatPlus.to_s + " = " + total.to_s;
-       say = say + "  REASON: " + comment;
-       say = say + "\n===============";
-       event.message.delete;  
-    end;
-    event.respond say;
+  event.message.delete;  check_user_or_nick(event);  total = 0;  theString = event.content; diePosition = theString.index("d20.");
+  begin; numbA = Integer(theString.slice(0,diePosition)); rescue; numbA = 1; end;  afterDieStr = theString.slice((diePosition+4),99).strip;
+  spacePos = afterDieStr.index(" "); comment = "#d20.# [space] comment";   ### puts spacePos.inspect; puts "*" + afterDieStr + "*";
+  if spacePos != nil then;     #### when a SPACE exists within afterDieStr do this stuff
+     begin; numbB = Integer(afterDieStr.slice(0,spacePos)); rescue; numbB = nil; end;
+     if numbB == nil; comment = afterDieStr.slice(0,99); else; comment = afterDieStr.slice(spacePos,99); numbB = 0; end;
+  else;    ### puts " spacePos IS nil:     " + spacePos.inspect;
+     begin; numbB = Integer(afterDieStr.slice(0,99)); rescue; numbB = 0; end;
+     if afterDieStr.length != 0 && numbB == 0 then; comment = afterDieStr.slice(0,99); end;
+  end;
+  theDice = Array.new;   ### puts "numbA " + numbA.to_s + "      numbB " + numbB.to_s;
+  say = @user.to_s + " rolled " + numbA.to_s + "d20" + "+" + numbB.to_s + "  (" + theString.slice(0,9) + ")" + "\n";
+  (0..(numbA-1)).each do |x|;  theDice[x] = rand(1..20);  say = say + "[" + theDice[x].to_s + "]";  total = total + theDice[x];  end; #rolls the required dice
+  total = total + numbB;      say = say + " + " + numbB.to_s + " = " + total.to_s;      say = say + "\nREASON: " + comment;
+  event.respond say;
 end;
 
 ################## d20a. ##########################
@@ -1753,7 +2041,7 @@ bot.message(start_with:"d20a.") do |event|
        total = bigDie + @whatPlus;
        say = say + "       [" + bigDie.to_s + "] + " + @whatPlus.to_s + " = " + total.to_s;
        say = say + "  REASON: " + comment;
-       say = say + "\n---------------";
+       say = say + "\n~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~";
     end;
     event.respond say;
 end;
@@ -1923,7 +2211,7 @@ bot.message(contains:"D500.") do |event|
       say = "Busted: " + chkNum.to_s;
     else;
          if chkNum > 0 then;
-            howManyDice = @tempVar.slice(0,(locationValue.to_i)-1);
+            howManyDice = @tempVar.slice(0,(locationValue.to_i));
             puts howManyDice.to_s + "     <----";
             say = @user.to_s + " rolled " + howManyDice.to_s + "D500." + " + " + @whatPlus.to_s + "\n";
             die=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; total=0;
@@ -1942,40 +2230,17 @@ bot.message(contains:"D500.") do |event|
     event.respond say;
 end;
 
-################## help ##########################
-################## help ##########################
-################## help ##########################
-bot.message(start_with:"help") do |event|
-  lyrics = Array.new
-  lyrics[0]="Help me if you can, I'm feeling down";
-  lyrics[1]="And I do appreciate you being 'round";
-  lyrics[2]="Help me get my feet back on the ground";
-  lyrics[3]="Won't you please, please help me?";
-  say = "HELP HELP HELP  for the manual dice rolling commands  \n"; #+ lyrics[(rand 4)].to_s +
-  say = say + "NOTE WELL: the command MUST begin at the START of input.\n"
-  say = say + "REASON: after the command, leave a SPACE, then type a REASON.\n\n"
-  say = say + "COMMAND:   d4.   d6.   d8.   d10.   d12.   d20.  or d100.  \n";
-  say = say + "d20.  rolls 1d20 + 0           d20.6   rolls 1d20 + 6 \n";
-  say = say + "d20a.4       rolls Advantage         1d20 + 4   \n";
-  say = say + "d20d.-5     rolls Dis-Advantage  1d20 - 5  \n";
-  say = say + "d4.3  rolls 1d4 + 3           d6.-2     rolls 1d6 -2 \n";
-  say = say + "2d8.  rolls 2d8 + 0           3d8.-1   rolls 3d8 -1 \n";
-  event.respond say;
-end;
 
 ####### parse_the_d accepts and incoming value of something like d20. to help location the core of the command
 def parse_the_d(incoming);
   #puts "the value of @tempVar is: " + @tempVar.inspect;
-  theIndex1 = Integer.(@tempVar.index(incoming)) rescue false;
-  if theIndex1 == false then; theIndex1 = 1; end;
-  #puts " the value of theIndex1 is: " + theIndex1.inspect;
+  theIndex1 = @tempVar.index(incoming).to_i;          #puts "The Index Value: " + theIndex1.to_s;
+  if theIndex1 == false then; theIndex1 = 1; end;     #puts " the value of theIndex1 is: " + theIndex1.inspect;
   @howManyDice = Integer(@tempVar.slice(0,(theIndex1))) rescue false;
-  if @howManyDice == false then; @howManyDice = 1; end;
-  #puts "the value of @howManyDice is: " + @howManyDice.inspect;
-#  if ( @howManyDice == "0" || @howManyDice == "" ) then @howManyDice = 1; end;
-  #puts "the value of @tempVar is: " + @tempVar.inspect;
-  theIndex2 = @tempVar.index('.');  #puts "the value of theIndex2 is: " + theIndex2.inspect;
-  tempVarLen = @tempVar.length;  #puts "the value of tempVarLen  is: " + tempVarLen.inspect;
+  if @howManyDice == false then; @howManyDice = 1; end; #puts "the value of @howManyDice is: " + @howManyDice.inspect;
+  if ( @howManyDice == "0" || @howManyDice == "" ) then @howManyDice = 1; end; #puts "the value of @tempVar is: " + @tempVar.inspect;
+  theIndex2 = @tempVar.index('.');         #puts "the value of theIndex2 is: " + theIndex2.inspect;
+  tempVarLen = @tempVar.length;            #puts "the value of tempVarLen  is: " + tempVarLen.inspect;
   if @tempVar.slice((theIndex2+1),1) != nil then;
      @whatPlus = @tempVar.slice((theIndex2+1),(tempVarLen-theIndex2));
   else 
@@ -2160,28 +2425,26 @@ bot.message(start_with:"$HPall") do |event|
 end;
 
 
-################## manual damage ###############################
-bot.message(start_with:"dam") do |event|
-    check_user_or_nick(event); inputStr = event.content.slice(3,4);   # creature Number and DAMAGE should be in the string
-       alphaVal = inputStr.slice(0,1); creatHP = inputStr.slice(1,3);
-       target = "ABCDEFGHIJKLMNOPQRSTU".index(alphaVal);
-       validTarget = false; if (target > -1) && (target < 20) then; validTarget = true; end; #creature Number
-       hpVal = Integer(creatHP) rescue false;  #Value of HP
-       if ( (inputStr.length > 1) && (validTarget != false) && (hpVal != false) && (@user.slice(0,5) == "Allen") ) then;
-            @HP[target][0]=@HP[target][0]-hpVal;
-            if (@RE[target]==1) && (@HP[target][0] < 1) then;
-              @RE[target] = 0; @HP[target][0] = 1;
-            end;   
-            say = "Hit Points for Creature " + alphaVal + "  (" + target.to_s + ") , reduced by " + hpVal.to_s + " hit points.";
-            health_check(@HP[target][0], @HP[target][1])
-            say = say + "\n\n Creature Number " + alphaVal + "  (" + target.to_s + ")  looks " + @healthStat;
-       else;
-        say = ";damage?? where first ? is Target Integer and second ? is the HP integer."
+################# Character Generator #########################
+bot.message(start_with:"charGen") do |event|
+    check_user_or_nick(event); say="";
+    results = [0,0,0,0,0,0];   rolls = [0,0,0,0];   bigTotal = 0; total = 0;
+       (0..5).each do |z|;
+            (0..3).each do |y|;
+               rolls[y]= SecureRandom.random_number(6)+1;
+               total = total + rolls[y];
+            end;
+            minimum = rolls.min;
+            results[z] = rolls[0]+rolls[1]+rolls[2]+rolls[3]-minimum;
+            bigTotal = bigTotal + results[z]; 
+            say = say + "[" + rolls[0].to_s + "]" + "[" + rolls[1].to_s + "]" + "[" + rolls[2].to_s + "]" + "[" + rolls[3].to_s + "]" + " = " + results[z].to_s + "\n";
        end;
+       say = say + "Average: " + ('%.2f' % (bigTotal/6.0)).to_s; 
     event.respond say;
 end;
 
-################## manual damage ###############################
+
+################## RELENTLESS ENDURANCE ###############################
 bot.message(start_with:"RELE") do |event|
     check_user_or_nick(event);
        inputStr = event.content.slice(4,1);   # creature Number and DAMAGE should be in the string
