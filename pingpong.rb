@@ -559,7 +559,7 @@ end;
 ##################################################################################################################
 ################################################################################################################## TREASURE CALCULATIONS
 ########################0123456789################################################################################
-bot.message(start_with:"MONEY") do |event|;
+bot.message(start_with:"CASH") do |event|;
   def cr0to4(theRoll);
     case theRoll;
       when 1..30; cash=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6); cash=cash.to_s + " copper";
@@ -570,10 +570,22 @@ bot.message(start_with:"MONEY") do |event|;
     end;
     return cash; 
   end;
+  def cr5to10(theRoll);
+    case theRoll;
+      when 1..30; cash1=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6);cash2=rand(1..6); cash=(cash1*100).to_s + " copper & " + (cash2*5).to_s + " gold";
+      when 31..60; cash1=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6);cash2=rand(1..6)+rand(1..6); cash=(cash1*10).to_s + " silver" + " & " + (cash2*10).to_s + " gold";
+      when 61..70; cash1=rand(1..6)+rand(1..6)+rand(1..6);cash2=rand(1..6)+rand(1..6);cash=((cash1*5)+(cash2*10)).to_s + " gold";
+      when 71..95; cash=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6); cash=(cash*10).to_s + " gold";
+      when 96..100; cash1=rand(1..6)+rand(1..6); cash2=rand(1..6)+rand(1..6)+rand(1..6);cash=(cash1*10).to_s + " gold & " + (cash2*10).to_s + " platinum";
+    end;
+    return cash; 
+  end;  
+    
   event.message.delete
   crTreasure = event.content.slice(5,5).to_i;
   theRoll = rand(1..100);
   if crTreasure < 5 then; cash = cr0to4(theRoll); end;
+  if crTreasure < 11 then; cash = cr5to10(theRoll); end;
   say = "CR value is " + crTreasure.to_s + "\n" + cash;
   
   event.respond say;
