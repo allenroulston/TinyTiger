@@ -566,7 +566,8 @@ bot.message(start_with:"MONEY") do |event|;
       when 31..60; cash=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6); cash=cash.to_s + " silver";
       when 61..70; cash=rand(1..6)+rand(1..6)+rand(1..6)+1; cash=(cash/2).to_s + " gold";
       when 71..95; cash=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6); cash=cash.to_s + " gold";
-      when 96..100; cash=rand(1..6); cash=cash.to_s + " platinum"; 
+      when 96..100; cash=rand(1..6); cash=cash.to_s + " platinum";
+    end;
     return cash; 
   end;
   event.message.delete
@@ -574,6 +575,7 @@ bot.message(start_with:"MONEY") do |event|;
   theRoll = rand(1..100);
   if crTreasure < 5 then; cash = cr0to4(theRoll); end;
   say = "CR value is " + crTreasure.to_s + "\n" + cash;
+  
   event.respond say;
 end;
 ##################################################################################################################
