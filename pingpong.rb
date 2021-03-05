@@ -593,9 +593,10 @@ bot.message(start_with:"CASH") do |event|;
   event.message.delete
   crTreasure = event.content.slice(4,5).to_i;
   theRoll = rand(1..100);
+  if crTreasure < 17 then; cash = cr11to16(theRoll); end;
+  if crTreasure < 11 then; cash = cr5to10(theRoll); end;   
   if crTreasure < 5 then; cash = cr0to4(theRoll); end;
-  if crTreasure < 11 then; cash = cr5to10(theRoll); end;
-  if crTreasure < 17 then; cash = cr11to16(theRoll); end;  
+ 
   say = "CR value is " + crTreasure.to_s + "\n" + cash;
   
   event.respond say;
