@@ -270,7 +270,7 @@ bot.message(start_with: "$damage") do |event|;
        data = "---\n"
 #  Go through the list of critters and append the data to the preceeding data
        (0..(monsterHP.length-1)).each do |x|;    data = data + "- " + monsterHP[x].to_s + "\n";   end;               
-              File.open("testHitPoints.yml", 'w+') {|f| f.write(data) };
+              File.open("testHPAC.yml", 'w+') {|f| f.write(data) };
        say = "Deducted " + damage.to_s + " hp from Creature " + critter;
        perCent = monsterHP[position][0]/monsterHP[position][1];
        if perCent < 0.00010 then; health = "Down"; end;  # less than 0.0001 is only possible when HP = 0 or less 
