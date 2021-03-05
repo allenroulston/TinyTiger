@@ -580,12 +580,22 @@ bot.message(start_with:"CASH") do |event|;
     end;
     return cash; 
   end;  
-    
+  def cr11to16(theRoll);
+    case theRoll;
+      when 1..20; cash1=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6);cash2=rand(1..6);cash1=(cash1*100).to_s + " silver & " + (cash2*100).to_s + " gold";
+      when 21..35; cash1=rand(1..6);cash2=rand(1..6); cash=(cash1*50)+(cash2*100).to_s + " gold";
+      when 36..75; cash1=rand(1..6)+rand(1..6);cash2=rand(1..6);cash=((cash1*100).to_s + " gold & " + (cash2*10)).to_s + " platinum";
+      when 76..100; cash1=rand(1..6)+rand(1..6); cash2=rand(1..6)+rand(1..6);cash=(cash1*100).to_s + " gold & " + (cash2*10).to_s + " platinum";
+    end;
+    return cash; 
+  end; 
+      
   event.message.delete
   crTreasure = event.content.slice(4,5).to_i;
   theRoll = rand(1..100);
   if crTreasure < 5 then; cash = cr0to4(theRoll); end;
   if crTreasure < 11 then; cash = cr5to10(theRoll); end;
+  if crTreasure < 17 then; cash = cr11to16(theRoll); end;  
   say = "CR value is " + crTreasure.to_s + "\n" + cash;
   
   event.respond say;
