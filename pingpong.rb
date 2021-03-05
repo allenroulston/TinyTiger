@@ -353,9 +353,12 @@ bot.message(start_with: "RTH") do |event|;      event.message.delete;
          end;
          say = say + "    CRITICAL HIT!";
        end;
-       say = say + "\n\u2937 " + dDice ;
+       say = say + "\n\u2937 " + dDice ; huntMDmg = 0;
+       if huntM != nil then; 
+         huntMDmg = rand(1..6); say = say + "+" + huntM.to_s + "h";
+       end;
 
-        mHPAC[position][0] = mHPAC[position][0] - dmgT;
+        mHPAC[position][0] = mHPAC[position][0] - dmgT - huntMDmg;
         data = "---\n"    #  Go through the list of critters and append the data to the preceeding data
         (0..(mHPAC.length-1)).each do |x|;    data = data + "- " + mHPAC[x].to_s + "\n";   end;               
         File.open("testHPAC.yml", 'w+') {|f| f.write(data) };     
