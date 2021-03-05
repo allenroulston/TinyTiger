@@ -559,17 +559,21 @@ end;
 ##################################################################################################################
 ################################################################################################################## TREASURE CALCULATIONS
 ########################0123456789################################################################################
-bot.message(start_with:"TREASURE") do |event|;
-  def this(input);
-    return something; 
+bot.message(start_with:"MONEY") do |event|;
+  def cr0to4(theRoll);
+    case theRoll;
+      when 1..30; cash=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6); cash=cash.to_s + " copper";
+      when 31..60; cash=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6); cash=cash.to_s + " silver";
+      when 61..70; cash=rand(1..6)+rand(1..6)+rand(1..6)+1; cash=(cash/2).to_s + " gold";
+      when 71..95; cash=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6); cash=cash.to_s + " gold";
+      when 96..100; cash=rand(1..6); cash=cash.to_s + " platinum"; 
+    return cash; 
   end;
   event.message.delete
-  begin; crTreasure = event.content.slice(8,5).to_i; rescue crTreasure = nil; end;
-  if crTreasure == nil then;
-    say = "Invalid parameter: " + event.content;
-  else;
-    say = "CR value is " + crTreasure.to_s;
-  end;
+  crTreasure = event.content.slice(5,5).to_i;
+  theRoll = rand(1..100);
+  if crTreasure < 5 then; cash = cr0to4(theRoll); end;
+  say = "CR value is " + crTreasure.to_s + "\n" + cash;
   event.respond say;
 end;
 ##################################################################################################################
