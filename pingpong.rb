@@ -355,7 +355,7 @@ bot.message(start_with: "RTH") do |event|;      event.message.delete;
        end;
        say = say + "\n\u2937 " + dDice ; huntMDmg = 0;
        if huntM != nil then; 
-         huntMDmg = rand(1..6); say = say + "+" + huntM.to_s + "h";
+         huntMDmg = rand(1..6); say = say + "+[" + huntMDmg.to_s + "h]";
        end;
 
         mHPAC[position][0] = mHPAC[position][0] - dmgT - huntMDmg;
