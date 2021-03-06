@@ -584,7 +584,7 @@ bot.message(start_with:"CASH") do |event|;
     case theRoll;
       when 1..20; cash1=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6);cash2=rand(1..6);cash1=(cash1*100).to_s + " silver & " + (cash2*100).to_s + " gold";
       when 21..35; cash1=rand(1..6);cash2=rand(1..6); cash=(cash1*50)+(cash2*100).to_s + " gold";
-      when 36..75; cash1=rand(1..6)+rand(1..6);cash2=rand(1..6);cash=((cash1*100).to_s + " gold & " + (cash2*10)).to_s + " platinum";
+      when 36..75; cash1=rand(1..6)+rand(1..6);cash2=rand(1..6);cash=(cash1*100).to_s + " gold & " + (cash2*10).to_s + " platinum";
       when 76..100; cash1=rand(1..6)+rand(1..6); cash2=rand(1..6)+rand(1..6);cash=(cash1*100).to_s + " gold & " + (cash2*10).to_s + " platinum";
     end;
     return cash; 
