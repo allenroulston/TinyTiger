@@ -237,15 +237,7 @@ bot.message(start_with: "$EDIT") do |event|;
      say = say + "\n st:" + player[pIndex][2].to_s + "  dx:" + player[pIndex][3].to_s + "  co:" + player[pIndex][4].to_s +
                "  in:" + player[pIndex][5].to_s + "  wi:" + player[pIndex][6].to_s + "  ch:" + player[pIndex][7].to_s;
                
-data = "#######....MW.St.Dx.Co.In.Wi.Ch.Pr.AF.SS.RS.RW
-#######....eE.St.Dx.Co.In.Wi.Ch.of.lE.PP.AP.AE
-#######....lA.St.Dx.Co.In.Wi.Ch.ic.eA.EE.NE.NA
-#######....eP.St.Dx.Co.In.Wi.Ch.ie.rT.LL.GC.GP
-#######....eO.St.Dx.Co.In.Wi.Ch.nc.t .LL.EI.EO
-#######.....N. 2. 3. 4. 5. 6. 7.y8. 9.DC..A.DN
-#######.....1. 2. 3. 4. 5. 6. 7. 8. 9.10..L.RW
-#######.....1. 2. 3. 4. 5. 6. 7. 8. 9.10.11.12
----\n"
+data = "---\n";
 #     we go through the list of characters and append the data to the preceeding data
        (0..(player.length-1)).each do |x|; 
            a1 = "- " + player[x].to_s + "\n";
