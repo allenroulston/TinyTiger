@@ -291,13 +291,15 @@ bot.message(start_with: "$EDIT") do |event|;
      say = "st:" + player[pIndex][1].to_s + "  dx:" + player[pIndex][2].to_s + "  co:" + player[pIndex][3].to_s +
           "  in:" + player[pIndex][4].to_s + "  wi:" + player[pIndex][5].to_s + "  ch:" + player[pIndex][6].to_s + "\n";
      say = say + "ProfB:" + player[pIndex][7].to_s +  "   CastStat:" + player[pIndex][10].to_s  + "\n";
-     say = say + "MeleeW:" + player[pIndex][8].to_s + "   RangeW:" + player[pIndex][9].to_s;
+     say = say + "MeleeW:" + player[pIndex][8].to_s + "   RangeW:" + player[pIndex][9].to_s + "\n";
           
      player[pIndex][stat]=event.content.slice(7,1).to_i; #assignment of new stat modifier
 
-     say = say + "\n The player stat mod for [" + event.content.slice(5,2) + "] is now: " + player[pIndex][stat].to_s;
+     say = say + "\n The player stat mod for [" + event.content.slice(5,2) + "] is now: " + player[pIndex][stat].to_s + "\n";
      say = say + "\n st:" + player[pIndex][1].to_s + "  dx:" + player[pIndex][2].to_s + "  co:" + player[pIndex][3].to_s +
                "  in:" + player[pIndex][4].to_s + "  wi:" + player[pIndex][5].to_s + "  ch:" + player[pIndex][6].to_s;
+     say = say + "ProfB:" + player[pIndex][7].to_s +  "   CastStat:" + player[pIndex][10].to_s  + "\n";
+     say = say + "MeleeW:" + player[pIndex][8].to_s + "   RangeW:" + player[pIndex][9].to_s;
                
 data = "---\n";
 #     we go through the list of characters and append the data to the preceeding data
