@@ -154,7 +154,7 @@ end;
 bot.message(start_with:"2help") do |event|
   say = "2help [command] HELP for the manual dice rolling commands  \n"; 
   say = say + "$EDITst#  $EDITdx#  $EDITco#  $EDITin#  $EDITwi#  $EDITch#\n";
-  say = say + "$sethp@#  $setac@# ";
+  say = say + "$sethp@#  $setac@#  $abclist";
   event.respond say;
 end;
 ##################################################################################################################
