@@ -15,20 +15,18 @@ owner = 690339632529015005 # Your user ID
 
 puts;
 @armour = YAML.load(File.read("armourClass.yml"));
-puts "   Enemy Armour Loaded";
+puts "The Tiny Tiger is preparing for battle"
+puts;
 @HP = YAML.load(File.read("hitPoints.yml"));
-puts "   Enemy Hit Points Loaded";
 @weapon = YAML.load(File.read("weaponDamage.yml"));
-puts "   Weapon Damages Loaded";
 @player = YAML.load(File.read("ABSmods.yml"));
-puts "   Player Ability Score Modifiers Loaded";
 @RE = YAML.load(File.read("relentEndure.yml"));
 puts "   Relentless Endurance Loaded";
 @dmg1 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 @dmg2 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 @dmg3 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 @dmg4 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-puts "   Damage Arrays Created";
+puts "   The useless Damage Arrays have been Created";
 puts;
 
 @gmBonus = 5;
@@ -147,14 +145,24 @@ bot.message(start_with:"help") do |event|
   say = say + "d20d.-5  rolls Dis-Advantage =>  1d20 - 5   \n";
   say = say + "d4.3  rolls 1d4 + 3       d6.-2    rolls 1d6 -2 \n";
   say = say + "2d8.  rolls 2d8 + 0       3d8.-1   rolls 3d8 -1 \n";
+  say = say + "\nTry pchelp to modify ability modifiers\n";
   event.respond say;
 end;
 ################## 2help ############################################ 2help ##########################
 ################## 2help ############################################ 2help ##########################
-bot.message(start_with:"2help") do |event|
-  say = "2help [command] HELP for the GM commands  \n"; 
-  say = say + "$EDITst#  $EDITdx#  $EDITco#  \n";
-  say = say + "$EDITin#  $EDITwi#  $EDITch#  \n";
+bot.message(start_with:"pchelp") do |event|
+  say = "pchelp [command] HELP for the GM commands  \n"; 
+  say = say + "$EDITst# Strength      $EDITdx# Dexterity  \n";
+  say = say + "$EDITco# Constitution  $EDITin# Intelligence  \n";
+  say = say + "$EDITwi# Wisdom        $EDITch# Charisma  \n";  
+  say = say + "$EDITpr# Proficiency   $EDITme# Melee  \n";  
+  say = say + "$EDITra# Range Special $EDITcs# Casting ABS Stat";  
+  event.respond say;
+end;
+################## gmhelp ############################################ 2help ##########################
+################## gmhelp ############################################ 2help ##########################
+bot.message(start_with:"gmhelp") do |event|
+  say = "gmhelp [command] HELP for the GM commands  \n";  
   say = say + "$sethp@#  $setallhp##  $abclist \n";
   say = say + "$setac@#  $setallac##  $abclist";
   event.respond say;
