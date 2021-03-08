@@ -15,19 +15,17 @@ owner = 690339632529015005 # Your user ID
 
 puts;
 @armour = YAML.load(File.read("armourClass.yml"));
-puts "The Tiny Tiger is preparing for battle"
+puts "The Tiny Tiger is prepared for battle"
 puts;
 @HP = YAML.load(File.read("hitPoints.yml"));
 @weapon = YAML.load(File.read("weaponDamage.yml"));
 @player = YAML.load(File.read("ABSmods.yml"));
 @RE = YAML.load(File.read("relentEndure.yml"));
-puts "   Relentless Endurance Loaded";
+
 @dmg1 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 @dmg2 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 @dmg3 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 @dmg4 = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-puts "   The useless Damage Arrays have been Created";
-puts;
 
 @gmBonus = 5;
 ###### End of Configuration ####
@@ -293,7 +291,7 @@ bot.message(start_with: "$EDIT") do |event|;
      say = say + "ProfB:" + player[pIndex][7].to_s +  "   CastStat:" + player[pIndex][10].to_s  + "\n";
      say = say + "MeleeW:" + player[pIndex][8].to_s + "   RangeW:" + player[pIndex][9].to_s + "\n";
           
-     player[pIndex][stat]=event.content.slice(7,1).to_i; #assignment of new stat modifier
+     player[pIndex][stat]=event.content.slice(7,3).to_i; #assignment of new stat modifier
 
      say = say + "\n The player stat mod for [" + event.content.slice(5,2) + "] is now: " + player[pIndex][stat].to_s + "\n";
      say = say + "\n st:" + player[pIndex][1].to_s + "  dx:" + player[pIndex][2].to_s + "  co:" + player[pIndex][3].to_s +
