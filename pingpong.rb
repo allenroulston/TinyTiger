@@ -193,7 +193,7 @@ bot.message(start_with: "$sethp") do |event|;
  ##################################################################################################################
  bot.message(start_with: "$setallhp") do |event|;  
     monsterHP = YAML.load(File.read("testHPAC.yml"));   hitPoints = event.content.slice(9,3).to_i;
-    if (hitpoints != nil) && (hitPoints != 0) then;
+    if (hitPoints != nil) && (hitPoints != 0) then;
        (0..(monsterHP.length-1)).each do |z|
           monsterHP[z][0] = hitPoints;
           monsterHP[z][1] = hitPoints * 1.0;
