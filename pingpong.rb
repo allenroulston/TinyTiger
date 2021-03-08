@@ -151,12 +151,18 @@ end;
 ################## 2help ############################################ 2help ##########################
 ################## 2help ############################################ 2help ##########################
 bot.message(start_with:"pchelp") do |event|
-  say = "pchelp [command] HELP for the GM commands  \n"; 
-  say = say + "$EDITst# Strength      $EDITdx# Dexterity  \n";
-  say = say + "$EDITco# Constitution  $EDITin# Intelligence  \n";
-  say = say + "$EDITwi# Wisdom        $EDITch# Charisma  \n";  
-  say = say + "$EDITpr# Proficiency   $EDITme# Melee  \n";  
-  say = say + "$EDITra# Range Special $EDITcs# Casting ABS Stat";  
+  say = "pchelp [command] HELP for PC commands  \n"; 
+  say = say + "$EDITst# Strength     \n";
+  say = say + "$EDITdx# Dexterity    \n";  
+  say = say + "$EDITco# Constitution \n";
+  say = say + "$EDITin# Intelligence \n";
+  say = say + "$EDITwi# Wisdom       \n"; 
+  say = say + "$EDITch# Charisma     \n";     
+  say = say + "$EDITpr# Proficiency Bonus \n";  
+  say = say + "$EDITme# Melee Weapon Damage \n";
+  say = say + "$EDITra# Range Weapon Damage \n";   
+  say = say + "$EDITcs# Casting ABS Stat \n";  
+  say = say + "$EDITsh# Sharp Shooter?";    
   event.respond say;
 end;
 ################## gmhelp ############################################ 2help ##########################
