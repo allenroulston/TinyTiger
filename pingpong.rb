@@ -155,8 +155,8 @@ bot.message(start_with:"2help") do |event|
   say = "2help [command] HELP for the GM commands  \n"; 
   say = say + "$EDITst#  $EDITdx#  $EDITco#  \n";
   say = say + "$EDITin#  $EDITwi#  $EDITch#  \n";
-  say = say + "$sethp@#  $setallhp@#  $abclist \n";
-  say = say + "$setac@#  $setallac@#  $abclist";
+  say = say + "$sethp@#  $setallhp##  $abclist \n";
+  say = say + "$setac@#  $setallac##  $abclist";
   event.respond say;
 end;
 ##################################################################################################################
@@ -190,10 +190,10 @@ bot.message(start_with: "$sethp") do |event|;
    end;
       event.respond say;
  end;
- ##################################################################################################################
- ##################################################################################################################
- ##################################################################################################################
- bot.message(start_with: "$setallhp") do |event|;  
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+bot.message(start_with: "$setallhp") do |event|;  
     monsterHP = YAML.load(File.read("testHPAC.yml"));   hitPoints = event.content.slice(9,3).to_i;
     if (hitPoints != nil) && (hitPoints != 0) then;
        (0..(monsterHP.length-1)).each do |z|
@@ -209,11 +209,11 @@ bot.message(start_with: "$sethp") do |event|;
        say = "Nothing happened.";
     end;
        event.respond say;
-  end;
- ##################################################################################################################
- ##################################################################################################################
- ##################################################################################################################
- bot.message(start_with: "$setac") do |event|;  
+end;
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+bot.message(start_with: "$setac") do |event|;  
     monsterAC = YAML.load(File.read("testHPAC.yml"));
     alphabet = "ABCDEFGHIJKLMNOPQRST";   critter = event.content.slice(6,1);   position = alphabet.index(critter); 
     theAC = event.content.slice(7,3).to_i;
@@ -228,7 +228,26 @@ bot.message(start_with: "$sethp") do |event|;
        say = "Nothing happened.";
     end;
        event.respond say;
-  end;
+end;
+##################################################################################################################
+##################################################################################################################
+##################################################################################################################
+bot.message(start_with: "$setallac") do |event|;  
+    monsterHP = YAML.load(File.read("testHPAC.yml"));   armour = event.content.slice(9,2).to_i;
+    if (armour != nil) && (armour != 0) then;
+       (0..(monsterHP.length-1)).each do |z|
+          monsterHP[z][2] = armour;
+       end;
+        data = "---\n"
+ #  Go through the list of critters and append the data to the preceeding data
+        (0..(monsterHP.length-1)).each do |x|;    data = data + "- " + monsterHP[x].to_s + "\n";   end;               
+               File.open("testHPAC.yml", 'w+') {|f| f.write(data) };
+       say = "Setting ALL HP process complete.";
+    else
+       say = "Nothing happened.";
+    end;
+       event.respond say;
+end;
 ###############################################################################################
 ###############################################################################################
 #             Proof of concept. Reading and writing data to a text file. 
