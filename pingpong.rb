@@ -275,17 +275,24 @@ bot.message(start_with: "$EDIT") do |event|;
        if (player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
    end;
    case  event.content.slice(0,7);
-      when "$EDITst"; flag = true; stat=2;
-      when "$EDITdx"; flag = true; stat=3;
-      when "$EDITco"; flag = true; stat=4;
-      when "$EDITin"; flag = true; stat=5;
-      when "$EDITwi"; flag = true; stat=6;
-      when "$EDITch"; flag = true; stat=7;
+      when "$EDITst"; flag = true; stat=1;
+      when "$EDITdx"; flag = true; stat=2;
+      when "$EDITco"; flag = true; stat=3;
+      when "$EDITin"; flag = true; stat=4;
+      when "$EDITwi"; flag = true; stat=5;
+      when "$EDITch"; flag = true; stat=6;
+      when "$EDITpr"; flag = true; stat=7;
+      when "$EDITme"; flag = true; stat=8;
+      when "$EDITra"; flag = true; stat=9;
+      when "$EDITcs"; flag = true; stat=10;
+      when "$EDITsh"; flag = true; stat=11;
    end;
    if flag == true then;
      say = "st:" + player[pIndex][2].to_s + "  dx:" + player[pIndex][3].to_s + "  co:" + player[pIndex][4].to_s +
-          "  in:" + player[pIndex][5].to_s + "  wi:" + player[pIndex][6].to_s + "  ch:" + player[pIndex][7].to_s;
-
+          "  in:" + player[pIndex][5].to_s + "  wi:" + player[pIndex][6].to_s + "  ch:" + player[pIndex][7].to_s + "\n";
+     say = say + "ProfB:" + player[pIndex][7].to_s + "   MeleeW:" + player[pIndex][8].to_s + "   RangeW:" + player[pIndex][9].to_s + "\n";
+     say = say + "CastStat:" + player[pIndex][10].to_s;
+          
      player[pIndex][stat]=event.content.slice(7,1).to_i; #assignment of new stat modifier
 
      say = say + "\n The player stat mod for [" + event.content.slice(5,2) + "] is now: " + player[pIndex][stat].to_s;
