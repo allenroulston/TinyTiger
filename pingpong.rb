@@ -154,7 +154,7 @@ end;
 bot.message(start_with:"2help") do |event|
   say = "2help [command] HELP for the manual dice rolling commands  \n"; 
   say = say + "$EDITst#  $EDITdx#  $EDITco#  $EDITin#  $EDITwi#  $EDITch#\n";
-  say = say + "$sethp@#  $setac@#  $abclist";
+  say = say + "$sethp@#  $setac@#  $setallhp@#  $setallac@#   $abclist";
   event.respond say;
 end;
 ##################################################################################################################
@@ -188,6 +188,26 @@ bot.message(start_with: "$sethp") do |event|;
    end;
       event.respond say;
  end;
+ ##################################################################################################################
+ ##################################################################################################################
+ ##################################################################################################################
+ bot.message(start_with: "$setallhp") do |event|;  
+    monsterHP = YAML.load(File.read("testHPAC.yml"));   hitPoints = event.content.slice(9,3).to_i;
+    if (position != nil) && (hitPoints != 0) then;
+       (0..(monsterHP.length-1)).each do |z|
+          monsterHP[z][0] = hitPoints;
+          monsterHP[z][1] = hitPoints * 1.0;
+       end;
+        data = "---\n"
+ #  Go through the list of critters and append the data to the preceeding data
+        (0..(monsterHP.length-1)).each do |x|;    data = data + "- " + monsterHP[x].to_s + "\n";   end;               
+               File.open("testHPAC.yml", 'w+') {|f| f.write(data) };
+       say = "Setting ALL HP process complete.";
+    else
+       say = "Nothing happened.";
+    end;
+       event.respond say;
+  end;
  ##################################################################################################################
  ##################################################################################################################
  ##################################################################################################################
