@@ -153,8 +153,10 @@ end;
 ################## 2help ############################################ 2help ##########################
 bot.message(start_with:"2help") do |event|
   say = "2help [command] HELP for the manual dice rolling commands  \n"; 
-  say = say + "$EDITst#  $EDITdx#  $EDITco#  $EDITin#  $EDITwi#  $EDITch#\n";
-  say = say + "$sethp@#  $setac@#  $setallhp@#  $setallac@#   $abclist";
+  say = say + "$EDITst#  $EDITdx#  $EDITco#  \n";
+  say = say + "$EDITin#  $EDITwi#  $EDITch#  \n";
+  say = say + "$sethp@#  $setallhp@#  $abclist";
+  say = say + "$setac@#  $setallac@#  $abclist";
   event.respond say;
 end;
 ##################################################################################################################
