@@ -318,8 +318,7 @@ end;
 ###############################################################################################
 bot.message(start_with: "$READ") do |event|;  
    player = YAML.load(File.read("testABSmods.yml"));
-   if event.user.nick != nil; theUser = event.user.nick; else; theUser = event..slice(5,5); end;   flag= false;
-   pIndex = nil;
+   theUser = event.slice(5,5);    pIndex = nil;
    (0..(player.length-1)).each do |y|
        if (player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
        puts "==> " + player.inspect
