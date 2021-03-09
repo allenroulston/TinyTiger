@@ -368,7 +368,7 @@ end;
 #             Proof of concept. ONE Roll To Hit method with multiple SWITCHES
 ###############################################################################################
 ###############################################################################################
-bot.message(start_with: "RTH") do |event|;      event.message.delete;
+bot.message(start_with: "RTH") do |event|;      event.message.delete;   dDice = "";
    theChars = YAML.load(File.read("testABSmods.yml"));  roll = rand(1..20);  r2 = rand(1..20);  r3 = rand(1..20);  r4 = rand(1..20);
    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end;   alphabet = "ABCDEFGHIJKLMNOPQRST";
    switches = event.content.slice(4,99);   pIndex = nil;   target = event.content.slice(3,1);   position = alphabet.index(target);
