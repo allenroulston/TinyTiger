@@ -324,7 +324,7 @@ bot.message(start_with: "$READ") do |event|;
        if (player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
    end;
 
-   if flag == true then;
+   if pIndex != nil then;
      say = "st:" + player[pIndex][1].to_s + "  dx:" + player[pIndex][2].to_s + "  co:" + player[pIndex][3].to_s +
           "  in:" + player[pIndex][4].to_s + "  wi:" + player[pIndex][5].to_s + "  ch:" + player[pIndex][6].to_s + "\n";
      say = say + "ProfB:" + player[pIndex][7].to_s +  "   CastStat:" + player[pIndex][10].to_s  + "\n";
