@@ -401,7 +401,7 @@ bot.message(start_with: "RTH") do |event|;      event.message.delete;   dDice = 
        if (bless != nil) then; b = rand(1..4); total = total + b; say = say + "+" + b.to_s + "b"; end;
        say = say + "= " + total.to_s;
        weaponData = YAML.load(File.read("weaponDamage.yml"));  # melee 1 & 12 range 
-       if range == nil then; weaponDmg = theChars[pIndex][1]; else; weaponDmg = theChars[pIndex][12]; end;
+       if range == nil then; weaponDmg = theChars[pIndex][8]; else; weaponDmg = theChars[pIndex][9]; end;
        mHPAC = YAML.load(File.read("testHPAC.yml"));   mAC = mHPAC[position][2];
      if (roll > 1) then;
        if total >= mAC then;  
