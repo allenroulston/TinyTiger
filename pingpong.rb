@@ -15,7 +15,7 @@ owner = 690339632529015005 # Your user ID
 
 puts;
 @armour = YAML.load(File.read("armourClass.yml"));
-puts "The Tiny Tiger is prepared for battle"
+puts "          The Tiny Tiger is prepared for battle"
 puts;
 @HP = YAML.load(File.read("hitPoints.yml"));
 @weapon = YAML.load(File.read("weaponDamage.yml"));
@@ -156,7 +156,7 @@ bot.message(start_with:"pchelp") do |event|
   say = say + "$EDITin# Intelligence \n";
   say = say + "$EDITwi# Wisdom       \n"; 
   say = say + "$EDITch# Charisma     \n";     
-  say = say + "$EDITpr# Proficiency Bonus \n";  
+  say = say + "$EDITpb# Proficiency Bonus \n";  
   say = say + "$EDITme# Melee Weapon Damage \n";
   say = say + "$EDITra# Range Weapon Damage \n";   
   say = say + "$EDITcs# Casting ABS Stat \n";  
@@ -279,7 +279,7 @@ bot.message(start_with: "$EDIT") do |event|;
       when "$EDITin"; flag = true; stat=4;
       when "$EDITwi"; flag = true; stat=5;
       when "$EDITch"; flag = true; stat=6;
-      when "$EDITpr"; flag = true; stat=7;
+      when "$EDITpb"; flag = true; stat=7;
       when "$EDITme"; flag = true; stat=8;
       when "$EDITra"; flag = true; stat=9;
       when "$EDITcs"; flag = true; stat=10;
