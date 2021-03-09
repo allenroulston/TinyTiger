@@ -313,6 +313,30 @@ data = "---\n";
 end;
 ###############################################################################################
 ###############################################################################################
+#             Read the ABS details for a character
+###############################################################################################
+###############################################################################################
+bot.message(start_with: "$READ") do |event|;  
+   player = YAML.load(File.read("testABSmods.yml"));
+   if event.user.nick != nil; theUser = event.user.nick; else; theUser = event..slice(5,5); end;   flag= false;
+   pIndex = nil;
+   (0..(player.length-1)).each do |y|
+       if (player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
+   end;
+
+   if flag == true then;
+     say = "st:" + player[pIndex][1].to_s + "  dx:" + player[pIndex][2].to_s + "  co:" + player[pIndex][3].to_s +
+          "  in:" + player[pIndex][4].to_s + "  wi:" + player[pIndex][5].to_s + "  ch:" + player[pIndex][6].to_s + "\n";
+     say = say + "ProfB:" + player[pIndex][7].to_s +  "   CastStat:" + player[pIndex][10].to_s  + "\n";
+     say = say + "MeleeW:" + player[pIndex][8].to_s + "   RangeW:" + player[pIndex][9].to_s + "\n";
+     say = say + "SharpShooter:" + player[pIndex][11].to_s + "\n";
+   else;
+     say = "That didn't work.";
+   end;
+   event.respond say;
+end;          
+###############################################################################################
+###############################################################################################
 #             Proof of concept. Reading and writing data to CREATURE Hit Points file. 
 ###############################################################################################
 ###############################################################################################
