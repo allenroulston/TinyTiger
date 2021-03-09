@@ -384,18 +384,18 @@ bot.message(start_with: "RTH") do |event|;      event.message.delete;   dDice = 
        rage = switches.index("r");  huntM = switches.index("h");  smite = switches.index("s");
        #---------------------------------------------------------------------------------------------------------------------#
        say = event.content + " **" + theChars[pIndex][0] + "** vs " + target + ":";
-       statMod = [theChars[pIndex][2],theChars[pIndex][3]].max; # max of ST or DX mod
-       if (range != nil) then statMod = theChars[pIndex][3]; end; # ranged attack uses DEX abs mod
+       statMod = [theChars[pIndex][1],theChars[pIndex][2]].max; # max of ST or DX mod
+       if (range != nil) then statMod = theChars[pIndex][2]; end; # ranged attack uses DEX abs mod
        if (adv == nil) && (dis == nil) then;
-          total = roll + theChars[pIndex][8] + statMod;
-          say = say + " [" + roll.to_s + "]+" + theChars[pIndex][8].to_s + "p+" + statMod.to_s + "a";
+          total = roll + theChars[pIndex][7] + statMod;
+          say = say + " [" + roll.to_s + "]+" + theChars[pIndex][7].to_s + "p+" + statMod.to_s + "a";
        else;
           if (adv != nil) then
-            roll = [r2,r3].max; total = roll + theChars[pIndex][8] + statMod;
-            say = say + " [" + r2.to_s + "][" + r3.to_s + "]+" + theChars[pIndex][8].to_s + "p+" + statMod.to_s + "a";
+            roll = [r2,r3].max; total = roll + theChars[pIndex][7] + statMod;
+            say = say + " [" + r2.to_s + "][" + r3.to_s + "]+" + theChars[pIndex][7].to_s + "p+" + statMod.to_s + "a";
           else;
-            roll = [r3,r4].min; total = roll + theChars[pIndex][8] + statMod;
-            say = say + " [" + r3.to_s + "][" + r4.to_s + "]+" + theChars[pIndex][8].to_s + "p+" + statMod.to_s + "a";           
+            roll = [r3,r4].min; total = roll + theChars[pIndex][7] + statMod;
+            say = say + " [" + r3.to_s + "][" + r4.to_s + "]+" + theChars[pIndex][7].to_s + "p+" + statMod.to_s + "a";           
           end;
        end;
        if (bless != nil) then; b = rand(1..4); total = total + b; say = say + "+" + b.to_s + "b"; end;
