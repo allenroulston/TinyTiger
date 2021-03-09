@@ -325,10 +325,10 @@ bot.message(start_with: "$READ") do |event|;
    end;
 
    if pIndex != nil then;
-     say = "st:" + player[pIndex][1].to_s + "  dx:" + player[pIndex][2].to_s + "  co:" + player[pIndex][3].to_s +
-          "  in:" + player[pIndex][4].to_s + "  wi:" + player[pIndex][5].to_s + "  ch:" + player[pIndex][6].to_s + "\n";
-     say = say + "ProfB:" + player[pIndex][7].to_s +  "   CastStat:" + player[pIndex][10].to_s  + "\n";
-     say = say + "MeleeW:" + player[pIndex][8].to_s + "   RangeW:" + player[pIndex][9].to_s + "\n";
+     say = "ST:" + player[pIndex][1].to_s + "   DX:" + player[pIndex][2].to_s + "   CO:" + player[pIndex][3].to_s +
+           "   IN:" + player[pIndex][4].to_s + "   WI:" + player[pIndex][5].to_s + "   CH:" + player[pIndex][6].to_s + "\n";
+     say = say + "Prof B:" + player[pIndex][7].to_s +  "   Cast Stat:" + player[pIndex][10].to_s  + "\n";
+     say = say + "Melee W:" + player[pIndex][8].to_s + "   Range W:" + player[pIndex][9].to_s + "\n";
      say = say + "SharpShooter:" + player[pIndex][11].to_s + "\n";
    else;
      say = "That didn't work.";
