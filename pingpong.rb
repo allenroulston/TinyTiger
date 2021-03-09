@@ -322,6 +322,7 @@ bot.message(start_with: "$READ") do |event|;
    pIndex = nil;
    (0..(player.length-1)).each do |y|
        if (player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
+       puts "==> " + player.inspect
    end;
 
    if pIndex != nil then;
