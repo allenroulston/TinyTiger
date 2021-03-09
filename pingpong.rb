@@ -432,7 +432,6 @@ bot.message(start_with: "RTH") do |event|;      event.message.delete;   dDice = 
          end;
          say = say + "    CRITICAL HIT!";
        end;
-       puts " The value of  dDice is:" + dDice.inspect.to_s;
        say = say + "\n\u2937 " + dDice ; huntMDmg = 0;
        if huntM != nil then; 
          huntMDmg = rand(1..6); say = say + "+[" + huntMDmg.to_s + "h]";
