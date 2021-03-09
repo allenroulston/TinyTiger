@@ -321,7 +321,6 @@ bot.message(start_with: "$READ") do |event|;
    theUser = event.content.slice(5,5);    pIndex = nil;
    (0..(player.length-1)).each do |y|
        if (player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
-       puts "==> " + player.inspect
    end;
 
    if pIndex != nil then;
@@ -433,6 +432,7 @@ bot.message(start_with: "RTH") do |event|;      event.message.delete;
          end;
          say = say + "    CRITICAL HIT!";
        end;
+       puts " The value of  dDice is:" + dDice.inspect.to_s;
        say = say + "\n\u2937 " + dDice ; huntMDmg = 0;
        if huntM != nil then; 
          huntMDmg = rand(1..6); say = say + "+[" + huntMDmg.to_s + "h]";
