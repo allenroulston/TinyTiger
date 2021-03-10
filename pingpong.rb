@@ -683,10 +683,10 @@ bot.message(start_with:"CASH") do |event|;
   crTreasure = event.content.slice(4,5).to_i;
   theRoll = rand(1..100);
   if crTreasure > 30 then; cash = "Too large a CR number."; end;
-  if crTreasure < 31 then; cash = cr17to30(theRoll,crTreasure); end;  
-  if crTreasure < 17 then; cash = cr11to16(theRoll,crTreasure); end;
-  if crTreasure < 11 then; cash = cr5to10(theRoll); end;   
-  if crTreasure < 5 then; cash = cr0to4(theRoll); end;
+  if crTreasure < 31 then; cash = cr17to30(theRoll); end;  
+  if crTreasure < 17 then; cash = cr11to16(theRoll); end;
+  if crTreasure < 11 then; cash = cr5to10(theRoll,crTreasure); end;   
+  if crTreasure < 5 then; cash = cr0to4(theRoll,crTreasure); end;
  
   say = "CR value is " + crTreasure.to_s + "\n" + cash;
   
