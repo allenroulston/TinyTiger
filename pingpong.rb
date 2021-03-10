@@ -670,7 +670,7 @@ bot.message(start_with:"CASH") do |event|;
   end;
   def cr17to30(theRoll);
     case theRoll;
-      when 1..15; cash1=rand(1..6)+rand(1..6);cash2=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6);cash=(cash1*500)+(cash2*100).to_s + " gold";
+      when 1..15; cash1=rand(1..6)+rand(1..6);cash2=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6);cash=((cash1*500)+(cash2*100)).to_s + " gold";
       when 16..55; cash1=rand(1..6)*1000;cash2=rand(1..6)*100;cash=cash1.to_s + " gold & " + cash2.to_s + " platinum";
       when 56..100; cash1=rand(1..6)*1000;cash2=(rand(1..6)+rand(1..6))*100;cash=cash1.to_s + " gold & " + cash2.to_s + " platinum";
     end;
