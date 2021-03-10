@@ -717,7 +717,7 @@ bot.message(start_with:"GOLDGEM") do |event|;
     when 1..10000; say = ffGem(halfGold);
   end;
   event.message.delete  
-  event.respond say = "Input Gold: " + theGold.to_s + "\n" + say;
+  event.respond say = "Input Gold: " + theGold.to_s + "\n" + say + "\n" + halfGold.to_s + " half the gold unused.";
 end;
 
 ##################################################################################################################
