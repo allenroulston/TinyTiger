@@ -710,7 +710,7 @@ bot.message(start_with:"GOLDGEM") do |event|;
     remain5 = remain4 - (bGem * 70);
     aGem = remain5/20;
     remain6 = remain5 - (aGem * 20);
-    return (remain6.to_s + " Gold, " + aGem.to_s + " A gems " + bGem.to_s + " B gems " + cGem.to_s + " C gems " + dGem.to_s + " D gems " + eGem.to_s + " E gems " + fGem.to_s + " F gems");
+    return (remain6.to_s + " Gold, " + aGem.to_s + " A gems, " + bGem.to_s + " B gems, " + cGem.to_s + " C gems, " + dGem.to_s + " D gems, " + eGem.to_s + " E gems, " + fGem.to_s + " F gems");
   end;
   halfGold = (event.content.slice(7,9).to_i)/2;
   case halfGold;
