@@ -640,13 +640,13 @@ end;
 ########################0123456789################################################################################
 bot.message(start_with:"CASH") do |event|;
   def cr0to4(theRoll,crTreasure);
-    theRoll = theRoll+(crTreasure*5);
+    theRoll = theRoll+(crTreasure*7);
     case theRoll;
       when 1..30; cash=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6); cash=cash.to_s + " copper";
       when 31..60; cash=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6); cash=cash.to_s + " silver";
       when 61..70; cash=rand(1..6)+rand(1..6)+rand(1..6)+1; cash=(cash/2).to_s + " gold";
       when 71..95; cash=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6); cash=cash.to_s + " gold";
-      when 96..120; cash=rand(1..6); cash=cash.to_s + " platinum";
+      when 96..128; cash=rand(1..6); cash=cash.to_s + " platinum";
     end;
     return cash; 
   end;
