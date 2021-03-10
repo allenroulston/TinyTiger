@@ -667,12 +667,21 @@ bot.message(start_with:"CASH") do |event|;
       when 76..100; cash1=rand(1..6)+rand(1..6); cash2=rand(1..6)+rand(1..6);cash=(cash1*100).to_s + " gold & " + (cash2*10).to_s + " platinum";
     end;
     return cash; 
-  end; 
+  end;
+  def cr17to30(theRoll);
+    case theRoll;
+      when 1..15; cash1=rand(1..6)+rand(1..6);cash2=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6);cash=(cash1*500)+(cash2*100).to_s + " gold";
+      when 16..55; cash1=rand(1..6)*1000;cash2=rand(1..6)*100;cash=cash1.to_s + " gold & " + cash2.to_s + " platinum";
+      when 56..100; cash1=rand(1..6)*1000;cash2=(rand(1..6)+rand(1..6))*100;cash=cash1.to_s + " gold & " + cash2.to_s + " platinum";
+    end;
+    return cash; 
+  end;
       
   event.message.delete
   crTreasure = event.content.slice(4,5).to_i;
   theRoll = rand(1..100);
-  if crTreasure > 16 then; cash = "Too large a CR number."; end;
+  if crTreasure > 30 then; cash = "Too large a CR number."; end;
+  if crTreasure < 31 then; cash = cr17to30(theRoll); end;  
   if crTreasure < 17 then; cash = cr11to16(theRoll); end;
   if crTreasure < 11 then; cash = cr5to10(theRoll); end;   
   if crTreasure < 5 then; cash = cr0to4(theRoll); end;
