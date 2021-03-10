@@ -693,8 +693,33 @@ bot.message(start_with:"CASH") do |event|;
   event.respond say;
 end;
 ##################################################################################################################
+############################## GOLD TO GEMS  ########## GOLD TO GEMS  ############################################
+############################## GOLD TO GEMS  ########## GOLD TO GEMS  ############################################
 ##################################################################################################################
-##################################################################################################################
+bot.message(start_with:"GOLDGEM") do |event|;
+  def ffGem(halfGold);
+    fGem = halfGold/3500;
+    remain1 = halfGold - (fGem * 3500);
+    eGem = remain1/1850;
+    remain2 = remain1 - (eGem * 1850);
+    dGem = remain2/500;
+    remain3 = remain2 - (dGem * 500);
+    cGem = remain3/220;
+    remain4 = remain3 - (cGem * 220);
+    bGem = remain4/70;
+    remain5 = remain4 - (bGem * 70);
+    aGem = remain5/20;
+    remain6 = remain5 - (aGem * 20);
+    return (remain6.to_s + " Gold, " + aGem.to_s + " A gems " + bGem.to_s + " B gems " + cGem.to_s + " C gems " + dGem.to_s + " D gems " + eGem.to_s + " E gems " + fGem.to_s + " F gems");
+  end;
+  halfGold = (event.content.slice(7,9).to_i)/2;
+  case halfGold;
+    when 3001..10000; say = ffGem(halfGold);
+  end;
+  event.message.delete  
+  event.respond say;
+end;
+
 ##################################################################################################################
 ##################################################################################################################
 ##################################################################################################################
