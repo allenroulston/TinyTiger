@@ -688,7 +688,7 @@ bot.message(start_with:"CASH") do |event|;
   if crTreasure < 11 then; cash = cr5to10(theRoll,crTreasure); end;   
   if crTreasure < 5 then; cash = cr0to4(theRoll,crTreasure); end;
  
-  say = "CR value is " + crTreasure.to_s + "\n" + cash;
+  say = "CR value is " + crTreasure.to_s + "\n" + cash + "[  GOLDGEMS12345  ]";
   
   event.respond say;
 end;
