@@ -761,6 +761,65 @@ bot.message(start_with:"Bgem") do |event|;
   event.respond ("B " + say);
 end;
 ##################################################################################################################
+bot.message(start_with:"Cgem") do |event|;
+  dieRoll = rand(1..10);
+  case dieRoll;  
+    when 1; say = "Amber (transparent watery gold to rich gold)";
+    when 2; say = "Amethyst (transparent deep purple)";
+    when 3; say = "Chrysoberyl (transparent yellow-green to pale green)";
+    when 4; say = "Coral (opaque crimson)";
+    when 5; say = "Garnet (transparent red, brown-green, or violet)";
+    when 6; say = "Jade (translucent light green, deep green , or white)";
+    when 7; say = "Jet (opaque deep black)";
+    when 8; say = "Pearl (opaque lustrous white, yellow, or pink)";
+    when 9; say = "Spinel (transparent red, red-brown, or deep green)";
+    when 10; say = "Tourmaline (transparent pale green, blue, brown, or red)";
+  end;  
+  event.message.delete
+  event.respond ("C " + say);
+end;
+##################################################################################################################
+bot.message(start_with:"Dgem") do |event|;
+  dieRoll = rand(1..6);
+  case dieRoll;  
+    when 1; say = "Alexandrite (transparent dark green)";
+    when 2; say = "Aquamarine (transparent pale blue-green)";
+    when 3; say = "Black Pearl (opaque pure black)";
+    when 4; say = "Blue Spinel (transparent deep blue)";
+    when 5; say = "Peridot (transparent rich olive green)";
+    when 6; say = "Topaz (transparent golden yellow)";
+  end;  
+  event.message.delete
+  event.respond ("D " + say);
+end;
+##################################################################################################################
+bot.message(start_with:"Egem") do |event|;
+  dieRoll = rand(1..8);
+  case dieRoll;  
+    when 1; say = "Black Opal (translucent dark green with black mottling and golden flecks)";
+    when 2; say = "Blue Sapphire (transparent blue-white to medium blue)";
+    when 3; say = "Emerald (transparent deep bright green)";
+    when 4; say = "Fire Opal (translucent fiery red)";
+    when 5; say = "Opal (translucent pale blue with green and golden mottling)";
+    when 6; say = "Star Ruby (translucent ruby with white star-shaped center)";
+    when 7; say = "Star Sapphire (translucent blue sapphire with white star-shaped center)";
+    when 8; say = "Yellow Sapphire (transparent fiery yellow or yellow·green)";
+  end;  
+  event.message.delete
+  event.respond ("E " + say);
+end;
+##################################################################################################################
+bot.message(start_with:"Fgem") do |event|;
+  dieRoll = rand(1..4);
+  case dieRoll;  
+    when 1; say = "Black Sapphire (translucent lustrous black with glowing highlights)";
+    when 2; say = "Diamond (transparent blue-white, canary, pink, brown, or blue)";
+    when 3; say = "Jacinth (transparent fiery orange)";
+    when 4; say = "Ruby (transparent clear red to deep crimson)";
+  end;  
+  event.message.delete
+  event.respond ("F " + say);
+end;
 ##################################################################################################################
 ##################################################################################################################
 ##################################################################################################################
@@ -768,7 +827,7 @@ end;
 ##################################################################################################################
 ##################################################################################################################
 ##################################################################################################################
-
+##################################################################################################################
 ##################################################################################################################
 ##################################################################################################################
 bot.message(start_with: "myabs") do |event|;
