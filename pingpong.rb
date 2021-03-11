@@ -822,6 +822,33 @@ bot.message(start_with:"Fgem") do |event|;
   event.respond ("F " + say);
 end;
 ##################################################################################################################
+bot.message(start_with:"GEM") do |event|;
+  dieRoll = rand(1..4)+rand(1..4)+rand(1..4)+rand(1..4);
+  gemType = event.content.slice(3,1); result = "abcdef".index(gemType)
+  if result != nil then;    
+    case gemType;  
+      when "a"; value = 10;
+      when "b"; value = 50;
+      when "c"; value = 100;
+      when "d"; value = 500;
+      when "e"; value = 1000;
+      when "f"; value = 5000;
+    end;
+    case dieRoll;
+      when 4; dieRoll = 16;
+      when 5; dieRoll = 15;
+      when 6; dieRoll = 14;
+      when 7; dieRoll = 13;
+      when 8; dieRoll = 12; 
+      when 9; dieRoll = 11;
+    end;
+    value = value * (dieRoll/10);
+  else;
+    say = event.content + " invalid gem type";
+  end;  
+  event.message.delete
+  event.respond ("Gem "+ gemType.upcase + "  value of " + value.to_s + " gold pieces.");
+end;
 ##################################################################################################################
 ##################################################################################################################
 ##################################################################################################################
