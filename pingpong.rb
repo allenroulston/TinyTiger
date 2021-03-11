@@ -168,7 +168,8 @@ end;
 bot.message(start_with:"gmhelp") do |event|
   say = "gmhelp [command] HELP for the GM commands  \n";  
   say = say + "$sethp@#  $setallhp##  $abclist \n";
-  say = say + "$setac@#  $setallac##  $abclist";
+  say = say + "$setac@#  $setallac##  $abclist \n";
+  say = say + "CASH_#_ Agem Bgem Cgem Dgem Egem Fgem ";  
   event.respond say;
 end;
 ##################################################################################################################
