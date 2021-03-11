@@ -843,7 +843,7 @@ bot.message(start_with:"GEM") do |event|;
       when 9; dieRoll = 11;
     end;
     value = value * (dieRoll/10.0);
-    say = "["+dieRoll.to_s+"]"+"Gem "+ gemType.upcase + "  value of " + value.to_s + " gold pieces."
+    say = "Gem "+ gemType.upcase + "  value of " + value.to_s + " gold pieces."
   else;
     say = event.content + " invalid gem type";
   end;  
