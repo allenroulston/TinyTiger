@@ -688,7 +688,7 @@ bot.message(start_with:"CASH") do |event|;
   if crTreasure < 11 then; cash = cr5to10(theRoll,crTreasure); end;   
   if crTreasure < 5 then; cash = cr0to4(theRoll,crTreasure); end;
  
-  say = "CR value is " + crTreasure.to_s + "\n" + cash + "   [  GOLDGEMS12345  ]";
+  say = "CR value is " + crTreasure.to_s + "\n" + cash + "   [  GOLDGEM12345  ]";
   
   event.respond say;
 end;
@@ -721,7 +721,45 @@ bot.message(start_with:"GOLDGEM") do |event|;
 end;
 
 ##################################################################################################################
+bot.message(start_with:"Agem") do |event|;
+  dieRoll = rand(1..12);
+  case dieRoll;  
+    when 1; say = "Azurite (opaque mottled deep blue)";
+    when 2; say =  "Banded Agate (translucent striped brown, blue, white, or red)";
+    when 3; say =  "Blue Quartz (transparent pale blue)";
+    when 4; say =  "Eye Agate (translucent circles of gray, white, brown, blue, or green)";
+    when 5; say =  "Hematite (opaque gray-black)";
+    when 6; say =  "Lapis Lazuli (opaque light and dark blue with yellow flecks)";
+    when 7; say =  "Malachite (opaque striated light and dark green)";
+    when 8; say =  "Moss Agate (translucent pink or yellow-white with mossy gray or green markings)";
+    when 9; say =  "Obsidian (opaque black)";
+    when 10; say =  "Rhodochrosite (opaque light pink)";
+    when 11; say =  "Tiger Eye (translucent brown with golden center)";
+    when 12; say =  "Turquoise (opaque light blue-green)";
+  end;  
+  event.message.delete
+  event.respond ("A " + say);
+end;
 ##################################################################################################################
+bot.message(start_with:"Bgem") do |event|;
+  dieRoll = rand(1..12);
+  case dieRoll;  
+    when 1; say = "Bloodstone (opaque dark gray with red flecks)";
+    when 2; say = "Carnelian (opaque orange to red-brown)";
+    when 3; say = "Chalcedony (opaque white)";
+    when 4; say = "Chrysoprase (translucent green)";
+    when 5; say = "Citrine (transparent pale yellow-brown)";
+    when 6; say = "Jasper (opaque blue, black, or brown)";
+    when 7; say = "Moonstone (translucent white with pale blue glow)";
+    when 8; say = "Onyx (opaque bands of black and white, or pure black or white)";
+    when 9; say = "Quartz (transparent white, smoky gray, or yellow)";
+    when 10; say = "Sardonyx (opaque bands of red and white)";
+    when 11; say = "Star Rose Quartz (translucent rosy stone with white star-shaped center)";
+    when 12; say = "Zircon (transparent pale blue-green)";
+  end;  
+  event.message.delete
+  event.respond ("B " + say);
+end;
 ##################################################################################################################
 ##################################################################################################################
 ##################################################################################################################
