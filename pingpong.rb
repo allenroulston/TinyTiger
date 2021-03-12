@@ -150,7 +150,7 @@ end;
 ################## pchelp ############################################ pchelp ##########################
 bot.message(start_with:"pchelp") do |event|
   say = "pchelp [command] HELP for PC commands  \n";
-  say = say + "**myabs** - view all character details \n"; 
+  say = say + "**myabs** - view character details \n"; 
   say = say + "$EDITst# set Strength mod \n";
   say = say + "$EDITdx# set Dexterity mod \n";  
   say = say + "$EDITco# set Constitution mod \n";
@@ -322,7 +322,7 @@ bot.message(start_with: "$EDIT") do |event|;
      say = say + "\n The player stat mod for [" + event.content.slice(5,2) + "] is now: " + player[pIndex][stat].to_s + "\n";
      say = say + "\n st:" + player[pIndex][1].to_s + "  dx:" + player[pIndex][2].to_s + "  co:" + player[pIndex][3].to_s +
                "  in:" + player[pIndex][4].to_s + "  wi:" + player[pIndex][5].to_s + "  ch:" + player[pIndex][6].to_s + "\n";
-     say = say + "ProfB:" + player[pIndex][7].to_s +  "   CastStat:" + player[pIndex][10].to_s  + "\n";
+     say = say + "ProfB:" + player[pIndex][7].to_s +  "   CastStat:" + player[pIndex][10].to_s + "  [Int:4, Wis:5, Cha:6] \n";
      say = say + "MeleeW:" + player[pIndex][8].to_s + "   RangeW:" + player[pIndex][9].to_s + "\n";
      say = say + "SharpShooter:" + player[pIndex][11].to_s;
                
@@ -674,13 +674,14 @@ end;
 ########################0123456789################################################################################
 bot.message(start_with:"CASH") do |event|;
   def cr0to4(theRoll,crTreasure);
-    theRoll = theRoll+(crTreasure*7);
+    theRoll = theRoll+(crTreasure*10);
     case theRoll;
       when 1..30; cash=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6); cash=cash.to_s + " copper";
       when 31..60; cash=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6); cash=cash.to_s + " silver";
-      when 61..70; cash=rand(1..6)+rand(1..6)+rand(1..6)+1; cash=(cash/2).to_s + " gold";
+      when 61..69; cash=rand(1..6)+rand(1..6)+rand(1..6)+1; cash=(cash/2).to_s + " gold";
+      when 70; cash=rand(1..6)+rand(1..6)+rand(1..6)+1; cash=(cash/2).to_s + " gold & SPECIAL";
       when 71..95; cash=rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6)+rand(1..6); cash=cash.to_s + " gold";
-      when 96..128; cash=rand(1..6); cash=cash.to_s + " platinum";
+      when 96..140; cash=rand(1..6); cash=cash.to_s + " platinum";
     end;
     return cash; 
   end;
