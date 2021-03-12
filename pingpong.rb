@@ -157,9 +157,10 @@ bot.message(start_with:"pchelp") do |event|
   say = say + "$EDITwi# Wisdom       \n"; 
   say = say + "$EDITch# Charisma     \n";     
   say = say + "$EDITpb# Proficiency Bonus \n";
-  say = say + "**$DAMAGE  will list damage index for $EDITme & $EDITra** \n"; 
-  say = say + "$EDITme# Melee Weapon Damage \n";
-  say = say + "$EDITra# Range Weapon Damage \n";   
+  say = say + "**$DAMAGE  will list damage index** \n";
+  say = say + "**for $EDITme & $EDITra** \n";  
+  say = say + "..  $EDITme# Melee Weapon Damage \n";
+  say = say + "..  $EDITra# Range Weapon Damage \n";   
   say = say + "$EDITcs# Casting ABS Stat \n";  
   say = say + "$EDITsh# Sharp Shooter?";    
   event.respond say;
