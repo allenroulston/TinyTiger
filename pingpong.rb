@@ -377,7 +377,7 @@ bot.message(start_with: "dmg") do |event|;
    monsterHP = YAML.load(File.read("testHPAC.yml"));
    if event.user.nick != nil; theUser = event.user.nick; else; theUser = event.user.name; end;   flag= false;
    pIndex = nil; say = "We read the monsterHP"; alphabet = "ABCDEFGHIJKLMNOPQRST";
-   critter = event.content.slice(7,1);   position = alphabet.index(critter);   damage = event.content.slice(3,5).to_i;
+   critter = event.content.slice(3,1);   position = alphabet.index(critter);   damage = event.content.slice(4,5).to_i;
    if (position != nil) && (damage != 0) then;  
        monsterHP[position][0] = monsterHP[position][0] - damage;
        data = "---\n"
