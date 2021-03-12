@@ -149,20 +149,21 @@ end;
 ################## pchelp ############################################ pchelp ##########################
 ################## pchelp ############################################ pchelp ##########################
 bot.message(start_with:"pchelp") do |event|
-  say = "pchelp [command] HELP for PC commands  \n"; 
-  say = say + "$EDITst# Strength     \n";
-  say = say + "$EDITdx# Dexterity    \n";  
-  say = say + "$EDITco# Constitution \n";
-  say = say + "$EDITin# Intelligence \n";
-  say = say + "$EDITwi# Wisdom       \n"; 
-  say = say + "$EDITch# Charisma     \n";     
-  say = say + "$EDITpb# Proficiency Bonus \n";
+  say = "pchelp [command] HELP for PC commands  \n";
+  say = say + "**myabs** - view all character details \n"; 
+  say = say + "$EDITst# set Strength mod \n";
+  say = say + "$EDITdx# set Dexterity mod \n";  
+  say = say + "$EDITco# set Constitution mod \n";
+  say = say + "$EDITin# set Intelligence mod \n";
+  say = say + "$EDITwi# set Wisdom mod \n"; 
+  say = say + "$EDITch# set Charisma mod \n";     
+  say = say + "$EDITpb# set Proficiency Bonus \n";
   say = say + "**$DAMAGE  will list damage index** \n";
   say = say + "**for $EDITme & $EDITra** \n";  
-  say = say + "..  $EDITme# Melee Weapon Damage \n";
-  say = say + "..  $EDITra# Range Weapon Damage \n";   
-  say = say + "$EDITcs# Casting ABS Stat \n";  
-  say = say + "$EDITsh# Sharp Shooter?";    
+  say = say + "..  $EDITme# set Melee Damage index \n";
+  say = say + "..  $EDITra# set Range Damage index \n";   
+  say = say + "$EDITcs# set Casting ABS Stat \n";  
+  say = say + "$EDITsh# set Sharp Shooter";    
   event.respond say;
 end;
 ################## gmhelp ############################################ 2help ##########################
@@ -174,6 +175,27 @@ bot.message(start_with:"gmhelp") do |event|
   say = say + "CASH_#_ Agem Bgem Cgem Dgem Egem Fgem ";  
   event.respond say;
 end;
+##################################################################################################################
+##################################################################################################################
+bot.message(start_with: "myabs") do |event|;
+  if event.user.nick != nil;  theUser = event.user.nick;  else;  theUser = event.user.name;  end;
+   player = YAML.load(File.read("testABSmods.yml"));  pIndex = nil;
+   (0..(player.length-1)).each do |y|
+       if (player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
+   end;
+
+   if pIndex != nil then;
+     say = "ST:" + player[pIndex][1].to_s + "   DX:" + player[pIndex][2].to_s + "   CO:" + player[pIndex][3].to_s +
+           "   IN:" + player[pIndex][4].to_s + "   WI:" + player[pIndex][5].to_s + "   CH:" + player[pIndex][6].to_s + "\n";
+     say = say + "Prof B:" + player[pIndex][7].to_s +  "   Cast Stat:" + player[pIndex][10].to_s  + "\n";
+     say = say + "Melee W:" + player[pIndex][8].to_s + "   Range W:" + player[pIndex][9].to_s + "\n";
+     say = say + "SharpShooter:" + player[pIndex][11].to_s + "\n";
+     say = say + "Use **pchemp** to view modification commands. \n";
+   else;
+     say = "That didn't work. Discord nick name not found.";
+   end;
+   event.respond say;
+end;          
 ##################################################################################################################
 ##################################################################################################################
 ##################################################################################################################
@@ -870,33 +892,6 @@ end;
 ##################################################################################################################
 ##################################################################################################################
 ##################################################################################################################
-bot.message(start_with: "myabs") do |event|;
-  if event.user.nick != nil
-      theUser = event.user.nick
-  else
-      theUser = event.user.name
-  end;
-    pIndex = nil;
-    (0..(@player.length-1)).each do |y|
-        if (@player[y][0].index(theUser.slice(0,5)) == 0) then pIndex = y;  end; #finds player Index Value (integer or nil)
-    end;
-    stMod = @player[pIndex][2];
-    dxMod = @player[pIndex][3];
-    coMod = @player[pIndex][4];
-    inMod = @player[pIndex][5];
-    wiMod = @player[pIndex][6];
-    chMod = @player[pIndex][7];
-    prMod = @player[pIndex][8];
-    meleeDamage = @player[pIndex][1];
-    rangeDamage = @player[pIndex][12];
-    say = theUser + " has Proficiency Bonus of " + prMod.to_s + "  and ability score modifiers of \n";
-    say = say + "ST: " + stMod.to_s + "  DX: " + dxMod.to_s + "  CO: " + coMod.to_s + "  IN: " + inMod.to_s + "  WI: " + wiMod.to_s + "  CH: " + chMod.to_s + "\n";
-    say = say + "Default MELEE weapon damage: " + @weapon[meleeDamage] ;
-    say = say + "\nDefault RANGED weapon damage: " + @weapon[rangeDamage] ;
-    say = say + "\n=======> use $Wlist to change default weapon damage.";
-    event.respond say;
-end;
-
 bot.message(start_with:"55555") do |event|;
   def tis_this(input);
     bork = input;
