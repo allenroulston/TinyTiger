@@ -133,8 +133,8 @@ end;
 
 bot = Discordrb::Bot.new token: token
 
-################## 2help ############################################ 2help ##########################
-################## 2help ############################################ 2help ##########################
+################## help ############################################ help ##########################
+################## help ############################################ help ##########################
 bot.message(start_with:"help") do |event|
   say = "help: COMMAND [space] COMMENT\n";
   say = say + "   d4.   d6.   d8.   d10.   d12.   d20.  or d100.  \n";
@@ -146,8 +146,8 @@ bot.message(start_with:"help") do |event|
   say = say + "\nTry pchelp to modify ability modifiers\n";
   event.respond say;
 end;
-################## 2help ############################################ 2help ##########################
-################## 2help ############################################ 2help ##########################
+################## pchelp ############################################ pchelp ##########################
+################## pchelp ############################################ pchelp ##########################
 bot.message(start_with:"pchelp") do |event|
   say = "pchelp [command] HELP for PC commands  \n"; 
   say = say + "$EDITst# Strength     \n";
@@ -156,7 +156,8 @@ bot.message(start_with:"pchelp") do |event|
   say = say + "$EDITin# Intelligence \n";
   say = say + "$EDITwi# Wisdom       \n"; 
   say = say + "$EDITch# Charisma     \n";     
-  say = say + "$EDITpb# Proficiency Bonus \n";  
+  say = say + "$EDITpb# Proficiency Bonus \n";
+  say = say + "**$DAMAGE  will list damage index for $EDITme & $EDITra** \n"; 
   say = say + "$EDITme# Melee Weapon Damage \n";
   say = say + "$EDITra# Range Weapon Damage \n";   
   say = say + "$EDITcs# Casting ABS Stat \n";  
