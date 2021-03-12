@@ -143,7 +143,7 @@ bot.message(start_with:"help") do |event|
   say = say + "d20d.-5  rolls Dis-Advantage =>  1d20 - 5   \n";
   say = say + "d4.3  rolls 1d4 + 3       d6.-2    rolls 1d6 -2 \n";
   say = say + "2d8.  rolls 2d8 + 0       3d8.-1   rolls 3d8 -1 \n";
-  say = say + "\nTry pchelp to modify ability modifiers\n";
+  say = say + "\nUse **pchelp** for character management options \n";
   event.respond say;
 end;
 ################## pchelp ############################################ pchelp ##########################
