@@ -340,8 +340,8 @@ end;
 ###############################################################################################
 bot.message(start_with: "$DAMAGE") do |event|;  
    damage = YAML.load(File.read("weaponDamage.yml")); say = "";
-   (0..(damage.length-1)).each do |y|
-       say = say + y.to_s + " => " + damage[y] + "\n";
+   (0..4)).each do |y|
+       say = say + y.to_s + " => " + damage[y] + "______" + (y+4).to_s + " => " + damage[y+4] + "\n";
    end;
    event.respond say;
 end;
