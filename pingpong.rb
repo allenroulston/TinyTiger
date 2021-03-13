@@ -343,6 +343,7 @@ bot.message(start_with: "$DAMAGE") do |event|;
    (0..4).each do |y|
        say = say + y.to_s + " => " + damage[y] + "          " + (y+4).to_s + " => " + damage[y+4] + "\n";
    end;
+   event.message.delete;
    event.respond say;
 end;
 ###############################################################################################
