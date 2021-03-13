@@ -339,7 +339,7 @@ end;
 ###############################################################################################
 ###############################################################################################
 bot.message(start_with: "$DAMAGE") do |event|;  
-   damage = YAML.load(File.read("weaponDamage.yml")); say = "";
+   damage = YAML.load(File.read("weaponDamage.yml")); say = "  Index Value => Damage Dice \n";
    (0..4).each do |y|
        say = say + y.to_s + " => " + damage[y] + "          " + (y+4).to_s + " => " + damage[y+4] + "\n";
    end;
